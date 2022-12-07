@@ -1,0 +1,1 @@
+CREATE DOMAIN salary_type AS DECIMAL(8,2);

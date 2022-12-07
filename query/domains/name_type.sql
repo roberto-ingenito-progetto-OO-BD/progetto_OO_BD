@@ -1,0 +1,1 @@
+CREATE DOMAIN name_type AS VARCHAR(30);

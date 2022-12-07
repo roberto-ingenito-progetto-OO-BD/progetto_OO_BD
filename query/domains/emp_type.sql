@@ -1,0 +1,1 @@
+CREATE DOMAIN emp_type AS VARCHAR(10);
