@@ -9,7 +9,6 @@ CREATE TABLE base_emp(
     "role" VARCHAR(30) NOT NULL,
     salary salary_type NOT NULL,
 
-    CONSTRAINT check_type CHECK ( "type" IN ('junior', 'middle', 'senior', 'manager') ),
     CONSTRAINT emp_email_unique UNIQUE (email),
     CONSTRAINT base_emp_pk PRIMARY KEY (CF)
 );
