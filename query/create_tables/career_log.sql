@@ -9,7 +9,6 @@ CREATE TABLE career_log(
         ON UPDATE CASCADE,
 
     CONSTRAINT check_new_grade CHECK (
-
         (ex_role, new_role) IN ( 
             ('', 'junior'), 
             ('junior', 'middle'), 
@@ -31,6 +30,7 @@ CREATE TABLE career_log(
         ex_role = 'manager' AND new_role <> 'manager'
     )
 );
+
 
 /* 
 check_new_grade, tutte le possibili combinazioni
