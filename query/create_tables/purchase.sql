@@ -1,6 +1,6 @@
 CREATE TABLE purchase(
-    purchase_date DATE NOT NULL,
     price DECIMAL(10,2) NOT NULL,
+    purchase_date DATE NOT NULL,
 
     -- foreign keys
     CUP cup_type,

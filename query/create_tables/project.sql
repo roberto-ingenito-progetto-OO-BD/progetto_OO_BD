@@ -8,8 +8,8 @@ CREATE TABLE project(
     deadline DATE,
 
     -- foreign key
-    CF_manager cf_type NOT NULL,
-    CF_scientific_referent cf_type NOT NULL,
+    cf_manager cf_type NOT NULL,
+    cf_scientific_referent cf_type NOT NULL,
 
     CONSTRAINT project_pk PRIMARY KEY (CUP),    
     CONSTRAINT check_deadline CHECK ( deadline IS NULL OR deadline > start_date ),

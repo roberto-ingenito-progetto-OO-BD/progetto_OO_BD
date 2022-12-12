@@ -3,7 +3,8 @@ CREATE TABLE career_log(
     new_role emp_type,
     new_role_date DATE NOT NULL,
     CF cf_type,
-
+    
+    -- foreign key constraint
     CONSTRAINT emp_career_fk FOREIGN KEY (CF) REFERENCES base_emp(CF)
         ON DELETE CASCADE 
         ON UPDATE CASCADE,

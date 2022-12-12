@@ -2,7 +2,7 @@ CREATE TABLE equipment(
     code uuid DEFAULT uuid_generate_v4(),
     name equipment_name_type NOT NULL,
     type VARCHAR(30) NOT NULL,
-    techspecs VARCHAR(100),
+    tech_specs VARCHAR(100),
 
     -- foreign keys
     lab_code    SERIAL,
