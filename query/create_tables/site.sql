@@ -6,5 +6,5 @@ CREATE TABLE site(
     postal_code     VARCHAR(10) NOT NULL,
     city            VARCHAR(20) NOT NULL,
 
-    CONSTRAINT site_pk PRIMARY KEY site_number
+    CONSTRAINT site_pk PRIMARY KEY (site_number)
 );
