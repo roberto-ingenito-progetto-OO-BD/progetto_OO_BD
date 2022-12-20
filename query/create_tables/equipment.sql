@@ -8,10 +8,10 @@ CREATE TABLE equipment(
     lab_code    SERIAL,
 
     -- primary key
-    CONSTRAINT equipment_pk PRIMARY KEY code,
+    CONSTRAINT equipment_pk PRIMARY KEY (code),
 
     -- foreign key constraint
-    CONSTRAINT lab_code_fk FOREIGN KEY lab_code REFERENCES laboratory(lab_code)
+    CONSTRAINT lab_code_fk FOREIGN KEY (lab_code) REFERENCES laboratory(lab_code)
     ON UPDATE CASCADE
     ON DELETE SET NULL,
 

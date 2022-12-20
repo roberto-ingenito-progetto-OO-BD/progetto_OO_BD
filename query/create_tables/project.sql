@@ -14,8 +14,8 @@ CREATE TABLE project(
     CONSTRAINT project_pk PRIMARY KEY (CUP),    
     CONSTRAINT check_deadline CHECK ( deadline IS NULL OR deadline > start_date ),
 
-    CONSTRAINT fk_cf_manager FOREIGN KEY CF_manager REFERENCES base_emp(CF)
+    CONSTRAINT fk_cf_manager FOREIGN KEY (CF_manager) REFERENCES base_emp(CF)
     ON UPDATE CASCADE,
-    CONSTRAINT fk_cf_scientific_referent FOREIGN KEY CF_scientific_referent REFERENCES base_emp(CF)
+    CONSTRAINT fk_cf_scientific_referent FOREIGN KEY (CF_scientific_referent) REFERENCES base_emp(CF)
     ON UPDATE CASCADE
 );

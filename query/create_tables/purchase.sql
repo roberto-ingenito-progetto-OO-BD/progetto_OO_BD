@@ -7,11 +7,11 @@ CREATE TABLE purchase(
     equipment_code uuid,
 
     -- foreign key constraint
-    CONSTRAINT cup_type_fk FOREIGN KEY cup_type REFERENCES project(CUP)
+    CONSTRAINT cup_type_fk FOREIGN KEY (cup_type) REFERENCES project(CUP)
     ON UPDATE CASCADE
     ON DELETE SET NULL,
 
-    CONSTRAINT equipment_code_fk FOREIGN KEY equipment_code REFERENCES equipment(code)
+    CONSTRAINT equipment_code_fk FOREIGN KEY (equipment_code) REFERENCES equipment(code)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
 );

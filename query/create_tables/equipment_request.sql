@@ -7,11 +7,11 @@ CREATE TABLE equipment_request(
     CUP         cup_type,
     lab_code    SERIAL,
 
-    CONSTRAINT CUP_fk FOREIGN KEY CUP REFERENCES project(CUP)
+    CONSTRAINT CUP_fk FOREIGN KEY (CUP) REFERENCES project(CUP)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
 
-    CONSTRAINT lab_code_fk FOREIGN KEY lab_code REFERENCES laboratory(lab_code)
+    CONSTRAINT lab_code_fk FOREIGN KEY (lab_code) REFERENCES laboratory(lab_code)
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
