@@ -11,7 +11,7 @@ CREATE TABLE career_log(
 
     CONSTRAINT check_new_grade CHECK (
         (ex_role, new_role) IN ( 
-            ('', 'junior'), 
+            ('', 'junior'), -- assunto
             ('junior', 'middle'), 
             ('middle', 'senior')
         ) OR
@@ -36,31 +36,31 @@ CREATE TABLE career_log(
 /* 
 check_new_grade, tutte le possibili combinazioni
 
-(null, null); -- no
-(null, 'junior');
-(null, 'middle'); -- no
-(null, 'senior'); -- no
-(null, 'manager'); -- no
+('', ''); -- no
+('', 'junior');
+('', 'middle'); -- no
+('', 'senior'); -- no
+('', 'manager'); -- no
 
-('junior', null);
+('junior', '');
 ('junior', 'junior'); -- no
 ('junior', 'middle');
 ('junior', 'senior'); -- no
 ('junior', 'manager');
 
-('middle', null);
+('middle', '');
 ('middle', 'junior'); -- no
 ('middle', 'middle'); -- no
 ('middle', 'senior');
 ('middle', 'manager');
 
-('senior', null);
+('senior', '');
 ('senior', 'junior'); -- no
 ('senior', 'middle'); -- no
 ('senior', 'senior'); -- no
 ('senior', 'manager');
 
-('manager', null);
+('manager', '');
 ('manager', 'junior');
 ('manager', 'middle');
 ('manager', 'senior'); 
