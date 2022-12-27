@@ -1,7 +1,0 @@
-INSERT INTO site VALUES
-('049','Deloit SRL','Via Nazionale','2','80059','Torre del Greco'),
-('050', 'Altem SRL', 'Via Longobardi', '15,'80020','Frattaminore'),
-('060','Scintilloro','Via Leopardi','20','80020','Crispano'),
-('047','Lys & Sol','Via Alcide de Gasperi','11','80058','Torre Annunziata'),
-('069','Via Plinio','Via Roma','23','80056','Ercolano'),
-('052','Sole & Sirio','Via Scala','32','80045','Pompei');

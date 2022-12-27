@@ -1,5 +1,5 @@
 INSERT INTO base_emp VALUES
-('NGNRRT02M29H931J', 'Roberto', 'Ingenito', 'ingenitoroby@gmail.com', 'password', '29/08/2002', 'manager', 'developer', 10000),
+('NGNRRT02M29H931J','Roberto', 'Ingenito', 'ingenitoroby@gmail.com', 'password', '29/08/2002', 'manager', 'developer', 10000),
 ('SQNLNZ02R08L259U','Lorenzo','Sequino','sequinolorenzo1@gmail.com','lorenzo123','08/10/2002','junior','project manager',12000),
 ('CLNCRN73M48F839M','Caterina','Calandruccio','caterina.calandruccio89@libero.it','20/02/1989','middle','program manager',8750),
 ('CPCPPL79C15I119Z','Pierpaolo','Capoccia','pierpaolocapoccia23@alice.it','15/04/1960','senior','App Developer',14789),
