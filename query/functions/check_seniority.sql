@@ -19,23 +19,19 @@ log_cursor CURSOR FOR
     	-- prendo l'ULTIMO LOG di ogni impiegato 
         -- escludendo i log dove new_role è manager oppure '' (licenziato) 
     	SELECT C1.cf    
-    	FROM career_log AS C1
-        
-        -- seleziono l'ultimo log 
-    	WHERE C1.new_role_date = (  
-    			SELECT MAX(C2.new_role_date)	
-    			FROM career_log AS C2
-    			WHERE C1.cf = C2.cf
-    		) AND 
+    	FROM last_log AS C1
+    	WHERE 
             C1.new_role <> 'manager' AND    -- escludo i manager
     	  	C1.new_role <> ''   -- escludo i licenziati
-        ) AND 
-    	C.new_role_date = ( -- seleziono l'ultimo log junior
-            SELECT MAX(C1.new_role_date)
-     		FROM career_log AS C1
-    		WHERE C.cf = C1.cf and C1.new_role = 'junior'
-    	)
-    ;
+    ) AND 
+	
+	-- seleziono l'ultimo log dov'è stato assunto
+    C.new_role_date = ( 
+        SELECT MAX(C1.new_role_date)
+    	FROM career_log AS C1
+    	WHERE C.cf = C1.cf AND (C1.ex_role,C1.new_role) = ('','junior')
+    )
+;
 
 BEGIN
     FOR item IN log_cursor LOOP
