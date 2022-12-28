@@ -18,4 +18,4 @@ INSERT INTO base_emp VALUES
 ('BNDNDR90E15G712A','Andrea','Benedetto','andreabenedetto@gmail.com','18/08/1987','middle','App Developer',15123),
 ('BLLVCN72L22F052W','Vincenzo','Bellino','bellinoandrea123@libero.it','14/05/1987','middle','E-commerce manager ',19000),
 ('PZZGPP79H15G786W','Giuseppe','Pizzella','pizzagiuseppe@gmail.com','17/08/1989','junior','Web developer',20000),
-('SCRRCC66H16F052M','Vito','Tucci','vitotucci@gmail.com','09/05/1986',,'middle','developer',15420);
+('SCRRCC66H16F052M','Vito','Tucci','vitotucci@gmail.com','09/05/1986','middle','developer',15420);
