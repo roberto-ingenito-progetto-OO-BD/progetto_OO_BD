@@ -16,6 +16,7 @@ CREATE TABLE project(
 
     CONSTRAINT fk_cf_manager FOREIGN KEY (CF_manager) REFERENCES base_emp(CF)
     ON UPDATE CASCADE,
+    
     CONSTRAINT fk_cf_scientific_referent FOREIGN KEY (CF_scientific_referent) REFERENCES base_emp(CF)
     ON UPDATE CASCADE
 );

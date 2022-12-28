@@ -8,4 +8,4 @@ WHERE C1.new_role_date = (
 	SELECT MAX(C2.new_role_date) 
 	FROM career_log AS C2 
 	WHERE C1.cf = C2.cf
-)
+);

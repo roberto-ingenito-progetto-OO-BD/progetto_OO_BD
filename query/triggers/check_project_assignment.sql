@@ -47,6 +47,6 @@ $$;
 
 
 CREATE TRIGGER check_project_assignment
-BEFORE INSERT ON project
+BEFORE INSERT OR UPDATE OF cf_scientific_referent, cf_manager ON project
 FOR EACH ROW
 EXECUTE FUNCTION check_project_assignment();

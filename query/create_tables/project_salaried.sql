@@ -7,6 +7,6 @@ CREATE TABLE project_salaried(
     "role"      VARCHAR(30)     NOT NULL,
     birth_date  DATE            NOT NULL,
 
-    CONSTRAINT emp_email_unique UNIQUE (email),
+    CONSTRAINT project_salaried_email_unique UNIQUE (email),
     CONSTRAINT project_salaried_pk PRIMARY KEY (CF)
 );

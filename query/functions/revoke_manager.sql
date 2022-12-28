@@ -48,6 +48,3 @@ AS $$
 
     END;
 $$;
-
-
--- CALL revoke_manager('NGNRRT02M29H931J');

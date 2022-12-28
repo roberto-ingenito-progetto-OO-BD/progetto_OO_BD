@@ -13,8 +13,5 @@ CREATE TABLE equipment(
     -- foreign key constraint
     CONSTRAINT lab_code_fk FOREIGN KEY (lab_code) REFERENCES laboratory(lab_code)
     ON UPDATE CASCADE
-    ON DELETE SET NULL,
-
-    -- check
-    CONSTRAINT check_price CHECK ( price > 0)
+    ON DELETE SET NULL
 );

@@ -33,5 +33,3 @@ CREATE TRIGGER take_part_no_duplicates
 BEFORE INSERT ON take_part
 FOR EACH ROW
 EXECUTE FUNCTION take_part_no_duplicates();
-
-
