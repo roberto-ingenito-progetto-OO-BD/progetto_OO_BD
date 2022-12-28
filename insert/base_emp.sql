@@ -19,3 +19,4 @@ INSERT INTO base_emp VALUES
 ('BLLVCN72L22F052W',    'Vincenzo',         'Bellino',       'bellinoandrea123@libero.it',         'password',    '14/05/1987',     'middle',   'E-commerce manager',      19000    ),
 ('PZZGPP79H15G786W',    'Giuseppe',         'Pizzella',      'pizzagiuseppe@gmail.com',            'password',    '17/08/1989',     'junior',   'Web developer',           20000    ),
 ('SCRRCC66H16F052M',    'Vito',             'Tucci',         'vitotucci@gmail.com',                'password',    '09/05/1986',     'middle',   'developer',               15420    );
+GAY 
