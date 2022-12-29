@@ -6,7 +6,7 @@ language 'plpgsql'
 AS $$
 BEGIN
     INSERT INTO career_log (ex_role, new_role, new_role_date, CF) 
-    VALUES ('', 'junior', CURRENT_DATE, NEW.cf);
+    VALUES ('', 'junior', CURRENT_TIMESTAMP, NEW.cf);
 
     RETURN NEW;
 END;

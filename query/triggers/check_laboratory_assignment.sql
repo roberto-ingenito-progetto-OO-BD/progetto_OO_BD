@@ -1,5 +1,5 @@
 /*
-Controlla che il referente scientifico sia senior e che il supervisore sia manager
+Controlla che il manager scientifico del laboratorio sia senior
 */
 CREATE OR REPLACE FUNCTION check_laboratory_assignment()
 RETURNS trigger

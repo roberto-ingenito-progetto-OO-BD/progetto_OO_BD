@@ -5,16 +5,24 @@ AS $$
 
 DECLARE 
 
-    ex_role career_log.ex_role%TYPE := '';
+    new_role career_log.ex_role%TYPE := '';
 
 BEGIN
 
-    SELECT LL.ex_role INTO ex_role
+    SELECT LL.new_role INTO new_role
     FROM last_log AS LL
     WHERE LL.cf = fired_cf;
 
+    IF new_role = '' THEN
+        RAISE EXCEPTION '% already fired', fired_cf;
+    END IF;
+
     INSERT INTO career_log (ex_role, new_role, new_role_date, CF)
-    VALUES (ex_role, '', CURRENT_DATE, fired_cf);
+    VALUES (new_role, '', CURRENT_TIMESTAMP, fired_cf);
+    
+    EXCEPTION 
+        WHEN SQLSTATE '23514' THEN
+            RAISE EXCEPTION '% non trovato', fired_cf;
 
 END;
 $$;

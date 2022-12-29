@@ -1,7 +1,7 @@
 CREATE TABLE career_log(
     ex_role emp_type,
     new_role emp_type,
-    new_role_date DATE NOT NULL,
+    new_role_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CF cf_type,
     
     -- foreign key constraint

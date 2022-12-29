@@ -35,7 +35,7 @@ log_cursor CURSOR FOR
 
 BEGIN
     FOR item IN log_cursor LOOP
-        difference_years := ((CURRENT_DATE - item.new_role_date) / 365);
+        difference_years := EXTRACT( YEAR FROM AGE(CURRENT_TIMESTAMP, item.new_role_date));
 
         -- prendo il ruolo attuale dell'impiegato
         SELECT new_role INTO emp_current_role 
@@ -51,13 +51,13 @@ BEGIN
         -- avanza a senior
         IF difference_years >= 7 AND emp_current_role <> 'senior' THEN
             INSERT INTO career_log (ex_role, new_role, new_role_date, CF) 
-            VALUES ('middle', 'senior', CURRENT_DATE, item.cf);
+            VALUES ('middle', 'senior', CURRENT_TIMESTAMP, item.cf);
 
         -- lavora da 3 anni (o più) ma meno di 7 e NON è già middle
         -- avanza a middle
         ELSIF difference_years >= 3 AND difference_years < 7 AND emp_current_role <> 'middle' THEN
             INSERT INTO career_log (ex_role, new_role, new_role_date, CF) 
-            VALUES ('junior', 'middle', CURRENT_DATE, item.cf);
+            VALUES ('junior', 'middle', CURRENT_TIMESTAMP, item.cf);
         END IF;
 
     END LOOP;
@@ -90,58 +90,3 @@ devo quindi stare attento a fare le query solo sui log dopo l'ultimo licenziamen
 parto dal new_role junior, ovvero nel momento in cui è stato assunto. Da lì calcolo quanto tempo è passato per poi aggiornare il grado di anzianità
 */
  
------------------------------------------------------------------------------
-
--- prendo l'ultimo log di ogni impiegato
-SELECT *
-FROM career_log AS C1
-WHERE C1.new_role_date = (
-	SELECT MAX(C2.new_role_date) 
-	FROM career_log AS C2 
-	WHERE C1.cf = C2.cf
-)
-
------------------------------------------------------------------------------
-
--- prendo l'ULTIMO LOG di ogni impiegato 
--- escludendo i log dove new_role è manager oppure '' (licenziato) 
-SELECT *
-FROM career_log AS C1
-WHERE C1.new_role_date = (              -- seleziono l'ultimo log 
-		SELECT MAX(C2.new_role_date)
-		FROM career_log AS C2
-		WHERE C1.cf = C2.cf
-	) AND 
-  	C1.new_role <> 'manager' AND        -- escludo i manager
-  	C1.new_role <> ''                   -- escludo i licenziati
-
------------------------------------------------------------------------------
-
--- prendo l'ultimo log dove new_role = junior
--- escludendo quelli che attualmente sono manager o licenzianti
-SELECT *
-FROM career_log AS C
-
--- escludo quelli attualmente manager o licenziati
-WHERE C.cf IN(
-
-	-- prendo l'ULTIMO LOG di ogni impiegato 
-    -- escludendo i log dove new_role è manager oppure '' (licenziato) 
-	SELECT C1.cf    
-	FROM career_log AS C1
-    
-    -- seleziono l'ultimo log 
-	WHERE C1.new_role_date = (  
-			SELECT MAX(C2.new_role_date)	
-			FROM career_log AS C2
-			WHERE C1.cf = C2.cf
-		) AND 
-        C1.new_role <> 'manager' AND    -- escludo i manager
-	  	C1.new_role <> ''   -- escludo i licenziati
-    ) AND 
-	C.new_role_date = ( -- seleziono l'ultimo log junior
-		SELECT MAX(C1.new_role_date)
-		FROM career_log AS C1
-		WHERE C.cf = C1.cf and C1.new_role = 'junior'
-	)
-;

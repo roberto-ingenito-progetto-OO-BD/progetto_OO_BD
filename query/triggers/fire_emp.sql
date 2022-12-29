@@ -6,7 +6,8 @@ AS $$
 DECLARE
 
 BEGIN
-    -- se l'impiegato da licenziare è un referente scientifico oppure manager di laboratorio
+    -- se l'impiegato da licenziare è un referente scientifico oppure manager di progetto
+    -- e il progetto è in corso (end_date NULL)
     -- OPPURE
     -- è manager scientifico di un laboratorio
     -- non posso licenziarlo, ma bisognerà prima cambiare
@@ -14,7 +15,8 @@ BEGIN
     EXISTS(
         SELECT *
         FROM project
-        WHERE cf_manager = NEW.cf OR cf_scientific_referent = NEW.cf
+        WHERE (cf_manager = NEW.cf OR cf_scientific_referent = NEW.cf)
+                AND end_date IS NULL;
     ) OR
     EXISTS(
         SELECT *
@@ -25,7 +27,7 @@ BEGIN
         RAISE EXCEPTION '% lavora come manager o referente in un progetto o laboratorio', NEW.cf;
     END IF;
 
-    -- aggiorna l'end date dei progetti in cui lavora, alla data del licenziamento
+    -- aggiorna l'end date dei laboratori in cui lavora, alla data del licenziamento
     -- ciò significa che non lavora più in quel laboratorio
     UPDATE works_at
     SET end_date = NEW.new_role_date
