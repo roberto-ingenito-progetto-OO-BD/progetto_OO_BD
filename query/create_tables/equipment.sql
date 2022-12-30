@@ -1,5 +1,6 @@
 CREATE TABLE equipment(
     code uuid DEFAULT uuid_generate_v4(),
+    
     name equipment_name_type NOT NULL,
     type VARCHAR(30) NOT NULL,
     tech_specs VARCHAR(100),
