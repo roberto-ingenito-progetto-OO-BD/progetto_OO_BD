@@ -4,7 +4,7 @@ CREATE TABLE purchase(
 
     -- foreign keys
     CUP cup_type,
-    equipment_code uuid,
+    equipment_code uuid DEFAULT uuid_generate_v4(),
 
     -- foreign key constraint
     CONSTRAINT cup_type_fk FOREIGN KEY (CUP) REFERENCES project(CUP)
