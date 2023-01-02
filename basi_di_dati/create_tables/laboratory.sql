@@ -1,7 +1,7 @@
 CREATE TABLE laboratory(
     lab_code    SERIAL,
-    lab_name    VARCHAR(30) NOT NULL,
-    topic       VARCHAR(30) NOT NULL,
+    lab_name    VARCHAR(200)     NOT NULL,
+    topic       VARCHAR(1000)   NOT NULL,
 
     -- foreign keys
     site_number             SERIAL  NOT NULL,
@@ -11,3 +11,5 @@ CREATE TABLE laboratory(
     CONSTRAINT site_number_fk           FOREIGN KEY (site_number)             REFERENCES site(site_number),
     CONSTRAINT cf_scientific_manager_fk FOREIGN KEY (cf_scientific_manager)   REFERENCES base_emp(cf)
 );
+
+ALTER TABLE laboratory ALTER COLUMN topic VARCHAR(1000)

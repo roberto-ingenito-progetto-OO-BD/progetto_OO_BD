@@ -146,8 +146,8 @@ CREATE TABLE project(
 );
 CREATE TABLE laboratory(
     lab_code    SERIAL,
-    lab_name    VARCHAR(30) NOT NULL,
-    topic       VARCHAR(30) NOT NULL,
+    lab_name    VARCHAR(200) NOT NULL,
+    topic       VARCHAR(1000) NOT NULL,
 
     -- foreign keys
     site_number             SERIAL  NOT NULL,

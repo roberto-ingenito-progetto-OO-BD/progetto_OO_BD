@@ -1,0 +1,22 @@
+lab_code ,lab_name,topic ,site_number ,cf_scientific_manager
+DEFAULT,Bioinformatica ,studio dell'informatica applicata alla biologia ,1,RSNDNL83H22H501Q
+DEFAULT,Biochimica applicata ,studio delle reazioni chimiche complesse che avvengo all'interno degli esseri viventi,1,RSNDNL83H22H501Q
+DEFAULT,Biologia Animale,studio degli organismi animali e della loro compatibilità con impianti neurali ad alta tecnologia,1,RSNDNL83H22H501Q
+DEFAULT,Machine Learning ,creazione di sistemi e modelli che imitano l'intelligenza umana ,1,PTRRLL60A43F880S
+DEFAULT,Intelligenza Artificiale ,studio e creazione di intelligenze artificiali in grado di interfacciarsi con il sistema aziendale ,1,RSSNTN70C07L419D
+DEFAULT,Quantum Computing ,creazione di nuovi processori sperimentali con l'utilizzo della teoria quantistica,2,PTRRLL60A43F880S
+DEFAULT,Fisica delle nanoparticelle,studio delle nanoparticelle e i suoi campi di applicazione,2,RSSNTN70C07L419D
+DEFAULT,Sperimentazione e Collaudo,sperimentazione e collaudo di nuove attrezzature sviluppate ,2,RSNDNL83H22H501Q
+DEFAULT,Ricerca Energie Rinnovabili ,studio e ricerca di nuove energie rinnovabili da utilizzare,2,RSSNTN70C07L419D
+DEFAULT,Architettura dei Microprocessori ,creazione di nuovi microprocessori all'avanguardia,2,RSNDNL83H22H501Q
+DEFAULT,Ricerca Medica Sperimentale ,studio della medicina sperimentale e attrezzature mediche ,3,CRRSVT56B27F399B
+DEFAULT,Calcolo Probabilistico ,ricerca e studio delle probabilità,3,PTRRLL60A43F880S
+DEFAULT,Algoritmi Sperimentali ,ricerca di nuovi algoritmi per lo sviluppo di tecnologie avanzate,3,CRRSVT56B27F399B
+DEFAULT,Crittografia e Crittoanalisi ,studio dei sistemi di crittografia e algoritmi di crittografia avanzati ,3,RSNDNL83H22H501Q
+DEFAULT,Creazione di Sistemi Informativi,creazione di sistemi informativi aziendali ,3,CRRSVT56B27F399B
+DEFAULT,Conversione Analogico-Digitale,studio delle apparecchiature informatiche,4,RSSNTN70C07L419D
+DEFAULT,Neurotecnologie Avanzate ,ricerca di metodi sperimentali per l'impianto di interfacce aptiche avanzate ,4,RSNDNL83H22H501Q
+DEFAULT,Analisi matematica Comutazionale,studio e analisi matematiche ,4,CRRSVT56B27F399B
+DEFAULT,Ricerca Operativa e ottimizzazione,studio e ricerca operativa,4,PTRRLL60A43F880S
+DEFAULT,Meccanica dei Computer ,studio della meccanica dei computer,5,RSNDNL83H22H501Q
+DEFAULT,Fisica dei Computer ,studio della fisica dei computer,6,CRRSVT56B27F399B
