@@ -12,7 +12,9 @@ CREATE TABLE project(
     cf_scientific_referent cf_type NOT NULL,
 
     CONSTRAINT project_pk PRIMARY KEY (CUP),    
+
     CONSTRAINT check_deadline CHECK ( deadline IS NULL OR deadline > start_date ),
+    CONSTRAINT check_end_date CHECK ( end_date IS NULL OR end_date > start_date ),
 
     CONSTRAINT fk_cf_manager FOREIGN KEY (CF_manager) REFERENCES base_emp(CF)
     ON UPDATE CASCADE,

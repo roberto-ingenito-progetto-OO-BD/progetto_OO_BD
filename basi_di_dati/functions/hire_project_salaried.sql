@@ -1,5 +1,5 @@
 CREATE OR REPLACE PROCEDURE hire_project_salaried(
-    CF          IN project_salaried.CF%TYPE,
+    emp_cf      IN project_salaried.CF%TYPE,
     first_name  IN project_salaried.first_name%TYPE,
     last_name   IN project_salaried.last_name%TYPE,
     email       IN project_salaried.email%TYPE,
@@ -15,11 +15,20 @@ language 'plpgsql'
 AS $$
 BEGIN
 
-    INSERT INTO project_salaried (CF, first_name, last_name, email, passw, role, birth_date) VALUES
-    (CF, first_name, last_name, email, passw, role, birth_date);
+    IF 
+        NOT EXISTS(
+            SELECT *
+            FROM project_salaried
+            WHERE cf = emp_cf
+        )
+    THEN
+        INSERT INTO project_salaried (CF, first_name, last_name, email, passw, role, birth_date) VALUES
+        (emp_cf, first_name, last_name, email, passw, role, birth_date);
+    END IF;
+
 
     INSERT INTO works_on (pay, hire_date, expiration, CF, CUP) VALUES
-    (pay, hire_date, expiration, CF, CUP);
+    (pay, hire_date, expiration, emp_cf, CUP);
 
 END;
 $$;
