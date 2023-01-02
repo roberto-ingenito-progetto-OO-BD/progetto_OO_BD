@@ -16,7 +16,7 @@ AS $$
             EXISTS(
                 SELECT *
                 FROM project
-                WHERE cf_manager = v_cf_manager AND end_date IS NULL;
+                WHERE cf_manager = v_cf_manager AND end_date IS NULL
             )
         THEN
             RAISE EXCEPTION '% cannot be declassed, is a project manager', v_cf_manager;
@@ -37,7 +37,7 @@ AS $$
             WHERE (ex_role, new_role) = ('', 'junior') AND cf = v_cf_manager;
 
             -- calcolare gli anni di lavoro 
-            difference_years := EXTRACT( YEAR FROM AGE(CURRENT_TIMESTAMP, hire_date))
+            difference_years := EXTRACT( YEAR FROM AGE(CURRENT_TIMESTAMP, hire_date));
             
 
             -- assegnare ex_role in base agli anni di lavoro 

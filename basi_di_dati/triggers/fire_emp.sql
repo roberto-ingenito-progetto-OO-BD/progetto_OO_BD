@@ -16,7 +16,7 @@ BEGIN
         SELECT *
         FROM project
         WHERE (cf_manager = NEW.cf OR cf_scientific_referent = NEW.cf)
-                AND end_date IS NULL;
+                AND end_date IS NULL
     ) OR
     EXISTS(
         SELECT *
