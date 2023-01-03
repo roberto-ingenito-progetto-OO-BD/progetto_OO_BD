@@ -1,0 +1,9 @@
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
+\contentsline {section}{\numberline {1}Progettazione concettuale}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Analisi dei requisiti}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Schema concettuale}{4}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Dizionario delle entità e delle associazioni}{5}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Ristrutturazione del modello concettuale}{6}{section.2}%
+\contentsline {section}{\numberline {3}Traduzione al modello logico}{7}{section.3}%
+\contentsline {section}{\numberline {4}Progettazione fisica}{8}{section.4}%

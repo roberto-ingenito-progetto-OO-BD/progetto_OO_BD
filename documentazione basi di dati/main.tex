@@ -1,0 +1,50 @@
+\documentclass{article}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+
+% permette agli hypertext di essere cliccabili
+\usepackage{hyperref}
+
+\usepackage[inline]{enumitem}
+\setlist[itemize]{itemsep=0pt, topsep=2pt} % imposta di defualt le opzioni di itemize
+
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+% permette di impostare le dimensioni della pagina
+\usepackage[a4paper, total={6in, 9in}]{geometry}
+
+\newcommand{\sskip}{\smallskip \\}
+\newcommand{\meskip}{\medskip \\}
+\newcommand{\bskip }{\bigskip \\}
+
+\title{Documentazione database\\
+Sistema di gestione di personale e progetti all'interno di un'azienda }
+\author{Roberto Ingenito \and Simone Ingenito \and Lorenzo Sequino}
+\date{\today \\ \vspace{2cm} \includegraphics[width=0.7\textwidth]{images/logo.png}}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\include{section/progettazione_concettuale.tex}
+\include{section/ristrutturazione_concettuale.tex}
+\include{section/traduzione_modello_logico.tex}
+\include{section/progettazione_fisica.tex}
+
+
+\tableofcontents
+
+
+
+\end{document}
