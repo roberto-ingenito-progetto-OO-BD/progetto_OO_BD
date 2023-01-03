@@ -1,0 +1,9 @@
+CALL buy_equipment('fd0fab86-d339-4e60-b4e3-9919c6e34e23', 200);
+CALL buy_equipment('500b0f9a-3186-4b4c-a63a-c7451e5cb6da', 1000);
+CALL buy_equipment('271119ba-6f7f-4013-8c27-684ff793458d', 250);
+CALL buy_equipment('45e1704c-7516-4ed5-b79d-7029db656e87', 0.10);
+CALL buy_equipment('ffbc139d-5bf6-425b-b731-48cdf7ae2759', 10);
+CALL buy_equipment('081b7df7-e1ff-4fff-99e4-d53c2fdc5c5b', 500);
+CALL buy_equipment('09e98d95-be48-4b53-80e2-18b18b1d8649', 30);
+CALL buy_equipment('f3012487-8863-41fb-a49d-ba0e04a5200b', 2000);
+CALL buy_equipment('8370f19b-169d-48d0-8a87-da5e3c2f56fb', 150);

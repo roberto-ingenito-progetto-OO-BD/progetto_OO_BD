@@ -1,1 +1,13 @@
-
+INSERT INTO equipment_request(name,specs,quantity,CUP,lab_code,type,code) VALUES
+ ('Macbook m2','16 GB ram , 512 archiviaizione',10,'aaaa-0000000000',1,'computer','9b790ec8-37c1-40b9-b3cd-66059a845b2a')
+,('Rifrattometro Digitale','dimensione : 55x109x31',3,'aaaa-0000000000',1,'strumentazione','fd0fab86-d339-4e60-b4e3-9919c6e34e23')
+,('Macbook m1','8 GB ram , 256 archiviazione',4,'aaaa-0000000000',2,'computer','500b0f9a-3186-4b4c-a63a-c7451e5cb6da')
+,('Dinamometro Digitale','portata : 0-15kg',5,'aaaa-0000000003',2,'strumentazione','271119ba-6f7f-4013-8c27-684ff793458d')
+,('Braccio ergonomico per PC','peso : 10kg , apertura massima 95°',10,'aaaa-0000000003',2,'strumentazione','d37002d2-ddbb-4701-aa3c-74bf42b0980a')
+,('Archiviazione di massa','capienza : 3 TB',20,'aaaa-0000000007',6,'archiviazione','f945feba-f9b5-4ec4-bbc2-5e87040cc1b2')
+,('Fascette cavi','dimensione : 20x5 mm',100,'aaaa-0000000007',6,'strumentazione','45e1704c-7516-4ed5-b79d-7029db656e87')
+,('Cavo di rete','lunghezza : 10 m',5,'aaaa-0000000007',6,'strumentazione','ffbc139d-5bf6-425b-b731-48cdf7ae2759')
+,('Macchinetta del caffè','cialde , possibilità di fare ginseng',1,'aaaa-0000000008',6,'macchinetta','081b7df7-e1ff-4fff-99e4-d53c2fdc5c5b')
+,('Scheda di rete','wifi 6.0',3,'aaaa-0000000008',7,'strumentazione','09e98d95-be48-4b53-80e2-18b18b1d8649')
+,('Computer fisso','processore : i9 11900k',5,'aaaa-0000000009',7,'computer','f3012487-8863-41fb-a49d-ba0e04a5200b')
+,('Sedia ergonomica','peso : 100 Kg',10,'aaaa-0000000008',8,'sedia','8370f19b-169d-48d0-8a87-da5e3c2f56fb');
