@@ -1,0 +1,16 @@
+*.dvi
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+*.xdv
+*.aux
+# *.txt
+*.gz
+*.lol
+*.pygtex
+*.pygstyle
+*.listing
+*.Identifier
+*.bkp
