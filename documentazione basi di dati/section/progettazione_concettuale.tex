@@ -56,11 +56,231 @@ La relazione \textit{works\_on} infatti, tiene traccia di tutte le volte in cui 
 \includegraphics[width=\textwidth]{images/concettualeER.drawio.pdf}
 
 \newpage
-\subsection{Dizionario delle entità e delle associazioni}
-\begin{tabular}{@{}| l | l | l |}
+\subsection{Dizionario delle entità}
+\begin{longtable}{@{}| p{0.2\textwidth} | p{0.4\textwidth} | p{0.3\textwidth} |}
 	\hline
-	Entità & Descrizione & Attributi \\
+	Entità               & Descrizione                                                                                            & Attributi \\
 	\hline
-	col1   & col2        & col3      \\
+	employee             & \begin{minipage}[t]{0.4\textwidth}
+		                       \raggedright
+		                       Generico impiegato dell'azienda
+	                       \end{minipage}
+	                     & \begin{minipage}[t]{0.3\textwidth}
+		                       \raggedright
+		                       \textbf{cf}: Codice fiscale, informazione utile all'azienda\sskip
+		                       \textbf{first\_name} \sskip
+		                       \textbf{last\_name} \sskip
+		                       \textbf{birth\_date} \sskip
+		                       \textbf{role}: Professione (sviluppatore, designer, \dots)\sskip
+		                       \textbf{email}: Email necessaria per l'accesso al gestionale\sskip
+		                       \textbf{passw}: Password necessaria per l'accesso al gestionale
+	                       \end{minipage}                                                  \\[140pt]
+	\hline
+	base\_emp            & \begin{minipage}[t]{0.4\textwidth}
+		                       \raggedright
+		                       Specializzazione di \textit{employee}. Assunto a tempo indeterminato.
+	                       \end{minipage}
+	                     & \begin{minipage}[t]{0.3\textwidth}
+		                       \raggedright
+		                       \textbf{salary}: Stipendio\sskip
+		                       \textbf{hire\_date}: Data assunzione
+	                       \end{minipage}                                                                                \\[20pt]
+	\hline
+	career\_log          & \begin{minipage}[t]{0.4\textwidth}
+		                       \raggedright
+		                       Entità che memorizza gli scatti di carriera degli impiegati \textit{base\_emp}
+	                       \end{minipage}
+	                     & \begin{minipage}[t]{0.3\textwidth}
+		                       \raggedright
+		                       \textbf{ex\_role}: Ruolo precedente (stringa vuota quando è assunto)\sskip
+		                       \textbf{new\_role}: Ruolo successivo (stringa vuota quando è licenziato)\sskip
+		                       \textbf{new\_role\_date}: Data scatto di carriera
+	                       \end{minipage}                                      \\[90pt]
+	\hline
+	project\_salaried    & \begin{minipage}[t]{0.4\textwidth}
+		                       \raggedright
+		                       Specializzazione di \textit{employee}. Assunto per lavorare esclusivamente ad un progetto.
+	                       \end{minipage}
+	                     &                                                                                                                    \\[25pt]
+	\hline
+	junior               & \begin{minipage}[t]{0.4\textwidth}
+		                       \raggedright
+		                       Specializzazione di \textit{base\_emp}. Impiegato che lavora da meno di 3 anni.
+	                       \end{minipage}
+	                     &                                                                                                                    \\[25pt]
+	\hline
+	middle               & \begin{minipage}[t]{0.4\textwidth}
+		                       \raggedright
+		                       Specializzazione di \textit{base\_emp}. Impiegato che lavora dai 4 ai 7 anni.
+	                       \end{minipage}
+	                     &                                                                                                                    \\[15pt]
+	\hline
+	senior               & \begin{minipage}[t]{0.4\textwidth}
+		                       \raggedright
+		                       Specializzazione di \textit{base\_emp}. Impiegato che lavora da più di 7 anni.
+	                       \end{minipage}
+	                     &                                                                                                                    \\[15pt]
+	\hline
+	manager              & \begin{minipage}[t]{0.4\textwidth}
+		                       \raggedright
+		                       Specializzazione di \textit{base\_emp}. Impiegato che ha ricevuto una promozione in base al merito.
+	                       \end{minipage}
+	                     &                                                                                                                    \\[25pt]
+	\hline
+	scientific\_referent & \begin{minipage}[t]{0.4\textwidth}
+		                       \raggedright
+		                       Specializzazione di \textit{senior}. Impiegato a cui è stata affidata la gestione di un progetto.
+	                       \end{minipage}
+	                     &                                                                                                                    \\[25pt]
+	\hline
+	scientific\_manager  & \begin{minipage}[t]{0.4\textwidth}
+		                       \raggedright
+		                       Specializzazione di \textit{senior}.  Impiegato a cui è stata affidata la gestione di un laborfatorio.
+	                       \end{minipage}
+	                     &                                                                                                                    \\[25pt]
+	\hline
+	project              & \begin{minipage}[t]{0.4\textwidth}
+		                       \raggedright
+		                       Progetto a cui prendono parte i laboratori e i relativi impiegati.
+	                       \end{minipage}
+	                     & \begin{minipage}[t]{0.3\textwidth}
+		                       \raggedright
+		                       \textbf{CUP}: Codice Univoco Progett\sskip
+		                       \textbf{name}: Nome del progetto\sskip
+		                       \textbf{description}: Descrizione del progetto\sskip
+		                       \textbf{start\_date}: Data di inizio del progetto\sskip
+		                       \textbf{end\_date}: Data di effettiva fine del progetto\sskip
+		                       \textbf{deadline}: Data prevista per la fine del progetto\sskip
+		                       \textbf{funds}: Somma di denaro disponibile per l'acquisto di attrezzatura e personale
+	                       \end{minipage}                              \\[175pt]
+	\hline
+	laboratory           & \begin{minipage}[t]{0.4\textwidth}
+		                       \raggedright
+		                       Luogo all'interno dell'azienda nel quale gli impiegati lavorano ai progetti.
+	                       \end{minipage}
+	                     & \begin{minipage}[t]{0.3\textwidth}
+		                       \raggedright
+		                       \textbf{topic}: Campo di studi del laboratorio\sskip
+		                       \textbf{lab\_name}: Nome del laboratorio
+	                       \end{minipage}                                                                \\[40pt]
+	\hline
+	site                 & \begin{minipage}[t]{0.4\textwidth}
+		                       \raggedright
+		                       Sede dell'azienda in cui possono essere presente i laboratori.
+	                       \end{minipage}
+	                     & \begin{minipage}[t]{0.3\textwidth}
+		                       \raggedright
+		                       \textbf{name}: Nome della sede\sskip
+		                       \textbf{address}: Indirizzo
+		                       \begin{itemize}
+			\item \textbf{street}: Via
+			\item \textbf{street\_number}: Numero civico
+			\item \textbf{postal\_code}: CAP
+			\item \textbf{city}: Città
+		\end{itemize}
+	                       \end{minipage}                                                                                \\[90pt]
+	\hline
+	equipment            & \begin{minipage}[t]{0.4\textwidth}
+		                       \raggedright
+		                       Attrezzatura presente all'interno di un laboratorio
+	                       \end{minipage}
+	                     & \begin{minipage}[t]{0.3\textwidth}
+		                       \raggedright
+		                       \textbf{code}: Codice del prodotto\sskip
+		                       \textbf{name}: Nome del prodotto\sskip
+		                       \textbf{type}: Tipo di prodotto (computer, microscopio, \dots)\sskip
+		                       \textbf{techspecs}: Specifiche tecniche del prodotto
+	                       \end{minipage}                                                \\[70pt]
+	\hline
+\end{longtable}
+
+\newpage
+\subsection{Dizionario delle associazioni}
+\begin{tabular}{@{}| p{0.2\textwidth} | p{0.4\textwidth} | p{0.3\textwidth} |}
+	\hline
+	Associazioni       & Descrizione                                                                               & Attributi \\
+	\hline
+	works\_on          & \begin{minipage}[t]{0.4\textwidth}
+		                     \raggedright
+		                     Associazione tra \textit{project\_salaried} e \textit{project} \textbf{molti-a-molti}
+	                     \end{minipage}     & \begin{minipage}[t]{0.3\textwidth}
+		                                          \raggedright
+		                                          \textbf{pay}: Paga stabilita per lavorare a quel progetto\sskip
+		                                          \textbf{hire\_date}: Data di assunzione\sskip
+		                                          \textbf{expiration}: Data di fine contratto
+	                                          \end{minipage}
+	\\[70pt]
+	\hline
+	works\_at          & \begin{minipage}[t]{0.4\textwidth}
+		                     \raggedright
+		                     Associazione tra \textit{base\_emp} e \textit{laboratory} \textbf{molti-a-molti}.
+	                     \end{minipage}
+	                   & \begin{minipage}[t]{0.3\textwidth}
+		                     \raggedright
+		                     \textbf{start\_date}: Data di assegnazione di un impiegato ad un laboratorio\sskip
+		                     \textbf{end\_date}: Data di fine lavoro
+	                     \end{minipage}                     \\[55pt]
+	\hline
+	supervise          & \begin{minipage}[t]{0.4\textwidth}
+		                     \raggedright
+		                     Associazione tra \textit{manager} e \textit{project} \textbf{uno-a-molti}.
+	                     \end{minipage}
+	                   &                                                                                                       \\[15pt]
+	\hline
+	manage             & \begin{minipage}[t]{0.4\textwidth}
+		                     \raggedright
+		                     Associazione tra \textit{scientific\_referent} e \textit{project} \textbf{uno-a-molti}.
+	                     \end{minipage}
+	                   &                                                                                                       \\[15pt]
+	\hline
+	manage             & \begin{minipage}[t]{0.4\textwidth}
+		                     \raggedright
+		                     Associazione tra \textit{scientific\_manager} e \textit{laboratory} \textbf{uno-a-molti}.
+	                     \end{minipage}
+	                   &                                                                                                       \\[15pt]
+	\hline
+	take\_part         & \begin{minipage}[t]{0.4\textwidth}
+		                     \raggedright
+		                     Associazione tra \textit{project} e \textit{laboratory} \textbf{molti-a-molti}.
+	                     \end{minipage}
+	                   & \begin{minipage}[t]{0.3\textwidth}
+		                     \raggedright
+		                     \textbf{start\_date}: Data in cui un laboratorio inizia a lavorare ad un progetto \sskip
+		                     \textbf{end\_date}: Data di fine lavoro
+	                     \end{minipage}               \\[55pt]
+	\hline
+	purchase           & \begin{minipage}[t]{0.4\textwidth}
+		                     \raggedright
+		                     Associazione tra \textit{project} e \textit{equipment} \textbf{uno-a-molti}.
+	                     \end{minipage}              & \begin{minipage}[t]{0.3\textwidth}
+		                                                   \raggedright
+		                                                   \textbf{purchase\_date}: Data di acquisto\sskip
+		                                                   \textbf{price}: Prezzo dell'attrezzatura
+	                                                   \end{minipage}                          \\[40pt]
+	\hline
+	equipment\_request & \begin{minipage}[t]{0.4\textwidth}
+		                     \raggedright
+		                     Associazione tra \textit{project} e \textit{laboratory} \textbf{molti-a-molti}.
+	                     \end{minipage}
+	                   &                                                                                                       \\[15pt]
+	\hline
+	have               & \begin{minipage}[t]{0.4\textwidth}
+		                     \raggedright
+		                     Associazione tra \textit{equipment} e \textit{laboratory} \textbf{uno-a-molti}.
+	                     \end{minipage}
+	                   &                                                                                                       \\[15pt]
+	\hline
+	have               & \begin{minipage}[t]{0.4\textwidth}
+		                     \raggedright
+		                     Associazione tra \textit{base\_emp} e \textit{career\_log} \textbf{uno-a-molti}.
+	                     \end{minipage}
+	                   &                                                                                                       \\[15pt]
+	\hline
+	located            & \begin{minipage}[t]{0.4\textwidth}
+		                     \raggedright
+		                     Associazione tra \textit{site} e \textit{laboratory} \textbf{uno-a-molti}.
+	                     \end{minipage}
+	                   &                                                                                                       \\[15pt]
 	\hline
 \end{tabular}
+
