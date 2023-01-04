@@ -1,1 +1,66 @@
 \section{Traduzione al modello logico}
+\subsection{Mapping associazioni}
+\subsubsection{Associazioni 1-N}
+\begin{itemize}
+	\item \textit{Site} - \textit{Located} - \textit{Laboratory}:  inserimento chiave di \textit{Site} in \textit{Laboratory} come chiave esterna
+	\item \textit{base\_emp} - \textit{Supervise} - \textit{Project}: inserimento chiave di \textit{base\_emp} all'interno di \textit{Project} come chiave esterna
+	\item \textit{base\_emp} - \textit{Manage} - \textit{Project}: inserimento chiave di \textit{base\_emp} all'interno di \textit{Project} come chiave esterna
+	\item \textit{base\_emp} - \textit{Manage} - \textit{Laboratory}: inserimento di chiave di \textit{base\_emp} all'interno di \textit{Laboratory} come chiave esterna
+	\item \textit{Laboratory} - \textit{Have} - \textit{Equipment}: inserimento di chave di \textit{Laboratory} in \textit{Equipment} come chiave esterna
+	\item \textit{Project} - \textit{Purchase} - \textit{Equipment}: Equipment ha una partecipazione parziale, si procede come N-N
+	\item \textit{base\_emp} - \textit{Have} - \textit{career\_log}: relazione identificante, inserimento di chiave primaria di \textit{base\_emp} in \textit{career\_log} come chiave esterna
+\end{itemize}
+\subsubsection{Associazioni N-N}
+Per ognuna di queste relazioni, si inseriscono le chiavi delle due associazioni come chiavi esterne.\meskip
+\begin{tabular}{@{}| l | l | l |}
+	\hline
+	\textbf{Associazione} & \textbf{Relazione} & \textbf{Associazione} \\
+	\hline
+	project\_salaried     & works\_on          & project               \\
+	\hline
+	project               & take\_part         & laboratory            \\
+	\hline
+	project               & equipment\_request & laboratory            \\
+	\hline
+	base\_emp             & works\_at          & laboratory            \\
+	\hline
+\end{tabular}
+
+\newpage
+\subsection{Modello logico}
+Gli attributi \underline{sottolineati} sono chiavi primarie,\\
+gli attributi con un asterisco * alla fine sono chiavi esterne\meskip
+\begin{tabular}{@{}l l}
+	\textbf{\textit{base\_emp}}          & (\underline{CF}, first\_name, last\_name, email, passw, birth\_date, type, role, salary)                  \\
+	\textbf{\textit{career\_log}}        & \makecell[lt]{(\underline{lab\_code}, lab\_name, topic, cf\_scientific\_manager*, site\_number*)          \\
+	cf\_scientific\_manager $\mapsto$ base\_emp.CF                                                                                                   \\
+	site\_number $\mapsto$ site.site\_number}                                                                                                        \\
+	\textbf{\textit{laboratory}}         & \makecell[lt]{(\underline{lab\_code}, lab\_name, topic, cf\_scientific\_manager*, site\_number*)          \\
+	cf\_scientific\_manager $\mapsto$ base\_emp.CF                                                                                                   \\
+	site\_number $\mapsto$ site.site\_number}                                                                                                        \\
+	\textbf{\textit{take\_part}}         & \makecell[lt]{(start\_date, end\_date, CUP*, lab\_code*)                                                  \\
+	CUP $\mapsto$ project.CUP                                                                                                                        \\
+	lab\_code $\mapsto$ laboratory.lab\_code}                                                                                                        \\
+	\textbf{\textit{project}}            & \makecell[lt]{(\underline{CUP}, funds, name, description, start\_date, end\_date, deadline, cf\_manager*, \\
+	cf\_scientific\_referent*)                                                                                                                       \\
+	cf\_manager $\mapsto$ base\_emp.CF                                                                                                               \\
+	cf\_scientific\_referent $\mapsto$ base\_emp.CF}                                                                                                 \\
+	\textbf{\textit{project\_salaried}}  & \makecell[lt]{(\underline{CF}, first\_name, last\_name, email, passw, birth\_date, role)}                 \\
+	\textbf{\textit{works\_on}}          & \makecell[lt]{(pay, hire\_date, expiration, CF*, CUP*)                                                    \\
+	CF $\mapsto$ project\_salaried.CF                                                                                                                \\
+	CUP $\mapsto$ project.CUP}                                                                                                                       \\
+	\textbf{\textit{site}}               & \makecell[lt]{(\underbar{site\_number}, name, street, street\_number, postal\_code, city)}                \\
+	\textbf{\textit{equipment}}          & \makecell[lt]{(\underline{code}, name, type, tech\_specs, lab\_code*)                                     \\
+	lab\_code $\mapsto$ laboratory.lab\_code}                                                                                                        \\
+	\textbf{\textit{purchase}}           & \makecell[lt]{(purchase\_date, price, CUP*, equipment\_code*)                                             \\
+	CUP $\mapsto$ project.CUP                                                                                                                        \\
+	equipment\_code $\mapsto$ equipment.code}                                                                                                        \\
+	\textbf{\textit{works\_at}}          & \makecell[lt]{(start\_date, end\_date, cf\_base\_emp*, lab\_code*)                                        \\
+	cf\_base\_emp $\mapsto$ base\_emp.CF                                                                                                             \\
+	lab\_code $\mapsto$ laboratory.lab\_code}                                                                                                        \\
+	\textbf{\textit{equipment\_request}} & \makecell[lt]{(\underline{code}, type, name, specs, quantity,  CUP*, lab\_code*)                          \\
+	CUP $\mapsto$ project.CUP                                                                                                                        \\
+	lab\_code $\mapsto$ laboratory.lab\_code}                                                                                                        \\
+\end{tabular}
+
+
