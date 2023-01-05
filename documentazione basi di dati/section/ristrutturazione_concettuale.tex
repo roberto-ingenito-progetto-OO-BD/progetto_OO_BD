@@ -13,7 +13,7 @@ L'attributo \textit{tech\_specs} di \textit{equipment} potrebbe essere scomposto
 Procediamo all'eliminazione delle generalizzazioni partendo dal basso:
 \begin{enumerate}
 	\item Accorpamento di \textit{scientific\_referent} e \textit{scientific\_manager} in \textit{senior} in quanto non avendo attributi non è possibile inserire valori nulli che occupano spazio inutile.\\
-	      Fatta tale scelta bisogna cambiare la cardinalità da $(1, n)$ a $(0, n)$ in entrambe le associazioni, poiché un \textit{senior} può anche non essere nessuno dei due o uno soltanto (overlapping parziale)
+	      Fatta tale scelta bisogna cambiare la cardinalità da $\;(1, n)\;$ a $\;(0, n)\;$ in entrambe le associazioni, poiché un \textit{senior} può anche non essere nessuno dei due o uno soltanto (overlapping parziale)
 	\item Accorpamento di \textit{junior}, \textit{middle}, \textit{senior}, \textit{manager} all'interno di \textit{base\_emp} aggiungendo un attributo che ne specifica il tipo.\\
 	      Notare che questa scelta aggiunge una \textbf{ridondanza} poiché il tipo è reperibile effettuando un'interrogazione in \textit{career\_log}. Nonostante ciò è più efficiente e immediato eseguire determinate operazioni avendo quest'attributo disponibile direttamente in \textit{base\_emp}
 	\item Accorpamento di \textit{employee} all'interno di \textit{project\_salaried} e \textit{base\_emp} in quanto la generalizzazione è totale.

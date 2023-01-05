@@ -1,7 +1,24 @@
 \section{Progettazione fisica}
-\subsection{Creazione domini}
+\subsection{Creazione del database}
+
+\subsection{Creazione dello schema}
 
 \subsection{Attivazione estensioni}
+Estensione utilizzata per la cifratura delle password, usata per l'autenticazione lato client.
+\lstinputlisting{../basi_di_dati/extension/enable_crypt.sql}\medskip
+Estensione utilizzata per generare codici univoci causali.
+\lstinputlisting{../basi_di_dati/extension/enable_uuid.sql}
+
+\subsection{Gestione ruoli e permessi}
+
+\subsection{Creazione domini}
+\lstinputlisting{../basi_di_dati/domains/cf_type.sql}
+\lstinputlisting{../basi_di_dati/domains/cup_type.sql}
+\lstinputlisting{../basi_di_dati/domains/emp_type.sql}
+\lstinputlisting{../basi_di_dati/domains/equipment_name_type.sql}
+\lstinputlisting{../basi_di_dati/domains/name_type.sql}
+\lstinputlisting{../basi_di_dati/domains/password_type.sql}
+\lstinputlisting{../basi_di_dati/domains/salary_type.sql}
 
 \subsection{Creazione tabelle}
 
