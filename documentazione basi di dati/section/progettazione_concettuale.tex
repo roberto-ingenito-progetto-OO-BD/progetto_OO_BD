@@ -13,7 +13,7 @@ Gli impiegati assunti regolarmente, vengono assunti con un determinato ruolo e s
 
 Dal momento in cui viene assunto, l'impiegato diventa automaticamente un junior. Trascorsi 3 anni diventa middle, trascorsi altri 4 diventa senior.
 Inoltre, qualunque siano gli anni trascorsi all'interno dell'azienda, può essere promosso e diventare manager.\sskip
-Si tiene traccia di tutti gli scatti di carriera all'interno dell'entità \textit{career\_log} dove sono memorizzati:
+Si tiene traccia di tutti gli scatti di carriera all'interno dell'entità \textit{\careerlog} dove sono memorizzati:
 \begin{itemize}
 	\item ruolo precedente
 	\item ruolo successivo
@@ -41,7 +41,7 @@ Ad un progetto possono prendere parte massimo 3 laboratori contemporaneamente.\\
 Ogni impiegato che afferisce ad un laboratorio prende parte automaticamente a tutti i progetti a cui quel laboratorio sta lavorando.
 
 Il manager scientifico di un laboratorio decide a quali progetti partecipare e abbandonare, e richiede attrezzatura.\sskip
-Le richieste vengono memorizzate nell'entità \textit{equipment\_request}.
+Le richieste vengono memorizzate nell'entità \textit{\equipmentrequest}.
 Queste vengono valutate dal manager e dal referente scientifico del progetto a cui sono state fatte, i quali decidono, in base ai fondi del progetto, se soddisfare le richieste, con il vincolo che il costo totale delle attrezzature non può superare il 50\% dei fondi del progetto.\sskip
 Quando viene acquistata dell'attrezzatura, si salva l'acquisto nell'entità \textit{purchase} che tiene traccia della data e del prezzo d'acquisto.\sskip
 Ogni attrezzatura di ogni laboratorio viene memorizzata nell'entità \textit{equipment}.\\
@@ -49,7 +49,7 @@ Un laboratorio può possedere già dell'attrezzatura (acquistata precedentemente
 Con il restante 50\% dei fondi, il manager e il referente scientifico di un progetto possono assumere del personale che viene pagato per lavorare esclusivamente per quel progetto, e non viene considerato come impiegato regolare.
 
 Lo stesso impiegato può essere assunto più volte (anche per lo stesso progetto ma in date differenti), per questo motivo ognuno di questi impiegati non viene rimosso una volta terminato il contratto.
-La relazione \textit{works\_on} infatti, tiene traccia di tutte le volte in cui un impiegato è stato assunto per lavorare ai progetti.
+La relazione \textit{\workson} infatti, tiene traccia di tutte le volte in cui un impiegato è stato assunto per lavorare ai progetti.
 
 
 \subsection{Schema concettuale}\bigskip
@@ -76,7 +76,7 @@ La relazione \textit{works\_on} infatti, tiene traccia di tutte le volte in cui 
 		                       \textbf{passw}: Password necessaria per l'accesso al gestionale
 	                       \end{minipage}                                                  \\[140pt]
 	\hline
-	base\_emp            & \begin{minipage}[t]{0.4\textwidth}
+	\baseemp             & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
 		                       Specializzazione di \textit{employee}. Assunto a tempo indeterminato.
 	                       \end{minipage}
@@ -86,9 +86,9 @@ La relazione \textit{works\_on} infatti, tiene traccia di tutte le volte in cui 
 		                       \textbf{hire\_date}: Data assunzione
 	                       \end{minipage}                                                                                \\[20pt]
 	\hline
-	career\_log          & \begin{minipage}[t]{0.4\textwidth}
+	\careerlog           & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
-		                       Entità che memorizza gli scatti di carriera degli impiegati \textit{base\_emp}
+		                       Entità che memorizza gli scatti di carriera degli impiegati \textit{\baseemp}
 	                       \end{minipage}
 	                     & \begin{minipage}[t]{0.3\textwidth}
 		                       \raggedright
@@ -97,7 +97,7 @@ La relazione \textit{works\_on} infatti, tiene traccia di tutte le volte in cui 
 		                       \textbf{new\_role\_date}: Data scatto di carriera
 	                       \end{minipage}                                      \\[90pt]
 	\hline
-	project\_salaried    & \begin{minipage}[t]{0.4\textwidth}
+	\projectsalaried     & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
 		                       Specializzazione di \textit{employee}. Assunto per lavorare esclusivamente ad un progetto.
 	                       \end{minipage}
@@ -105,25 +105,25 @@ La relazione \textit{works\_on} infatti, tiene traccia di tutte le volte in cui 
 	\hline
 	junior               & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
-		                       Specializzazione di \textit{base\_emp}. Impiegato che lavora da meno di 3 anni.
+		                       Specializzazione di \textit{\baseemp}. Impiegato che lavora da meno di 3 anni.
 	                       \end{minipage}
 	                     &                                                                                                                    \\[25pt]
 	\hline
 	middle               & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
-		                       Specializzazione di \textit{base\_emp}. Impiegato che lavora dai 4 ai 7 anni.
+		                       Specializzazione di \textit{\baseemp}. Impiegato che lavora dai 4 ai 7 anni.
 	                       \end{minipage}
 	                     &                                                                                                                    \\[15pt]
 	\hline
 	senior               & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
-		                       Specializzazione di \textit{base\_emp}. Impiegato che lavora da più di 7 anni.
+		                       Specializzazione di \textit{\baseemp}. Impiegato che lavora da più di 7 anni.
 	                       \end{minipage}
 	                     &                                                                                                                    \\[15pt]
 	\hline
 	manager              & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
-		                       Specializzazione di \textit{base\_emp}. Impiegato che ha ricevuto una promozione in base al merito.
+		                       Specializzazione di \textit{\baseemp}. Impiegato che ha ricevuto una promozione in base al merito.
 	                       \end{minipage}
 	                     &                                                                                                                    \\[25pt]
 	\hline
@@ -198,12 +198,12 @@ La relazione \textit{works\_on} infatti, tiene traccia di tutte le volte in cui 
 \subsection{Dizionario delle associazioni}
 \begin{tabular}{@{}| p{0.2\textwidth} | p{0.4\textwidth} | p{0.3\textwidth} |}
 	\hline
-	Associazioni       & Descrizione                                                                               & Attributi \\
+	Associazioni      & Descrizione                                                                               & Attributi \\
 	\hline
-	works\_on          & \begin{minipage}[t]{0.4\textwidth}
-		                     \raggedright
-		                     Associazione tra \textit{project\_salaried} e \textit{project} \textbf{molti-a-molti}
-	                     \end{minipage}     & \begin{minipage}[t]{0.3\textwidth}
+	\workson          & \begin{minipage}[t]{0.4\textwidth}
+		                    \raggedright
+		                    Associazione tra \textit{\projectsalaried} e \textit{project} \textbf{molti-a-molti}
+	                    \end{minipage}      & \begin{minipage}[t]{0.3\textwidth}
 		                                          \raggedright
 		                                          \textbf{pay}: Paga stabilita per lavorare a quel progetto\sskip
 		                                          \textbf{hire\_date}: Data di assunzione\sskip
@@ -211,76 +211,76 @@ La relazione \textit{works\_on} infatti, tiene traccia di tutte le volte in cui 
 	                                          \end{minipage}
 	\\[70pt]
 	\hline
-	works\_at          & \begin{minipage}[t]{0.4\textwidth}
-		                     \raggedright
-		                     Associazione tra \textit{base\_emp} e \textit{laboratory} \textbf{molti-a-molti}.
-	                     \end{minipage}
-	                   & \begin{minipage}[t]{0.3\textwidth}
-		                     \raggedright
-		                     \textbf{start\_date}: Data di assegnazione di un impiegato ad un laboratorio\sskip
-		                     \textbf{end\_date}: Data di fine lavoro
-	                     \end{minipage}                     \\[55pt]
+	\worksat          & \begin{minipage}[t]{0.4\textwidth}
+		                    \raggedright
+		                    Associazione tra \textit{\baseemp} e \textit{laboratory} \textbf{molti-a-molti}.
+	                    \end{minipage}
+	                  & \begin{minipage}[t]{0.3\textwidth}
+		                    \raggedright
+		                    \textbf{start\_date}: Data di assegnazione di un impiegato ad un laboratorio\sskip
+		                    \textbf{end\_date}: Data di fine lavoro
+	                    \end{minipage}                     \\[55pt]
 	\hline
-	supervise          & \begin{minipage}[t]{0.4\textwidth}
-		                     \raggedright
-		                     Associazione tra \textit{manager} e \textit{project} \textbf{uno-a-molti}.
-	                     \end{minipage}
-	                   &                                                                                                       \\[15pt]
+	supervise         & \begin{minipage}[t]{0.4\textwidth}
+		                    \raggedright
+		                    Associazione tra \textit{manager} e \textit{project} \textbf{uno-a-molti}.
+	                    \end{minipage}
+	                  &                                                                                                       \\[15pt]
 	\hline
-	manage             & \begin{minipage}[t]{0.4\textwidth}
-		                     \raggedright
-		                     Associazione tra \textit{scientific\_referent} e \textit{project} \textbf{uno-a-molti}.
-	                     \end{minipage}
-	                   &                                                                                                       \\[15pt]
+	manage            & \begin{minipage}[t]{0.4\textwidth}
+		                    \raggedright
+		                    Associazione tra \textit{scientific\_referent} e \textit{project} \textbf{uno-a-molti}.
+	                    \end{minipage}
+	                  &                                                                                                       \\[15pt]
 	\hline
-	manage             & \begin{minipage}[t]{0.4\textwidth}
-		                     \raggedright
-		                     Associazione tra \textit{scientific\_manager} e \textit{laboratory} \textbf{uno-a-molti}.
-	                     \end{minipage}
-	                   &                                                                                                       \\[15pt]
+	manage            & \begin{minipage}[t]{0.4\textwidth}
+		                    \raggedright
+		                    Associazione tra \textit{scientific\_manager} e \textit{laboratory} \textbf{uno-a-molti}.
+	                    \end{minipage}
+	                  &                                                                                                       \\[15pt]
 	\hline
-	take\_part         & \begin{minipage}[t]{0.4\textwidth}
-		                     \raggedright
-		                     Associazione tra \textit{project} e \textit{laboratory} \textbf{molti-a-molti}.
-	                     \end{minipage}
-	                   & \begin{minipage}[t]{0.3\textwidth}
-		                     \raggedright
-		                     \textbf{start\_date}: Data in cui un laboratorio inizia a lavorare ad un progetto \sskip
-		                     \textbf{end\_date}: Data di fine lavoro
-	                     \end{minipage}               \\[55pt]
+	\takepart         & \begin{minipage}[t]{0.4\textwidth}
+		                    \raggedright
+		                    Associazione tra \textit{project} e \textit{laboratory} \textbf{molti-a-molti}.
+	                    \end{minipage}
+	                  & \begin{minipage}[t]{0.3\textwidth}
+		                    \raggedright
+		                    \textbf{start\_date}: Data in cui un laboratorio inizia a lavorare ad un progetto \sskip
+		                    \textbf{end\_date}: Data di fine lavoro
+	                    \end{minipage}               \\[55pt]
 	\hline
-	purchase           & \begin{minipage}[t]{0.4\textwidth}
-		                     \raggedright
-		                     Associazione tra \textit{project} e \textit{equipment} \textbf{uno-a-molti}.
-	                     \end{minipage}              & \begin{minipage}[t]{0.3\textwidth}
-		                                                   \raggedright
-		                                                   \textbf{purchase\_date}: Data di acquisto\sskip
-		                                                   \textbf{price}: Prezzo dell'attrezzatura
-	                                                   \end{minipage}                          \\[40pt]
+	purchase          & \begin{minipage}[t]{0.4\textwidth}
+		                    \raggedright
+		                    Associazione tra \textit{project} e \textit{equipment} \textbf{uno-a-molti}.
+	                    \end{minipage}              & \begin{minipage}[t]{0.3\textwidth}
+		                                                  \raggedright
+		                                                  \textbf{purchase\_date}: Data di acquisto\sskip
+		                                                  \textbf{price}: Prezzo dell'attrezzatura
+	                                                  \end{minipage}                          \\[40pt]
 	\hline
-	equipment\_request & \begin{minipage}[t]{0.4\textwidth}
-		                     \raggedright
-		                     Associazione tra \textit{project} e \textit{laboratory} \textbf{molti-a-molti}.
-	                     \end{minipage}
-	                   &                                                                                                       \\[15pt]
+	\equipmentrequest & \begin{minipage}[t]{0.4\textwidth}
+		                    \raggedright
+		                    Associazione tra \textit{project} e \textit{laboratory} \textbf{molti-a-molti}.
+	                    \end{minipage}
+	                  &                                                                                                       \\[15pt]
 	\hline
-	have               & \begin{minipage}[t]{0.4\textwidth}
-		                     \raggedright
-		                     Associazione tra \textit{equipment} e \textit{laboratory} \textbf{uno-a-molti}.
-	                     \end{minipage}
-	                   &                                                                                                       \\[15pt]
+	have              & \begin{minipage}[t]{0.4\textwidth}
+		                    \raggedright
+		                    Associazione tra \textit{equipment} e \textit{laboratory} \textbf{uno-a-molti}.
+	                    \end{minipage}
+	                  &                                                                                                       \\[15pt]
 	\hline
-	have               & \begin{minipage}[t]{0.4\textwidth}
-		                     \raggedright
-		                     Associazione tra \textit{base\_emp} e \textit{career\_log} \textbf{uno-a-molti}.
-	                     \end{minipage}
-	                   &                                                                                                       \\[15pt]
+	have              & \begin{minipage}[t]{0.4\textwidth}
+		                    \raggedright
+		                    Associazione tra \textit{\baseemp} e \textit{\careerlog} \textbf{uno-a-molti}.
+	                    \end{minipage}
+	                  &                                                                                                       \\[15pt]
 	\hline
-	located            & \begin{minipage}[t]{0.4\textwidth}
-		                     \raggedright
-		                     Associazione tra \textit{site} e \textit{laboratory} \textbf{uno-a-molti}.
-	                     \end{minipage}
-	                   &                                                                                                       \\[15pt]
+	located           & \begin{minipage}[t]{0.4\textwidth}
+		                    \raggedright
+		                    Associazione tra \textit{site} e \textit{laboratory} \textbf{uno-a-molti}.
+	                    \end{minipage}
+	                  &                                                                                                       \\[15pt]
 	\hline
 \end{tabular}
 

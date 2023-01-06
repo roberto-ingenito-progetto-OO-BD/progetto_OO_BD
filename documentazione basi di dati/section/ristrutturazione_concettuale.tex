@@ -1,6 +1,6 @@
 \section{Ristrutturazione del modello concettuale}
 \subsection{Analisi delle ridondanze}
-È presente una ridondanza nel campo \textit{hire\_date} di \textit{base\_emp} in quanto è possibile calcolarla dall'entità associata \textit{career\_log}
+È presente una ridondanza nel campo \textit{hire\_date} di \textit{\baseemp} in quanto è possibile calcolarla dall'entità associata \textit{\careerlog}
 \subsection{Eliminazione degli attributi multivalore}
 Non sono presenti attributi multivalore
 \subsection{Eliminazione degli attributi composti}
@@ -14,17 +14,17 @@ Procediamo all'eliminazione delle generalizzazioni partendo dal basso:
 \begin{enumerate}
 	\item Accorpamento di \textit{scientific\_referent} e \textit{scientific\_manager} in \textit{senior} in quanto non avendo attributi non è possibile inserire valori nulli che occupano spazio inutile.\\
 	      Fatta tale scelta bisogna cambiare la cardinalità da $\;(1, n)\;$ a $\;(0, n)\;$ in entrambe le associazioni, poiché un \textit{senior} può anche non essere nessuno dei due o uno soltanto (overlapping parziale)
-	\item Accorpamento di \textit{junior}, \textit{middle}, \textit{senior}, \textit{manager} all'interno di \textit{base\_emp} aggiungendo un attributo che ne specifica il tipo.\\
-	      Notare che questa scelta aggiunge una \textbf{ridondanza} poiché il tipo è reperibile effettuando un'interrogazione in \textit{career\_log}. Nonostante ciò è più efficiente e immediato eseguire determinate operazioni avendo quest'attributo disponibile direttamente in \textit{base\_emp}
-	\item Accorpamento di \textit{employee} all'interno di \textit{project\_salaried} e \textit{base\_emp} in quanto la generalizzazione è totale.
+	\item Accorpamento di \textit{junior}, \textit{middle}, \textit{senior}, \textit{manager} all'interno di \textit{\baseemp} aggiungendo un attributo che ne specifica il tipo.\\
+	      Notare che questa scelta aggiunge una \textbf{ridondanza} poiché il tipo è reperibile effettuando un'interrogazione in \textit{\careerlog}. Nonostante ciò è più efficiente e immediato eseguire determinate operazioni avendo quest'attributo disponibile direttamente in \textit{\baseemp}
+	\item Accorpamento di \textit{employee} all'interno di \textit{\projectsalaried} e \textit{\baseemp} in quanto la generalizzazione è totale.
 \end{enumerate}
 \subsection{Identificazioni chiavi primarie}
 \begin{itemize}
-	\item In \textit{base\_emp} abbiamo l'attributo \textit{CF} (Codice Fiscale), una stringa di $16$ caratteri
-	\item In \textit{project\_salaried} abbiamo l'attributo \textit{CF} (Codice Fiscale), una stringa di $16$ caratteri
+	\item In \textit{\baseemp} abbiamo l'attributo \textit{CF} (Codice Fiscale), una stringa di $16$ caratteri
+	\item In \textit{\projectsalaried} abbiamo l'attributo \textit{CF} (Codice Fiscale), una stringa di $16$ caratteri
 	\item \textit{project} è identificato dal \textit{CUP} (Codice Univoco Progetto)
 	\item \textit{equipment} è identificato da \textit{code} che è un codice generato randomicamente
-	\item \textit{equipment\_request} è identificato da \textit{code} che è un codice generato randomicamente
+	\item \textit{\equipmentrequest} è identificato da \textit{code} che è un codice generato randomicamente
 	\item \textit{site} è identificato da un nuovo attributo \textit{site\_number} che si autoincrementa
 	\item \textit{laboratory} è identificato da un nuovo attributo \textit{lab\_code} che si autoincrementa
 \end{itemize}

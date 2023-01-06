@@ -9,10 +9,10 @@ CREATE TABLE works_at(
     CONSTRAINT date_integrity CHECK (end_date IS NULL OR end_date > start_date),
 
     CONSTRAINT cf_base_emp_fk FOREIGN KEY (cf_base_emp) REFERENCES base_emp(cf)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE,
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
 
-    CONSTRAINT lab_code_fk FOREIGN KEY (lab_code) REFERENCES laboratory(lab_code)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE
+    CONSTRAINT lab_code_fk    FOREIGN KEY (lab_code) REFERENCES laboratory(lab_code)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );

@@ -22,7 +22,7 @@ ALTER USER project_admin IN DATABASE company SET search_path TO projects_schema;
 
 -- i privilegi di login_user sullo schema projects_schema, devono essere assegnati dal possessore dello schema
 -- in questo caso postgres
-GRANT USAGE ON SCHEMA projects_schema TO login_user;
+-- GRANT USAGE ON SCHEMA projects_schema TO login_user;
 ALTER USER login_user IN DATABASE company SET search_path TO projects_schema;
 
 -- le estensioni possono essere attivate solo da un superuser (postgres in questo caso)

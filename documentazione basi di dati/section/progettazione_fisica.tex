@@ -1,9 +1,18 @@
 \section{Progettazione fisica}
 \subsection{Creazione del database}
+\begin{lstlisting}
+CREATE DATABASE company WITH OWNER postgres;
+\end{lstlisting}
 
 \subsection{Creazione dello schema}
+\begin{lstlisting}
+CREATE SCHEMA projects_schema;
+\end{lstlisting}
 
 \subsection{Attivazione estensioni}
+Le estensioni possono essere attivate solo da un superuser (\textit{postgres} in questo caso); \textit{project\_admin} non può essere superuser altrimenti avrebbe gli stessi privilegi di \textit{postgres}.
+
+Le estensioni vengono create sullo schema \textit{projects\_schema} così che l'utente \textit{project\_admin} ne abbia l'accesso.\meskip
 Estensione utilizzata per la cifratura delle password, usata per l'autenticazione lato client.
 \lstinputlisting{../basi_di_dati/extension/enable_crypt.sql}\medskip
 Estensione utilizzata per generare codici univoci causali.
@@ -21,11 +30,297 @@ Estensione utilizzata per generare codici univoci causali.
 \lstinputlisting{../basi_di_dati/domains/salary_type.sql}
 
 \subsection{Creazione tabelle}
+\noindent \textbf{Tabella \baseemp}
+\lstinputlisting[lastline=14]{../basi_di_dati/create_tables/base_emp.sql}\bigskip
 
-\subsection{Vincoli}
-\subsubsection{Dizionario itra-relazionali}
-\subsubsection{Dizionario inter-relazionai}
+\noindent \textbf{Tabella \careerlog}
+\lstinputlisting[lastline=33]{../basi_di_dati/create_tables/career_log.sql}\bigskip
+
+\noindent \textbf{Tabella laboratory}
+\lstinputlisting{../basi_di_dati/create_tables/laboratory.sql}\bigskip
+
+\noindent \textbf{Tabella \takepart}
+\lstinputlisting{../basi_di_dati/create_tables/take_part.sql}\bigskip
+
+\noindent \textbf{Tabella \projectsalaried}
+\lstinputlisting{../basi_di_dati/create_tables/project_salaried.sql}\bigskip
+
+\noindent \textbf{Tabella \workson}
+\lstinputlisting{../basi_di_dati/create_tables/works_on.sql}\bigskip
+
+\noindent \textbf{Tabella site}
+\lstinputlisting{../basi_di_dati/create_tables/site.sql}\bigskip
+
+\noindent \textbf{Tabella equipment}
+\lstinputlisting{../basi_di_dati/create_tables/equipment.sql}\bigskip
+
+\noindent \textbf{Tabella purchase}
+\lstinputlisting{../basi_di_dati/create_tables/purchase.sql}\bigskip
+
+\noindent \textbf{Tabella \worksat}
+\lstinputlisting{../basi_di_dati/create_tables/works_at.sql}\bigskip
+
+\noindent \textbf{Tabella \equipmentrequest}
+\lstinputlisting{../basi_di_dati/create_tables/equipment_request.sql}\bigskip
+
+\noindent \textbf{Tabella project}
+\lstinputlisting{../basi_di_dati/create_tables/project.sql}\bigskip
 
 \subsection{Trigger e trigger function}
 
 \subsection{Procedure e funzioni}
+
+\subsection{Dizionario dei vincoli}
+\subsubsection{Vincoli intra-relazionali}
+\begin{tabular}{@{}| p{.3\textwidth} | p{.6\textwidth} |@{}} % base emp
+	\hline
+	\multicolumn{2}{|c|}{\textbf{\baseemp}}         \\
+	\hline
+	\textbf{Vincolo}   & \textbf{Descrizione}       \\
+	\hline
+	emp\_email\_unique & L'email è univoca          \\
+	\hline
+
+	\baseemp\_pk       & Vincolo di chiave primaria \\
+	\hline
+\end{tabular}\bskip
+\begin{tabular}{@{}| p{.3\textwidth} | p{.6\textwidth} |@{}} % laboratory
+	\hline
+	\multicolumn{2}{|c|}{\textbf{laboratory}}                \\
+	\hline
+	\textbf{Vincolo}            & \textbf{Descrizione}       \\
+	\hline
+	lab\_pk                     & Vincolo di chiave primaria \\
+	\hline
+	site\_number\_fk            & Vincolo di chiave esterna  \\
+	\hline
+	cf\_scientific\_manager\_fk & Vincolo di chiave esterna  \\
+	\hline
+\end{tabular}\bskip
+\begin{tabular}{@{}| p{.3\textwidth} | p{.6\textwidth} |@{}} % career log 
+	\hline
+	\multicolumn{2}{|c|}{\textbf {\careerlog}}                                                                                                     \\
+	\hline
+	\textbf{Vincolo}  & \textbf{Descrizione}                                                                                                       \\
+	\hline
+	emp\_career\_fk   & \begin{minipage}[t]{.6\textwidth}
+		                    Vincolo di chiave esterna.\\
+		                    Se viene eliminato l'impiegato, verrà eliminata anche la tupla in \textit{\careerlog}
+
+	                    \end{minipage}                                       \\[26pt]
+	\hline
+	check\_new\_grade & \begin{minipage}[t]{.6\textwidth}
+		                    Controlla che gli scatti di carriera siano coerenti.\\
+		                    Ad esempio non è possibile passare da \textit{junior} a \textit{senior} senza essere diventati prima \textit{middle}.\sskip
+		                    La stringa vuota come primo parametro significa che l'impiegato è stato assunto;\\
+		                    come secondo invece, significa che è stato licenziato.\meskip
+		                    \textbf{Casi possibili:}
+		                    \begin{itemize}
+			\item (' ', 'junior')
+			\item ('junior', 'middle')
+			\item ('middle', 'senior') \medskip
+			\item ('junior', 'manager')
+			\item ('middle', 'manager')
+			\item ('senior', 'manager') \medskip
+			\item ('manager', 'junior')
+			\item ('manager', 'middle')
+			\item ('manager', 'senior') \medskip
+			\item ('junior', ' ')
+			\item ('middle', ' ')
+			\item ('senior', ' ')
+			\item ('manager', ' ')
+
+		\end{itemize}
+
+	                    \end{minipage} \\[310pt]
+	\hline
+\end{tabular}\bskip
+\begin{tabular}{@{}| p{.3\textwidth} | p{.6\textwidth} |@{}} % equipment request
+	\hline
+	\multicolumn{2}{|c|}{\textbf{\equipmentrequest}}                                                                                                             \\
+	\hline
+	\textbf{Vincolo}       & \textbf{Descrizione}                                                                                                                \\
+	\hline
+	equipment\_request\_pk & Vincolo di chiave primaria                                                                                                          \\
+	\hline
+	CUP\_fk                & \begin{minipage}[t]{.6\textwidth}
+		                         \raggedright
+		                         Vincolo di chiave esterna.\\
+		                         Se viene eliminato il progetto (o modificato il cup), verrà eliminata (o aggiornata) anche la tupla in \textit{\equipmentrequest}
+	                         \end{minipage}    \\[40pt]
+	\hline
+	lab\_code\_fk          & \begin{minipage}[t]{.6\textwidth}
+		                         \raggedright
+		                         Vincolo di chiave esterna.\\
+		                         Se viene eliminato il laboratorio (o modificato il cup), verrà eliminata (o aggiornata) anche la tupla in \textit{\equipmentrequest}
+	                         \end{minipage} \\[40pt]
+	\hline
+	check\_quantity        & Controlla che la quantità sia maggiore di $0$                                                                                       \\
+	\hline
+\end{tabular}\bskip
+\begin{tabular}{@{}| p{.3\textwidth} | p{.6\textwidth} |@{}} % equipment
+	\hline
+	\multicolumn{2}{|c|}{\textbf{equipment}}                                                                          \\
+	\hline
+	\textbf{Vincolo} & \textbf{Descrizione}                                                                           \\
+	\hline
+	equipment\_pk    & Vincolo di chiave primaria                                                                     \\
+	\hline
+	lab\_code\_fk    & \begin{minipage}[t]{.6\textwidth}
+		                   \raggedright
+		                   Vincolo di chiave esterna.\\
+		                   Se viene eliminato il laboratorio, la chiave esterna verrà posta a NULL.\\
+		                   Se viene aggiornata la chiave di \textit{laboratory}, verrà aggiornata anche la chiave esterna.
+	                   \end{minipage} \\[50pt]
+	\hline
+\end{tabular}\bskip
+\begin{tabular}{@{}| p{.3\textwidth} | p{.6\textwidth} |@{}} % project salaried
+	\hline
+	\multicolumn{2}{|c|}{\textbf{\projectsalaried}}   \\
+	\hline
+	\textbf{Vincolo}     & \textbf{Descrizione}       \\
+	\hline
+	\projectsalaried\_pk & Vincolo di chiave primaria \\
+	\hline
+	emp\_email\_unique   & L'email è univoca          \\
+	\hline
+\end{tabular}\bskip
+\begin{tabular}{@{}| p{.3\textwidth} | p{.6\textwidth} |@{}} % project
+	\hline
+	\multicolumn{2}{|c|}{\textbf{project}}                                                                         \\
+	\hline
+	\textbf{Vincolo}             & \textbf{Descrizione}                                                            \\
+	\hline
+	project\_pk                  & Vincolo di chiave primaria                                                      \\
+	\hline
+	check\_deadline              & Verifica che la deadline sia dopo la data di inizio (nel caso in cui ci fosse). \\
+	\hline
+	check\_end\_date             & Verifica che la data di fine progetto sia dopo la data di inizio.               \\
+	\hline
+	fk\_cf\_manager              & Vincolo di chiave esterna                                                       \\
+	\hline
+	fk\_cf\_scientific\_referent & Vincolo di chiave esterna                                                       \\
+	\hline
+\end{tabular}\bskip
+\begin{tabular}{@{}| p{.3\textwidth} | p{.6\textwidth} |@{}} % purchase
+	\hline
+	\multicolumn{2}{|c|}{\textbf{purchase}}                                                                                                                                 \\
+	\hline
+	\textbf{Vincolo}    & \textbf{Descrizione}                                                                                                                              \\
+	\hline
+	cup\_type\_fk       & Vincolo di chiave esterna.
+
+	Se viene eliminato il progetto, la chiave esterna viene posta a NULL, questo perché si vuole tenere traccia della data d'acquisto e del prezzo dell'attrezzatura.       \\
+	\hline
+	equipment\_code\_fk & Vincolo di chiave esterna.
+
+	Se viene eliminato l'attrezzatura, verrà eliminata anche la tupla in purchase, dato che diventa inutile tenere traccia dell'acquisto di un prodotto che non si conosce. \\
+	\hline
+	check\_price        & Controlla che il prezzo sia maggiore di $0$                                                                                                       \\
+	\hline
+\end{tabular}\bskip
+\begin{tabular}{@{}| p{.3\textwidth} | p{.6\textwidth} |@{}} % site
+	\hline
+	\multicolumn{2}{|c|}{\textbf{site}}           \\
+	\hline
+	\textbf{Vincolo} & \textbf{Descrizione}       \\
+	\hline
+	site\_pk         & Vincolo di chiave primaria \\
+	\hline
+\end{tabular}\bskip
+\begin{tabular}{@{}| p{.3\textwidth} | p{.6\textwidth} |@{}} % take part
+	\hline
+	\multicolumn{2}{|c|}{\textbf{\takepart}}                                                                                                             \\
+	\hline
+	\textbf{Vincolo} & \textbf{Descrizione}                                                                                                              \\
+	\hline
+	date\_integrity  & Verifica che la data in cui il laboratorio termina di lavorare al progetto, sia dopo la data di inizio.                           \\
+	\hline
+	CUP\_fk          & \begin{minipage}[t]{.6\textwidth}
+		                   \raggedright
+		                   Vincolo di chiave esterna.\\
+		                   Se viene eliminato il progetto (o modificato il cup), verrà eliminata (o aggiornata) anche la tupla in \textit{\takepart}
+	                   \end{minipage}          \\[27pt]
+	\hline
+	lab\_code\_fk    & \begin{minipage}[t]{.6\textwidth}
+		                   \raggedright
+		                   Vincolo di chiave esterna.\\
+		                   Se viene eliminato il laboratorio (o modificato il lab\_code), verrà eliminata (o aggiornata) anche la tupla in \textit{\takepart}
+	                   \end{minipage} \\[36pt]
+	\hline
+\end{tabular}\bskip
+\begin{tabular}{@{}| p{.3\textwidth} | p{.6\textwidth} |@{}} % works at
+	\hline
+	\multicolumn{2}{|c|}{\textbf{\worksat}}                                                                                                              \\
+	\hline
+	\textbf{Vincolo}  & \textbf{Descrizione}                                                                                                             \\
+	\hline
+	date\_integrity   & Verifica che la data in cui l'impiegato termina di lavorare al laboratorio, sia dopo la data di inizio.                          \\
+	\hline
+	cf\_base\_emp\_fk & \begin{minipage}[t]{.6\textwidth}
+		                    \raggedright
+		                    Vincolo di chiave esterna.\\
+		                    Se viene eliminato l'impiegato (o modificato il cf), verrà eliminata (o aggiornata) anche la tupla in \textit{\worksat}
+	                    \end{minipage}           \\[27pt]
+	\hline
+	lab\_code\_fk     & \begin{minipage}[t]{.6\textwidth}
+		                    \raggedright
+		                    Vincolo di chiave esterna.\\
+		                    Se viene eliminato il laboratorio (o modificato il lab\_code), verrà eliminata (o aggiornata) anche la tupla in \textit{\worksat}
+	                    \end{minipage} \\[36pt]
+	\hline
+\end{tabular}\bskip
+\begin{tabular}{@{}| p{.3\textwidth} | p{.6\textwidth} |@{}} % works on
+	\hline
+	\multicolumn{2}{|c|}{\textbf{\workson}}                                                          \\
+	\hline
+	\textbf{Vincolo}        & \textbf{Descrizione}                                                   \\
+	\hline
+	check\_expiration\_date & Verifica che la data di fine contratto sia dopo la data di assunzione. \\
+	\hline
+	fk\_cf                  & Vincolo di chiave esterna.
+
+	Se viene eliminato l'impiegato, verrà posta la chiave esterna a NULL.
+
+	Questo perché si vuole salvare i contratti anche se un impiegato a progetto viene eliminato.     \\
+	\hline
+	fk\_cup                 & Vincolo di chiave esterna.                                             \\
+	\hline
+\end{tabular}\bskip
+\begin{tabular}{@{}| p{.3\textwidth} | p{.6\textwidth} |@{}} % purchase
+	\hline
+	\multicolumn{2}{|c|}{\textbf{Domini}}                                 \\
+	\hline
+	\textbf{Vincolo} & \textbf{Descrizione}                               \\
+	\hline
+	emp\_type\_check & Il valore inserito dev'essere uno fra questi
+
+	(' ', 'junior', 'middle', 'senior', 'manager')
+
+	e non deve essere NULL                                                \\
+	\hline
+	check\_cup\_type & Il valore inserito dev'essere lungo $15$ caratteri \\
+	\hline
+	cf\_type\_length & Il valore inserito dev'essere lungo $16$ caratteri \\
+	\hline
+\end{tabular}
+
+
+
+\subsubsection{Vincoli inter-relazionai}
+
+% \begin{tabular}{@{}| p{.3\textwidth} | p{.6\textwidth} |@{}} % purchase
+% 	\hline
+% 	\multicolumn{2}{|c|}{\textbf{}}         \\
+% 	\hline
+% 	\textbf{Vincolo} & \textbf{Descrizione} \\
+% 	\hline
+% 	                 &                      \\
+% 	\hline
+% \end{tabular}\bskip
+
+% \begin{minipage}[t]{.6\textwidth}
+% 	\raggedright
+% 	Vincolo di chiave esterna.\\
+% 	Se viene eliminato il progetto (o modificato il cup), verrà eliminata (o aggiornata) anche la tupla in \textit{\equipmentrequest}
+% \end{minipage}

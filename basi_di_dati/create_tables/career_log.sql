@@ -1,8 +1,8 @@
 CREATE TABLE career_log(
-    ex_role emp_type,
-    new_role emp_type,
-    new_role_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    CF cf_type,
+    ex_role         emp_type,
+    new_role        emp_type,
+    new_role_date   TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CF              cf_type,
     
     -- foreign key constraint
     CONSTRAINT emp_career_fk FOREIGN KEY (CF) REFERENCES base_emp(CF)
@@ -27,7 +27,8 @@ CREATE TABLE career_log(
         -- declassato
         --
         -- un trigger verificherà che il new_role sia quello del log precedente
-        -- se da middle è diventato manager e poi viene declassato, sarà declassato a middle 
+        -- se da middle è diventato manager e poi viene declassato, 
+        --    sarà declassato a middle 
         ex_role = 'manager' AND new_role <> 'manager'
     )
 );

@@ -12,7 +12,8 @@ CREATE TABLE works_on (
     CONSTRAINT fk_cf FOREIGN KEY (CF) REFERENCES project_salaried(CF)
     ON UPDATE CASCADE
     
-    -- mi interessa salvare i contratti anche se un impiegato a progetto viene eliminato
+    -- mi interessa salvare i contratti anche se 
+    -- un impiegato a progetto viene eliminato
     ON DELETE SET NULL, 
     
     CONSTRAINT fk_cup FOREIGN KEY (CUP) REFERENCES project(CUP)

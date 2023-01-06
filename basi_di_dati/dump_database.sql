@@ -1,24 +1,26 @@
-CREATE DOMAIN cf_type AS VARCHAR(16)
-CONSTRAINT cf_type_length CHECK (length(VALUE) = 16);
 CREATE DOMAIN salary_type AS DECIMAL(8,2);
+CREATE DOMAIN emp_type AS VARCHAR(10) 
+CONSTRAINT emp_type_check CHECK 
+    (VALUE IN ('', 'junior', 'middle', 'senior', 'manager') 
+        AND VALUE IS NOT NULL);
 CREATE DOMAIN password_type AS VARCHAR(100);
 CREATE DOMAIN name_type AS VARCHAR(30);
-CREATE DOMAIN equipment_name_type 
-AS VARCHAR(30);
-CREATE DOMAIN emp_type AS VARCHAR(10) 
-CONSTRAINT emp_type_check CHECK (VALUE IN ('', 'junior', 'middle', 'senior', 'manager') AND VALUE IS NOT NULL);
 CREATE DOMAIN cup_type AS VARCHAR(15)
 CONSTRAINT check_cup_type CHECK ( length(VALUE) = 15);
+CREATE DOMAIN equipment_name_type 
+AS VARCHAR(30);
+CREATE DOMAIN cf_type AS VARCHAR(16)
+CONSTRAINT cf_type_length CHECK (length(VALUE) = 16);
 CREATE TABLE base_emp(
-    CF cf_type,
-    first_name name_type NOT NULL,
-    last_name name_type NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    passw password_type NOT NULL,
-    birth_date DATE NOT NULL,
-    "type" emp_type NOT NULL, 
-    "role" VARCHAR(30) NOT NULL,
-    salary salary_type NOT NULL,
+    CF          cf_type,
+    first_name  name_type     NOT NULL,
+    last_name   name_type     NOT NULL,
+    email       VARCHAR(100)  NOT NULL,
+    passw       password_type NOT NULL,
+    birth_date  DATE          NOT NULL,
+    "type"      emp_type      NOT NULL, 
+    "role"      VARCHAR(30)   NOT NULL,
+    salary      salary_type   NOT NULL,
 
     CONSTRAINT emp_email_unique UNIQUE (email),
     CONSTRAINT base_emp_pk PRIMARY KEY (CF)
@@ -28,10 +30,10 @@ CREATE TABLE base_emp(
 -- ('NGNRRT02M29H931J', 'Roberto', 'Ingenito', 'ingenitoroby@gmail.com', 'password', '29/08/2002', 'manager', 'developer', 10000);
 
 CREATE TABLE career_log(
-    ex_role emp_type,
-    new_role emp_type,
-    new_role_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    CF cf_type,
+    ex_role         emp_type,
+    new_role        emp_type,
+    new_role_date   TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CF              cf_type,
     
     -- foreign key constraint
     CONSTRAINT emp_career_fk FOREIGN KEY (CF) REFERENCES base_emp(CF)
@@ -56,7 +58,8 @@ CREATE TABLE career_log(
         -- declassato
         --
         -- un trigger verificherà che il new_role sia quello del log precedente
-        -- se da middle è diventato manager e poi viene declassato, sarà declassato a middle 
+        -- se da middle è diventato manager e poi viene declassato, 
+        --    sarà declassato a middle 
         ex_role = 'manager' AND new_role <> 'manager'
     )
 );
@@ -118,17 +121,17 @@ CREATE TABLE site(
     CONSTRAINT site_pk PRIMARY KEY (site_number)
 );
 CREATE TABLE project(
-    CUP cup_type,
-    funds DECIMAL(10,2) NOT NULL,
-    "name" VARCHAR(50),
-    description VARCHAR(100) NOT NULL,
-    start_date DATE NOT NULL DEFAULT CURRENT_DATE,
-    end_date DATE,
-    deadline DATE,
+    CUP             cup_type,
+    funds           DECIMAL(10,2)   NOT NULL,
+    "name"          VARCHAR(50),
+    description     VARCHAR(100)    NOT NULL,
+    start_date      DATE            NOT NULL DEFAULT CURRENT_DATE,
+    end_date        DATE,
+    deadline        DATE,
 
     -- foreign key
-    cf_manager cf_type NOT NULL,
-    cf_scientific_referent cf_type NOT NULL,
+    cf_manager              cf_type NOT NULL,
+    cf_scientific_referent  cf_type NOT NULL,
 
     CONSTRAINT project_pk PRIMARY KEY (CUP),    
 
@@ -136,23 +139,28 @@ CREATE TABLE project(
     CONSTRAINT check_end_date CHECK ( end_date IS NULL OR end_date > start_date ),
 
     CONSTRAINT fk_cf_manager FOREIGN KEY (CF_manager) REFERENCES base_emp(CF)
-    ON UPDATE CASCADE,
+        ON UPDATE CASCADE,
     
-    CONSTRAINT fk_cf_scientific_referent FOREIGN KEY (CF_scientific_referent) REFERENCES base_emp(CF)
-    ON UPDATE CASCADE
+    CONSTRAINT fk_cf_scientific_referent    FOREIGN KEY (CF_scientific_referent) 
+                                            REFERENCES base_emp(CF)
+        ON UPDATE CASCADE
 );
 CREATE TABLE laboratory(
     lab_code    SERIAL,
-    lab_name    VARCHAR(200) NOT NULL,
-    topic       VARCHAR(1000) NOT NULL,
+    lab_name    VARCHAR(200)    NOT NULL,
+    topic       VARCHAR(1000)   NOT NULL,
 
     -- foreign keys
     site_number             SERIAL  NOT NULL,
     cf_scientific_manager   cf_type NOT NULL,
 
     CONSTRAINT lab_pk                   PRIMARY KEY (lab_code),
-    CONSTRAINT site_number_fk           FOREIGN KEY (site_number)             REFERENCES site(site_number),
-    CONSTRAINT cf_scientific_manager_fk FOREIGN KEY (cf_scientific_manager)   REFERENCES base_emp(cf)
+    
+    CONSTRAINT site_number_fk           FOREIGN KEY (site_number)             
+                                        REFERENCES site(site_number),
+
+    CONSTRAINT cf_scientific_manager_fk FOREIGN KEY (cf_scientific_manager)   
+                                        REFERENCES base_emp(cf)
 );
 CREATE TABLE works_on (
     pay         salary_type NOT NULL,
@@ -168,7 +176,8 @@ CREATE TABLE works_on (
     CONSTRAINT fk_cf FOREIGN KEY (CF) REFERENCES project_salaried(CF)
     ON UPDATE CASCADE
     
-    -- mi interessa salvare i contratti anche se un impiegato a progetto viene eliminato
+    -- mi interessa salvare i contratti anche se 
+    -- un impiegato a progetto viene eliminato
     ON DELETE SET NULL, 
     
     CONSTRAINT fk_cup FOREIGN KEY (CUP) REFERENCES project(CUP)
@@ -185,12 +194,12 @@ CREATE TABLE works_at(
     CONSTRAINT date_integrity CHECK (end_date IS NULL OR end_date > start_date),
 
     CONSTRAINT cf_base_emp_fk FOREIGN KEY (cf_base_emp) REFERENCES base_emp(cf)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE,
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
 
-    CONSTRAINT lab_code_fk FOREIGN KEY (lab_code) REFERENCES laboratory(lab_code)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE
+    CONSTRAINT lab_code_fk    FOREIGN KEY (lab_code) REFERENCES laboratory(lab_code)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 CREATE TABLE take_part(
     start_date  DATE    NOT NULL,
@@ -211,78 +220,63 @@ CREATE TABLE take_part(
     ON DELETE CASCADE
 );
 CREATE TABLE equipment(
-    code uuid DEFAULT uuid_generate_v4(),
-    
-    name equipment_name_type NOT NULL,
-    type VARCHAR(30) NOT NULL,
-    tech_specs VARCHAR(100),
+    code        uuid                DEFAULT uuid_generate_v4(),
+    name        equipment_name_type NOT NULL,
+    type        VARCHAR(30)         NOT NULL,
+    tech_specs  VARCHAR(100),
 
     -- foreign keys
     lab_code    SERIAL,
 
-    -- primary key
     CONSTRAINT equipment_pk PRIMARY KEY (code),
 
-    -- foreign key constraint
     CONSTRAINT lab_code_fk FOREIGN KEY (lab_code) REFERENCES laboratory(lab_code)
     ON UPDATE CASCADE
     ON DELETE SET NULL
 );
 CREATE TABLE equipment_request(
-    code uuid DEFAULT uuid_generate_v4(),
+    code     uuid                    DEFAULT uuid_generate_v4(),
 
-    name equipment_name_type NOT NULL,
-    specs VARCHAR(100) NOT NULL,
-    type VARCHAR(30) NOT NULL,
+    name     equipment_name_type     NOT NULL,
+    specs    VARCHAR(100)            NOT NULL,
+    type     VARCHAR(30)             NOT NULL,
 
-    quantity INTEGER NOT NULL DEFAULT 1,
+    quantity INTEGER                 NOT NULL   DEFAULT 1,
 
     -- foreign keys
-    CUP         cup_type,
-    lab_code    SERIAL,
+    CUP      cup_type,
+    lab_code SERIAL,
 
-    constraint equipment_request_pk PRIMARY KEY (code),
+    CONSTRAINT equipment_request_pk PRIMARY KEY (code),
 
-    CONSTRAINT CUP_fk FOREIGN KEY (CUP) REFERENCES project(CUP)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE,
+    CONSTRAINT CUP_fk       FOREIGN KEY (CUP)      REFERENCES project(CUP)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
 
-    CONSTRAINT lab_code_fk FOREIGN KEY (lab_code) REFERENCES laboratory(lab_code)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE,
+    CONSTRAINT lab_code_fk  FOREIGN KEY (lab_code) REFERENCES laboratory(lab_code)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
 
     CONSTRAINT check_quantity CHECK ( quantity > 0 )
 );
 CREATE TABLE purchase(
-    price DECIMAL(10,2) NOT NULL,
-    purchase_date DATE NOT NULL,
+    price           DECIMAL(10,2)   NOT NULL,
+    purchase_date   DATE            NOT NULL,
 
     -- foreign keys
-    CUP cup_type,
-    equipment_code uuid DEFAULT uuid_generate_v4(),
+    CUP             cup_type,
+    equipment_code  uuid            DEFAULT uuid_generate_v4(),
 
-    -- foreign key constraint
     CONSTRAINT cup_type_fk FOREIGN KEY (CUP) REFERENCES project(CUP)
-    ON UPDATE CASCADE
-    ON DELETE SET NULL,
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
 
-    CONSTRAINT equipment_code_fk FOREIGN KEY (equipment_code) REFERENCES equipment(code)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE,
+    CONSTRAINT equipment_code_fk    FOREIGN KEY (equipment_code) 
+                                    REFERENCES equipment(code)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
 
-    -- check
     CONSTRAINT check_price CHECK ( price > 0)
-);
-/*
-Prende gli ultimi log in base alla data (new_role_date)
-*/
-CREATE VIEW last_log AS
-SELECT *
-FROM career_log AS C1
-WHERE C1.new_role_date = (
-	SELECT MAX(C2.new_role_date) 
-	FROM career_log AS C2 
-	WHERE C1.cf = C2.cf
 );
 /*
 funds_to_hire: fondi rimanenti per l'assunzione di impiegati a progetto
@@ -302,6 +296,17 @@ SELECT
 	(PR.funds / 2) - COALESCE(	(SELECT SUM(price) FROM purchase WHERE cup = PR.cup), 	0 ) AS funds_to_buy
 FROM project AS PR;  
 
+/*
+Prende gli ultimi log in base alla data (new_role_date)
+*/
+CREATE VIEW last_log AS
+SELECT *
+FROM career_log AS C1
+WHERE C1.new_role_date = (
+	SELECT MAX(C2.new_role_date) 
+	FROM career_log AS C2 
+	WHERE C1.cf = C2.cf
+);
 CREATE OR REPLACE PROCEDURE revoke_manager( v_cf_manager IN base_emp.cf%TYPE ) 
 language 'plpgsql'
 
@@ -364,6 +369,128 @@ AS $$
     END;
 $$;
 
+-- restituisce vero se il login è avvenuto correttamente, falso altrimenti
+CREATE OR REPLACE FUNCTION project_salaried_login(in_email IN VARCHAR(100), in_passw IN password_type)
+RETURNS boolean
+language 'plpgsql'
+
+AS $$
+BEGIN
+RETURN EXISTS(
+    SELECT * 
+    FROM project_salaried
+    WHERE email = in_email AND passw = crypt(in_passw, passw)
+);
+END;
+$$;
+
+CREATE OR REPLACE PROCEDURE promotion_to_manager( v_cf_manager IN base_emp.cf%TYPE ) 
+language 'plpgsql'
+
+AS $$
+
+    DECLARE
+        emp_log last_log%ROWTYPE; 
+    BEGIN
+        -- recuperare l'utlimo log dell'impiegato in ingresso e verificare che non sia già manager 
+        SELECT * INTO emp_log 
+        FROM last_log 
+        WHERE cf = v_cf_manager AND new_role <> 'manager'; 
+
+        IF NOT FOUND THEN 
+            RAISE EXCEPTION '% is already manager', v_cf_manager;
+
+        -- se è senior ed è un referente scientifico (progetto) oppure un manager scientifico (laboratorio)
+        ELSIF 
+            emp_log.new_role = 'senior' AND
+            (
+                EXISTS(
+                    SELECT * 
+                    FROM project
+                    WHERE cf_scientific_referent = v_cf_manager AND end_date IS NULL
+                ) 
+            OR
+                EXISTS(
+                    SELECT * 
+                    FROM laboratory
+                    WHERE cf_scientific_manager = v_cf_manager
+                ) 
+            )
+        THEN
+            RAISE EXCEPTION '% cannot be promoted, is scientific manager and/or scientific referent', v_cf_manager;
+        END IF; 
+            
+
+        -- inserimento nuova tupla in carrer log
+        INSERT INTO career_log(ex_role, new_role, new_role_date, CF)
+        VALUES (emp_log.new_role, 'manager', CURRENT_TIMESTAMP, v_cf_manager);
+
+        RAISE NOTICE '% promoted to manager', v_cf_manager; 
+    END;
+$$;
+
+CREATE OR REPLACE PROCEDURE hire_project_salaried(
+    emp_cf      IN project_salaried.CF%TYPE,
+    first_name  IN project_salaried.first_name%TYPE,
+    last_name   IN project_salaried.last_name%TYPE,
+    email       IN project_salaried.email%TYPE,
+    passw       IN project_salaried.passw%TYPE,
+    role        IN project_salaried.role%TYPE,
+    birth_date  IN project_salaried.birth_date%TYPE,
+    pay         IN works_on.pay%TYPE,
+    hire_date   IN works_on.hire_date%TYPE,
+    expiration  IN works_on.expiration%TYPE,
+    CUP         IN works_on.CUP%TYPE
+)
+language 'plpgsql'
+AS $$
+BEGIN
+
+    IF 
+        NOT EXISTS(
+            SELECT *
+            FROM project_salaried
+            WHERE cf = emp_cf
+        )
+    THEN
+        INSERT INTO project_salaried (CF, first_name, last_name, email, passw, role, birth_date) VALUES
+        (emp_cf, first_name, last_name, email, passw, role, birth_date);
+    END IF;
+
+
+    INSERT INTO works_on (pay, hire_date, expiration, CF, CUP) VALUES
+    (pay, hire_date, expiration, emp_cf, CUP);
+
+END;
+$$;
+-- Licenzia l'impiegato preso in input
+CREATE OR REPLACE PROCEDURE fire(fired_cf IN career_log.cf%TYPE)
+language 'plpgsql'
+AS $$
+
+DECLARE 
+
+    new_role career_log.ex_role%TYPE := '';
+
+BEGIN
+
+    SELECT LL.new_role INTO new_role
+    FROM last_log AS LL
+    WHERE LL.cf = fired_cf;
+
+    IF new_role = '' THEN
+        RAISE EXCEPTION '% already fired', fired_cf;
+    END IF;
+
+    INSERT INTO career_log (ex_role, new_role, new_role_date, CF)
+    VALUES (new_role, '', CURRENT_TIMESTAMP, fired_cf);
+    
+    EXCEPTION 
+        WHEN SQLSTATE '23514' THEN
+            RAISE EXCEPTION '% non trovato', fired_cf;
+
+END;
+$$;
 -- controlla il grado di anzianità degli impiegati e li aggiorna nel caso
 CREATE OR REPLACE PROCEDURE check_seniority()
 language 'plpgsql'
@@ -457,85 +584,6 @@ parto dal new_role junior, ovvero nel momento in cui è stato assunto. Da lì ca
 */
  
 
-CREATE OR REPLACE PROCEDURE promotion_to_manager( v_cf_manager IN base_emp.cf%TYPE ) 
-language 'plpgsql'
-
-AS $$
-
-    DECLARE
-        emp_log last_log%ROWTYPE; 
-    BEGIN
-        -- recuperare l'utlimo log dell'impiegato in ingresso e verificare che non sia già manager 
-        SELECT * INTO emp_log 
-        FROM last_log 
-        WHERE cf = v_cf_manager AND new_role <> 'manager'; 
-
-        IF NOT FOUND THEN 
-            RAISE EXCEPTION '% is already manager', v_cf_manager;
-
-        -- se è senior ed è un referente scientifico (progetto) oppure un manager scientifico (laboratorio)
-        ELSIF 
-            emp_log.new_role = 'senior' AND
-            (
-                EXISTS(
-                    SELECT * 
-                    FROM project
-                    WHERE cf_scientific_referent = v_cf_manager AND end_date IS NULL
-                ) 
-            OR
-                EXISTS(
-                    SELECT * 
-                    FROM laboratory
-                    WHERE cf_scientific_manager = v_cf_manager
-                ) 
-            )
-        THEN
-            RAISE EXCEPTION '% cannot be promoted, is scientific manager and/or scientific referent', v_cf_manager;
-        END IF; 
-            
-
-        -- inserimento nuova tupla in carrer log
-        INSERT INTO career_log(ex_role, new_role, new_role_date, CF)
-        VALUES (emp_log.new_role, 'manager', CURRENT_TIMESTAMP, v_cf_manager);
-
-        RAISE NOTICE '% promoted to manager', v_cf_manager; 
-    END;
-$$;
-
-CREATE OR REPLACE PROCEDURE hire_project_salaried(
-    emp_cf      IN project_salaried.CF%TYPE,
-    first_name  IN project_salaried.first_name%TYPE,
-    last_name   IN project_salaried.last_name%TYPE,
-    email       IN project_salaried.email%TYPE,
-    passw       IN project_salaried.passw%TYPE,
-    role        IN project_salaried.role%TYPE,
-    birth_date  IN project_salaried.birth_date%TYPE,
-    pay         IN works_on.pay%TYPE,
-    hire_date   IN works_on.hire_date%TYPE,
-    expiration  IN works_on.expiration%TYPE,
-    CUP         IN works_on.CUP%TYPE
-)
-language 'plpgsql'
-AS $$
-BEGIN
-
-    IF 
-        NOT EXISTS(
-            SELECT *
-            FROM project_salaried
-            WHERE cf = emp_cf
-        )
-    THEN
-        INSERT INTO project_salaried (CF, first_name, last_name, email, passw, role, birth_date) VALUES
-        (emp_cf, first_name, last_name, email, passw, role, birth_date);
-    END IF;
-
-
-    INSERT INTO works_on (pay, hire_date, expiration, CF, CUP) VALUES
-    (pay, hire_date, expiration, emp_cf, CUP);
-
-END;
-$$;
 -- riceve in ingresso un cf di impiegato e il lab_code del laboratorio dove spostarlo 
 CREATE OR REPLACE PROCEDURE change_lab_afference (
     cf base_emp.cf%TYPE,
@@ -565,34 +613,6 @@ BEGIN
     -- assegnare l'impiegato al nuovo laboratorio 
     INSERT INTO works_at VALUES (current_date, null, cf, v_lab_code); 
     RAISE NOTICE '% is now working into lab: %', cf, v_lab_code; 
-
-END;
-$$;
--- Licenzia l'impiegato preso in input
-CREATE OR REPLACE PROCEDURE fire(fired_cf IN career_log.cf%TYPE)
-language 'plpgsql'
-AS $$
-
-DECLARE 
-
-    new_role career_log.ex_role%TYPE := '';
-
-BEGIN
-
-    SELECT LL.new_role INTO new_role
-    FROM last_log AS LL
-    WHERE LL.cf = fired_cf;
-
-    IF new_role = '' THEN
-        RAISE EXCEPTION '% already fired', fired_cf;
-    END IF;
-
-    INSERT INTO career_log (ex_role, new_role, new_role_date, CF)
-    VALUES (new_role, '', CURRENT_TIMESTAMP, fired_cf);
-    
-    EXCEPTION 
-        WHEN SQLSTATE '23514' THEN
-            RAISE EXCEPTION '% non trovato', fired_cf;
 
 END;
 $$;
@@ -641,6 +661,27 @@ BEGIN
 
 END;
 $$;
+-- restituisce emp_type (junior, middle, senior, manager) se il login è avvenuto correttamente
+-- restituisce NULL altrimenti
+CREATE OR REPLACE FUNCTION base_emp_login(in_email IN VARCHAR(100), in_passw IN password_type)
+RETURNS VARCHAR
+language 'plpgsql'
+
+AS $$
+DECLARE
+
+emp_t VARCHAR;
+
+BEGIN
+
+SELECT type INTO emp_t 
+FROM base_emp
+WHERE email = in_email AND passw = crypt(in_passw, passw);
+
+RETURN emp_t;
+
+END;
+$$;
 -- Ad un laboratorio non può lavorare lo STESSO impiegato più di una volta nello stesso momemento 
 CREATE OR REPLACE FUNCTION works_at_no_duplicates() 
 RETURNS trigger
@@ -678,6 +719,31 @@ CREATE TRIGGER works_at_no_duplicates
 BEFORE INSERT ON works_at
 FOR EACH ROW
 EXECUTE FUNCTION works_at_no_duplicates();
+/*
+Aggiorna il campo type di base_emp all'ultimo new_role di career_log
+*/
+
+CREATE OR REPLACE FUNCTION update_emp_type()
+RETURNS trigger
+language 'plpgsql'
+
+AS $$
+BEGIN
+
+    UPDATE base_emp
+    SET "type" = NEW.new_role
+    WHERE cf = NEW.cf;
+
+    RETURN NEW;
+
+END;
+$$;
+
+
+CREATE TRIGGER update_emp_type
+AFTER INSERT ON career_log
+FOR EACH ROW
+EXECUTE FUNCTION update_emp_type();
 -- Controlla nella richiesta se il laboratorio partecipa al progetto  
 CREATE OR REPLACE FUNCTION validate_equipment_request() 
 RETURNS TRIGGER 
@@ -704,31 +770,6 @@ CREATE OR REPLACE TRIGGER validate_equipment_request
 BEFORE INSERT ON equipment_request 
 FOR EACH ROW
 EXECUTE FUNCTION validate_equipment_request(); 
-/*
-Aggiorna il campo type di base_emp all'ultimo new_role di career_log
-*/
-
-CREATE OR REPLACE FUNCTION update_emp_type()
-RETURNS trigger
-language 'plpgsql'
-
-AS $$
-BEGIN
-
-    UPDATE base_emp
-    SET "type" = NEW.new_role
-    WHERE cf = NEW.cf;
-
-    RETURN NEW;
-
-END;
-$$;
-
-
-CREATE TRIGGER update_emp_type
-AFTER INSERT ON career_log
-FOR EACH ROW
-EXECUTE FUNCTION update_emp_type();
 -- Ad un progetto non può lavorare lo STESSO laboratorio più di una volta nello stesso momemento 
 CREATE OR REPLACE FUNCTION take_part_no_duplicates() 
 RETURNS trigger
@@ -893,6 +934,26 @@ AFTER INSERT ON base_emp
 FOR EACH ROW
 EXECUTE FUNCTION employee_hiring();
 
+CREATE OR REPLACE FUNCTION crypt_password()
+RETURNS trigger
+language 'plpgsql'
+AS $$ 
+BEGIN
+    NEW.passw := crypt(NEW.passw, gen_salt('md5'));
+
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER crypt_password_project_salaried
+BEFORE INSERT ON project_salaried
+FOR EACH ROW
+EXECUTE FUNCTION crypt_password();
+
+CREATE TRIGGER crypt_password_base_emp
+BEFORE INSERT ON  base_emp
+FOR EACH ROW
+EXECUTE FUNCTION crypt_password();
 -- controlla che lo stesso impiegato non lavori già allo stesso progetto 
 CREATE OR REPLACE FUNCTION check_works_on_date()
 RETURNS trigger
@@ -1011,34 +1072,6 @@ CREATE TRIGGER check_laboratory_assignment
 BEFORE INSERT OR UPDATE OF cf_scientific_manager ON laboratory
 FOR EACH ROW
 EXECUTE FUNCTION check_laboratory_assignment();
--- controlla che l'acquisto di attrezzatura
--- non faccia superare il limite imposto
-CREATE OR REPLACE FUNCTION check_equipment_funds() 
-RETURNS TRIGGER 
-language 'plpgsql'
-AS $$
-
-    DECLARE 
-
-        remaining_funds remaining_project_funds.funds_to_buy%TYPE; 
-
-    BEGIN 
-
-        SELECT funds_to_buy INTO remaining_funds 
-        FROM remaining_project_funds
-        WHERE CUP = NEW.CUP; 
-
-        IF remaining_funds - NEW.price < 0 THEN 
-            RAISE EXCEPTION 'not enough funds to buy equipment'; 
-        END IF; 
-
-    RETURN NEW; 
-END $$; 
-
-CREATE OR REPLACE TRIGGER check_equipment_funds 
-BEFORE INSERT ON purchase 
-FOR EACH ROW
-EXECUTE FUNCTION check_equipment_funds(); 
 -- controlla che l'assunzione di un impiegato a progetto 
 -- non faccia superare il limite imposto
 CREATE OR REPLACE FUNCTION check_funds_to_hire() 
@@ -1067,3 +1100,31 @@ CREATE OR REPLACE TRIGGER check_funds_to_hire
 BEFORE INSERT ON works_on 
 FOR EACH ROW
 EXECUTE FUNCTION check_funds_to_hire(); 
+-- controlla che l'acquisto di attrezzatura
+-- non faccia superare il limite imposto
+CREATE OR REPLACE FUNCTION check_equipment_funds() 
+RETURNS TRIGGER 
+language 'plpgsql'
+AS $$
+
+    DECLARE 
+
+        remaining_funds remaining_project_funds.funds_to_buy%TYPE; 
+
+    BEGIN 
+
+        SELECT funds_to_buy INTO remaining_funds 
+        FROM remaining_project_funds
+        WHERE CUP = NEW.CUP; 
+
+        IF remaining_funds - NEW.price < 0 THEN 
+            RAISE EXCEPTION 'not enough funds to buy equipment'; 
+        END IF; 
+
+    RETURN NEW; 
+END $$; 
+
+CREATE OR REPLACE TRIGGER check_equipment_funds 
+BEFORE INSERT ON purchase 
+FOR EACH ROW
+EXECUTE FUNCTION check_equipment_funds(); 
