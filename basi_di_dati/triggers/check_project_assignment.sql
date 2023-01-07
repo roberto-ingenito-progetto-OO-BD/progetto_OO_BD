@@ -4,16 +4,13 @@ Controlla che il referente scientifico sia senior e che il supervisore sia manag
 CREATE OR REPLACE FUNCTION check_project_assignment()
 RETURNS trigger
 language 'plpgsql'
-
 AS $$
 
 DECLARE
-
     referent_type base_emp.type%TYPE := ''; -- emp_type del referente di progetto
     manager_type base_emp.type%TYPE := ''; -- emp_type del supervisore del progetto
 
 BEGIN
-
     SELECT "type" INTO referent_type
     FROM base_emp
     WHERE cf = NEW.cf_scientific_referent;
@@ -41,10 +38,7 @@ BEGIN
         -- viene dunque lanciata l'eccezione
         WHEN SQLSTATE '23514' THEN 
             RAISE EXCEPTION 'cf_scientific_referent or cf_manager does not exist';
-
-END;
-$$;
-
+END; $$;
 
 CREATE TRIGGER check_project_assignment
 BEFORE INSERT OR UPDATE OF cf_scientific_referent, cf_manager ON project

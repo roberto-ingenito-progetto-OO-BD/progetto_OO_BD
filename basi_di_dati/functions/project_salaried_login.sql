@@ -10,5 +10,4 @@ RETURN EXISTS(
     FROM project_salaried
     WHERE email = in_email AND passw = crypt(in_passw, passw)
 );
-END;
-$$;
+END; $$;

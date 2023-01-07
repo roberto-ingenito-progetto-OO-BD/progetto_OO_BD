@@ -14,7 +14,6 @@ CREATE OR REPLACE PROCEDURE hire_project_salaried(
 language 'plpgsql'
 AS $$
 BEGIN
-
     IF 
         NOT EXISTS(
             SELECT *
@@ -26,9 +25,6 @@ BEGIN
         (emp_cf, first_name, last_name, email, passw, role, birth_date);
     END IF;
 
-
     INSERT INTO works_on (pay, hire_date, expiration, CF, CUP) VALUES
     (pay, hire_date, expiration, emp_cf, CUP);
-
-END;
-$$;
+END; $$;

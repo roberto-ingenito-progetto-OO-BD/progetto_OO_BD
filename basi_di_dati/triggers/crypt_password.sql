@@ -6,8 +6,7 @@ BEGIN
     NEW.passw := crypt(NEW.passw, gen_salt('md5'));
 
     RETURN NEW;
-END;
-$$;
+END; $$;
 
 CREATE TRIGGER crypt_password_project_salaried
 BEFORE INSERT ON project_salaried

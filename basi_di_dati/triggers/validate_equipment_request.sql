@@ -3,8 +3,8 @@ CREATE OR REPLACE FUNCTION validate_equipment_request()
 RETURNS TRIGGER 
 language 'plpgsql'
 AS $$
-BEGIN 
 
+BEGIN 
     IF 
         NOT EXISTS(
             SELECT *
@@ -15,7 +15,6 @@ BEGIN
     THEN
         RAISE EXCEPTION 'lab % non partecipa al progetto %', NEW.lab_code, NEW.CUP;
     END IF;
-  
 
     RETURN NEW; 
 END $$; 

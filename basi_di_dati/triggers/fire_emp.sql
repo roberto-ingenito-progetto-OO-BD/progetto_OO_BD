@@ -1,8 +1,8 @@
 CREATE OR REPLACE FUNCTION fire_emp()
 RETURNS trigger
 language 'plpgsql'
-
 AS $$
+
 DECLARE
 
 BEGIN
@@ -34,9 +34,7 @@ BEGIN
     WHERE cf_base_emp = NEW.cf AND end_date IS NULL;
 
     RETURN NEW;
-END;
-$$;
-
+END; $$;
 
 CREATE TRIGGER fire_emp
 BEFORE INSERT ON career_log

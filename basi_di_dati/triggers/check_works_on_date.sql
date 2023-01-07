@@ -5,6 +5,7 @@ language 'plpgsql'
 AS $$
 DECLARE
     max_expiration works_on.expiration%TYPE;
+    
 BEGIN
     SELECT MAX(expiration) INTO max_expiration
     FROM works_on
@@ -15,9 +16,7 @@ BEGIN
     END IF;
 
     RETURN NEW;
-END;
-$$;
-
+END; $$;
 
 CREATE TRIGGER check_works_on_date
 BEFORE INSERT ON works_on

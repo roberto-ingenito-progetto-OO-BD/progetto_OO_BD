@@ -4,11 +4,9 @@ language 'plpgsql'
 AS $$
 
 DECLARE 
-
     new_role career_log.ex_role%TYPE := '';
 
 BEGIN
-
     SELECT LL.new_role INTO new_role
     FROM last_log AS LL
     WHERE LL.cf = fired_cf;
@@ -23,6 +21,4 @@ BEGIN
     EXCEPTION 
         WHEN SQLSTATE '23514' THEN
             RAISE EXCEPTION '% non trovato', fired_cf;
-
-END;
-$$;
+END; $$;

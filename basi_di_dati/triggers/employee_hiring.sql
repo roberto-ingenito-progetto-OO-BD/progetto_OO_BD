@@ -9,8 +9,7 @@ BEGIN
     VALUES ('', 'junior', CURRENT_TIMESTAMP, NEW.cf);
 
     RETURN NEW;
-END;
-$$;
+END; $$;
 
 
 CREATE TRIGGER employee_hiring

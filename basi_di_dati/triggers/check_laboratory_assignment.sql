@@ -4,15 +4,12 @@ Controlla che il manager scientifico del laboratorio sia senior
 CREATE OR REPLACE FUNCTION check_laboratory_assignment()
 RETURNS trigger
 language 'plpgsql'
-
 AS $$
 
 DECLARE
-
     scientific_manager_type base_emp.type%TYPE := ''; -- emp_type del manager di laboratorio
 
 BEGIN
-
     SELECT "type" INTO scientific_manager_type
     FROM base_emp
     WHERE cf = NEW.cf_scientific_manager;
@@ -30,10 +27,7 @@ BEGIN
         -- viene dunque lanciata l'eccezione
         WHEN SQLSTATE '23514' THEN 
             RAISE EXCEPTION 'cf_scientific_manager does not exist';
-
-END;
-$$;
-
+END; $$;
 
 CREATE TRIGGER check_laboratory_assignment
 BEFORE INSERT OR UPDATE OF cf_scientific_manager ON laboratory

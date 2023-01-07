@@ -1,9 +1,7 @@
 -- Ad un progetto possono prendere parte contemporaneamente al massimo 3 laboratori 
 CREATE OR REPLACE FUNCTION max_lab_in_project() 
 RETURNS trigger
-
 language 'plpgsql'
-
 AS $$
 
 DECLARE

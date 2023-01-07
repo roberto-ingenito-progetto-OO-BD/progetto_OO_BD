@@ -12,8 +12,8 @@ DECLARE
 
     -- variabile contatore che scorre la quantità da acquistare 
     quantity equipment_request.quantity%TYPE; 
+    
 BEGIN
-
     -- prendo la richiesta
     SELECT * INTO request 
     FROM equipment_request
@@ -40,6 +40,4 @@ BEGIN
     
     DELETE FROM equipment_request
     WHERE code = request_code; 
-
-END;
-$$;
+END; $$;

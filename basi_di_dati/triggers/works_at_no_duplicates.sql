@@ -7,7 +7,7 @@ language 'plpgsql'
 AS $$
 
 DECLARE
-emps_number INTEGER := 0;
+    emps_number INTEGER := 0;
 
 BEGIN
     -- se end_date non è null, significa che non lavoro più in quel laboratorio

@@ -66,9 +66,107 @@ Estensione utilizzata per generare codici univoci causali.
 \noindent \textbf{Tabella project}
 \lstinputlisting{../basi_di_dati/create_tables/project.sql}\bigskip
 
-\subsection{Trigger e trigger function}
+\subsection{Trigger e trigger function}\label{trigger}
+La descrizione dei seguenti trigger è riportata nella \hyperref[vincoli_inter_relazionali]{\textcolor{red}{\underline{sezione dei vincoli inter-relazionali}}}\meskip
+\noindent \textbf{check\_equipment\_funds}
+\lstinputlisting[firstline=3]{../basi_di_dati/triggers/check_equipment_funds.sql}\bigskip
+
+\noindent \textbf{check\_funds\_to\_hire}
+\lstinputlisting[firstline=3]{../basi_di_dati/triggers/check_funds_to_hire.sql}\bigskip
+
+\noindent \textbf{check\_laboratory\_assignment}
+\lstinputlisting[firstline=4]{../basi_di_dati/triggers/check_laboratory_assignment.sql}\bigskip
+
+\noindent \textbf{check\_project\_assignment}
+\lstinputlisting[firstline=4]{../basi_di_dati/triggers/check_project_assignment.sql}\bigskip
+
+\noindent \textbf{check\_works\_on\_date}
+\lstinputlisting[firstline=2]{../basi_di_dati/triggers/check_works_on_date.sql}\bigskip
+
+\noindent \textbf{crypt\_password}
+\lstinputlisting{../basi_di_dati/triggers/crypt_password.sql}\bigskip
+
+\noindent \textbf{employee\_hiring}
+\lstinputlisting[firstline=3]{../basi_di_dati/triggers/employee_hiring.sql}\bigskip
+
+\noindent \textbf{fire\_emp}
+\lstinputlisting{../basi_di_dati/triggers/fire_emp.sql}\bigskip
+
+\noindent \textbf{max\_lab\_in\_project}
+\lstinputlisting[firstline=2]{../basi_di_dati/triggers/max_lab_in_project.sql}\bigskip
+
+\noindent \textbf{take\_part\_no\_duplicates}
+\lstinputlisting[firstline=2]{../basi_di_dati/triggers/take_part_no_duplicates.sql}\bigskip
+
+\noindent \textbf{update\_emp\_type}
+\lstinputlisting[firstline=4]{../basi_di_dati/triggers/update_emp_type.sql}\bigskip
+
+\noindent \textbf{validate\_equipment\_request}
+\lstinputlisting[firstline=2]{../basi_di_dati/triggers/validate_equipment_request.sql}\bigskip
+
+\noindent \textbf{works\_at\_no\_duplicates}
+\lstinputlisting[firstline=2]{../basi_di_dati/triggers/works_at_no_duplicates.sql}
 
 \subsection{Procedure e funzioni}
+\noindent \textbf{base\_emp\_login}\sskip
+Effettua il login di un \textit{\baseemp} con \textit{email} e \textit{password}.
+
+Restituisce il tipo (junior, middle, senior, manager) se il login è avvenuto con successo, \textit{NULL} altrimenti.
+\lstinputlisting[firstline=3]{../basi_di_dati/functions/base_emp_login.sql}\bigskip
+
+\noindent \textbf{buy\_equipment}\sskip
+Prende in ingresso un codice di una richiesta attrezzatura e il prezzo per singolo prodotto.
+
+Soddisfa la richiesta effettuando gli acquisti richiesti.
+\lstinputlisting{../basi_di_dati/functions/buy_equipment.sql}\bigskip
+
+\noindent \textbf{change\_lab\_afference}\sskip
+Prende in ingresso il \textit{cf} di un impiegato e il codice di un laboratorio nel quale spostare l'impiegato.
+
+Se l'impiegato sta lavorando in un laboratorio diverso rispetto al quale lo si vuole spostare, lo rimuove prima da quello vecchio (aggiornando la data di fine \textit{end\_date} a \textit{CURRENT\_DATE}).
+
+Successivamente si inserisce in \textit{\worksat} l'impiegato per quel laboratorio.
+\lstinputlisting[firstline=2]{../basi_di_dati/functions/change_lab_afference.sql}\bigskip
+
+\noindent \textbf{check\_seniority}\sskip
+Controlla il grado di anzianità degli impiegati e li aggiorna nel caso.\\
+Si suppone che il controllo dell'avanzamento di grado verrà fatto una volta al mese dopo il giorno di paga.
+
+Cosi facendo, i dipendenti che avanzano di grado, iniziano a lavorare con il nuovo grado e il nuovo stipendio subito dopo l'ultima paga.\sskip
+Questa funzione esclude i licenziati e quelli che attualmente sono \textit{manager}\meskip
+Quest'idea nasce dal fatto che l'inserimento viene fatto sulla data corrente.
+Avendo pensato che questa funzione venisse eseguita dall'amministratore del database una tantum, avrebbe poi creato problemi con l'avanzamento di grado e la corretta data dell'avanzamento.
+Cosi invece si sfora al massimo di un mese.
+\lstinputlisting[firstline=2, lastline=64]{../basi_di_dati/functions/check_seniority.sql}\bigskip
+
+\noindent \textbf{fire}\sskip
+Licenzia l'impiegato passato come parametro, ossia inserisce una tupla in
+
+\textit{\careerlog} con \textit{new\_role} = ' '
+\lstinputlisting[firstline=2]{../basi_di_dati/functions/fire.sql}\bigskip
+
+\noindent \textbf{hire\_project\_salaried}\sskip
+Assume un impiegato a progetto. Se questo è già stato inserito nella tabella \textit{\projectsalaried}, verrà inserita solo la tupla in \textit{workson}.
+\lstinputlisting{../basi_di_dati/functions/hire_project_salaried.sql}\bigskip
+
+\noindent \textbf{project\_salaried\_login}\sskip
+Effettua il login di un \textit{\projectsalaried} con \textit{email} e \textit{password}.
+
+Restituisce vero o falso a seconda della riuscita del login.
+\lstinputlisting[firstline=2]{../basi_di_dati/functions/project_salaried_login.sql}\bigskip
+
+\noindent \textbf{promotion\_to\_manager}\sskip
+Promuove l'impiegato preso in input a \textit{manager}.
+
+Se è gia \textit{manager} oppure è \textit{referente scientifico} o \textit{manager scientifico} non può essere promosso. \\
+Altrimenti inserisce in \textit{\careerlog} con \textit{new\_role} = 'manager'
+\lstinputlisting{../basi_di_dati/functions/promotion_to_manager.sql}\bigskip
+
+\noindent \textbf{revoke\_manager}\sskip
+Declassa l'impiegato preso in input da \textit{manager} al ruolo che aveva precedentemente.
+
+Se nel mentre che era \textit{manager} è avanzato di grado per anzianità, non dovrà essere declassato al ruolo precedente ma al nuovo grado (in base all'anzianità).
+\lstinputlisting{../basi_di_dati/functions/revoke_manager.sql}
 
 \subsection{Dizionario dei vincoli}
 \subsubsection{Vincoli intra-relazionali}
@@ -305,9 +403,54 @@ Estensione utilizzata per generare codici univoci causali.
 	\hline
 \end{tabular}
 
+\subsubsection{Vincoli inter-relazionali}\label{vincoli_inter_relazionali}
+L'implementazione SQL dei seguenti trigger è riportata nella \hyperref[trigger]{\textcolor{red}{\underline{sezione dei trigger e trigger functions}}}\medskip
+\begin{itemize}
+	\item \textbf{check\_equipment\_funds}\\
+	      Prima di acquistare un'attrezzatura, controlla che il progetto abbia i fondi.
 
+	\item \textbf{check\_funds\_to\_hire}\\
+	      Prima di assumere un impiegato a progetto, controlla che il progetto abbia i fondi.
 
-\subsubsection{Vincoli inter-relazionai}
+	\item \textbf{check\_laboratory\_assignment}\\
+	      Prima di inserire un laboratorio o prima di aggiornare il manager scientifico, controlla che questo sia \textit{senior}
+
+	\item \textbf{check\_project\_assignment}\\
+	      Prima di inserire un progetto, o prima di aggiornare il referente scientifico o il supervisore, controlla che questi siano rispettivamente \textit{senior} e \textit{manager}
+
+	\item \textbf{check\_works\_on\_date}\\
+	      Controlla che lo stesso impiegato non lavori già allo stesso progetto. Può lavorare allo stesso progetto solo se la data di assunzione del nuovo contratto è superiore alla data di scadenza del suo ultimo contratto per quel progetto.
+
+	\item \textbf{crypt\_password}\\
+	      Prima di inserire un \textit{impiegato}/\textit{impiegato a progetto}, cripta la password.
+
+	\item \textbf{employee\_hiring}\\
+	      Quando viene assunto un impiegato (ovvero quando viene inserito nella tabella \textit{\baseemp}), viene inserito un log in \textit{\careerlog}.\\
+	      \null \quad (' ', 'junior')
+
+	\item \textbf{fire\_emp}\\
+	      Prima di licenziare un impiegato, ossia prima di inserire una tupla in \textit{\careerlog} dove il campo \textit{new\_role} = ' ' , controlla che l'impiegato non sia referente scientifico o manager di progetto, oppure che non sia manager scientifico di un laboratorio.
+
+	      In quel caso non è possibile licenziarlo, bisognerà prima rimuoverlo da questi ruoli.
+
+	\item \textbf{max\_lab\_in\_project}\\
+	      Verifica che ad un progetto prendano parte al massimo $3$ laboratori
+
+	\item \textbf{take\_part\_no\_duplicates}\\
+	      Verifica che un laboratorio non prenda parte più volte allo stesso progetto nello stesso momento.
+
+	\item \textbf{update\_emp\_type}\\
+	      Quando viene inserita una tupla in \textit{\careerlog}, aggiorna il campo \textit{type} di \textit{\baseemp} in base al \textit{new\_role} appena inserito.
+
+	\item \textbf{validate\_equipment\_request}\\
+	      Prima di inserire una richiesta di attrezzatura, controlla che il laboratorio richiedente partecipi al progetto.
+
+	\item \textbf{works\_at\_no\_duplicates}\\
+	      Prima di inserire un impiegato in \textit{\worksat}, ossia prima di farlo lavorare in un laboratorio, controlla che lo stesso impiegato non lavori già allo stesso laboratorio.
+
+	\item \textbf{emp\_works\_at\_one\_lab}\\
+	      Controlla che un impiegato lavori ad un unico laboratorio
+\end{itemize}
 
 % \begin{tabular}{@{}| p{.3\textwidth} | p{.6\textwidth} |@{}} % purchase
 % 	\hline

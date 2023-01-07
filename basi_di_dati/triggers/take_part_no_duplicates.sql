@@ -1,9 +1,7 @@
 -- Ad un progetto non può lavorare lo STESSO laboratorio più di una volta nello stesso momemento 
 CREATE OR REPLACE FUNCTION take_part_no_duplicates() 
 RETURNS trigger
-
 language 'plpgsql'
-
 AS $$
 
 DECLARE

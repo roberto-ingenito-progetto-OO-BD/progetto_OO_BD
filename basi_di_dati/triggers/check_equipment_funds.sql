@@ -5,19 +5,17 @@ RETURNS TRIGGER
 language 'plpgsql'
 AS $$
 
-    DECLARE 
+DECLARE 
+    remaining_funds remaining_project_funds.funds_to_buy%TYPE; 
 
-        remaining_funds remaining_project_funds.funds_to_buy%TYPE; 
+BEGIN 
+    SELECT funds_to_buy INTO remaining_funds 
+    FROM remaining_project_funds
+    WHERE CUP = NEW.CUP; 
 
-    BEGIN 
-
-        SELECT funds_to_buy INTO remaining_funds 
-        FROM remaining_project_funds
-        WHERE CUP = NEW.CUP; 
-
-        IF remaining_funds - NEW.price < 0 THEN 
-            RAISE EXCEPTION 'not enough funds to buy equipment'; 
-        END IF; 
+    IF remaining_funds - NEW.price < 0 THEN 
+        RAISE EXCEPTION 'not enough funds to buy equipment'; 
+    END IF; 
 
     RETURN NEW; 
 END $$; 

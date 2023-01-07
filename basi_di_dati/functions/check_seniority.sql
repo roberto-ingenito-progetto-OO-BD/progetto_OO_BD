@@ -2,7 +2,6 @@
 CREATE OR REPLACE PROCEDURE check_seniority()
 language 'plpgsql'
 AS $$
-
 DECLARE
 difference_years INTEGER;
 emp_current_role career_log.new_role%TYPE := '';
@@ -30,8 +29,7 @@ log_cursor CURSOR FOR
         SELECT MAX(C1.new_role_date)
     	FROM career_log AS C1
     	WHERE C.cf = C1.cf AND (C1.ex_role,C1.new_role) = ('','junior')
-    )
-;
+    );
 
 BEGIN
     FOR item IN log_cursor LOOP
@@ -61,8 +59,7 @@ BEGIN
         END IF;
 
     END LOOP;
-END;
-$$;
+END;$$;
 
 
 /*
