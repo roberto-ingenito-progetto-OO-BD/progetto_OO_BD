@@ -1,3 +1,5 @@
+[Link alla documentazione](https://github.com/roberto-ingenito/progetto_OO_BD/raw/main/basi_di_dati/documentazione.pdf)
+
 #### Eseguire l'accesso al dbms con utente `postgres` ed eseguire la query seguente
 ```sql
 CREATE DATABASE company WITH OWNER postgres;
