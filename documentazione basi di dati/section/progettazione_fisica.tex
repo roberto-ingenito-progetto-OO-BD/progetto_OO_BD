@@ -242,15 +242,8 @@ Successivamente si inserisce in \textit{\worksat} l'impiegato per quel laborator
 
 \newpage
 \noindent \textbf{check\_seniority}\sskip
-Controlla il grado di anzianità degli impiegati e li aggiorna nel caso.\\
-Si suppone che il controllo dell'avanzamento di grado verrà fatto una volta al mese dopo il giorno di paga.
-
-Cosi facendo, i dipendenti che avanzano di grado, iniziano a lavorare con il nuovo grado e il nuovo stipendio subito dopo l'ultima paga.\sskip
-Questa funzione esclude i licenziati e quelli che attualmente sono \textit{manager}\meskip
-Quest'idea nasce dal fatto che l'inserimento viene fatto sulla data corrente.
-Avendo pensato che questa funzione venisse eseguita dall'amministratore del database una tantum, avrebbe poi creato problemi con l'avanzamento di grado e la corretta data dell'avanzamento.
-Cosi invece si sfora al massimo di un mese.
-\lstinputlisting[firstline=2, lastline=64]{../basi_di_dati/functions/check_seniority.sql}\bigskip
+Controlla il grado di anzianità degli impiegati e li aggiorna nel caso. Si suppone che il controllo dell'avanzamento di grado verrà fatto una volta al mese dopo il giorno di paga.
+\lstinputlisting[firstline=2, lastline=62]{../basi_di_dati/functions/check_seniority.sql}\bigskip
 
 \noindent \textbf{fire}\sskip
 Licenzia l'impiegato passato come parametro, ossia inserisce una tupla in
@@ -258,7 +251,6 @@ Licenzia l'impiegato passato come parametro, ossia inserisce una tupla in
 \textit{\careerlog} con \textit{new\_role} = ' '
 \lstinputlisting[firstline=2]{../basi_di_dati/functions/fire.sql}\bigskip
 
-\newpage
 \noindent \textbf{hire\_project\_salaried}\sskip
 Assume un impiegato a progetto. Se questo è già stato inserito nella tabella \textit{\projectsalaried}, verrà inserita solo la tupla in \textit{workson}.
 \lstinputlisting{../basi_di_dati/functions/hire_project_salaried.sql}\bigskip

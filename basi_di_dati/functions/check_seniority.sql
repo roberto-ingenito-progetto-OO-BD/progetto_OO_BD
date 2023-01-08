@@ -57,7 +57,6 @@ BEGIN
             INSERT INTO career_log (ex_role, new_role, new_role_date, CF) 
             VALUES ('junior', 'middle', CURRENT_TIMESTAMP, item.cf);
         END IF;
-
     END LOOP;
 END;$$;
 
