@@ -5,7 +5,7 @@ CREATE DATABASE company WITH OWNER postgres;
 -- mi connetto al database company CON POSTGRES
 
 CREATE USER project_admin WITH 
-    PASSWORD 'a'
+    PASSWORD 'proj_admin'
     CREATEROLE
     CONNECTION LIMIT 1;
 
