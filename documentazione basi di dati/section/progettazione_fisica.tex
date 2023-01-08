@@ -19,6 +19,96 @@ Estensione utilizzata per generare codici univoci causali.
 \lstinputlisting{../basi_di_dati/extension/enable_uuid.sql}
 
 \subsection{Gestione ruoli e permessi}
+All'utente \textit{project\_admin} è affidata la gestione dello schema \textit{projects\_schema}. Si occuperà di tutto, dalla creazione delle tabelle ai trigger \dots\\
+Non essendo possessore dello schema, gli è impossibile cancellarlo.\sskip
+Il numero massimo di connessioni è $1$.
+\begin{lstlisting}
+CREATE USER project_admin WITH 
+    PASSWORD 'a'
+    CREATEROLE
+    CONNECTION LIMIT 1;
+
+GRANT ALL PRIVILEGES ON SCHEMA projects_schema TO project_admin;
+\end{lstlisting}\medskip
+Utente utilizzato esclusivamente per effettuare l'accesso lato client.\\
+Ha accesso in lettura solo in \textit{\baseemp} e \textit{\projectsalaried} perché ha bisogno di \textit{email} e \textit{password}
+\begin{lstlisting}
+CREATE USER login_user WITH
+	PASSWORD 'login';
+
+GRANT SELECT ON base_emp, project_salaried TO login_user;
+\end{lstlisting}
+\newpage \noindent
+Ruolo generico che accorpa permessi necessari a tutti gli utenti che ne "ereditano" il ruolo.
+\begin{lstlisting}
+CREATE ROLE base_emp_role;
+
+GRANT USAGE ON SCHEMA projects_schema TO base_emp_role;
+
+GRANT SELECT ON base_emp, career_log, works_at, laboratory, take_part, equipment, site 
+	     TO base_emp_role;
+
+GRANT SELECT(CUP, name, description, start_date, end_date, deadline) ON project 
+	     TO base_emp_role;
+\end{lstlisting}\medskip
+\textit{junior\_user} e \textit{middle\_user} non hanno ulteriori permessi specifici.
+\begin{lstlisting}
+CREATE USER junior_user WITH 
+	PASSWORD 'junior'
+	IN ROLE base_emp_role;
+
+CREATE USER middle_user WITH
+	PASSWORD 'middle'
+	IN ROLE base_emp_role;
+\end{lstlisting}\medskip
+L'utente \textit{senior\_user} accorpa i permessi di \textit{scientific\_referent} e \textit{scientific\_manager}.
+\begin{lstlisting}
+CREATE USER senior_user WITH
+	PASSWORD 'senior'
+	IN ROLE base_emp_role;
+
+-- Possibilità di prendere parte ad un progetto e richiedere attrezzatura
+GRANT INSERT ON take_part, equipment_request TO senior_user; 
+
+-- Possibilità di abbandonare un progetto
+GRANT UPDATE(end_date) ON take_part TO senior_user;
+
+-- Modificare la richiesta di attrezzatura
+GRANT UPDATE(specs, quantity) ON equipment_request TO senior_user;
+\end{lstlisting}
+\begin{lstlisting}
+CREATE USER manager_user WITH
+	PASSWORD 'manager'
+	IN ROLE base_emp_role;	
+\end{lstlisting}\medskip
+Questi permessi sono condivisi sia dallo \textit{scientific\_referent} che dal \textit{manager}
+\begin{lstlisting}
+GRANT SELECT ON project,  
+                purchase,  
+                equipment_request,  
+                project_salaried,  
+                works_on, 
+                remaining_project_funds 
+             TO manager_user, senior_user;
+
+GRANT INSERT ON equipment, 
+                purchase, 
+                project_salaried, 
+                works_on 
+             TO manager_user, senior_user;
+
+GRANT DELETE ON equipment_request TO manager_user, senior_user;
+\end{lstlisting}
+Non essendo \textit{\baseemp}, non ne eredita il ruolo ma può visualizzare solo le informazioni dei progetti a cui lavora.
+\begin{lstlisting}
+CREATE USER project_salaried_user WITH
+	PASSWORD 'proj_sal';
+
+GRANT USAGE ON SCHEMA projects_schema TO project_salaried_user;
+
+GRANT SELECT ON project_salaried, works_on, project
+             TO project_salaried_user;
+\end{lstlisting}
 
 \subsection{Creazione domini}
 \lstinputlisting{../basi_di_dati/domains/cf_type.sql}
@@ -29,6 +119,7 @@ Estensione utilizzata per generare codici univoci causali.
 \lstinputlisting{../basi_di_dati/domains/password_type.sql}
 \lstinputlisting{../basi_di_dati/domains/salary_type.sql}
 
+\newpage
 \subsection{Creazione tabelle}
 \noindent \textbf{Tabella \baseemp}
 \lstinputlisting[lastline=14]{../basi_di_dati/create_tables/base_emp.sql}\bigskip
@@ -36,6 +127,7 @@ Estensione utilizzata per generare codici univoci causali.
 \noindent \textbf{Tabella \careerlog}
 \lstinputlisting[lastline=33]{../basi_di_dati/create_tables/career_log.sql}\bigskip
 
+\newpage
 \noindent \textbf{Tabella laboratory}
 \lstinputlisting{../basi_di_dati/create_tables/laboratory.sql}\bigskip
 
@@ -45,6 +137,7 @@ Estensione utilizzata per generare codici univoci causali.
 \noindent \textbf{Tabella \projectsalaried}
 \lstinputlisting{../basi_di_dati/create_tables/project_salaried.sql}\bigskip
 
+\newpage
 \noindent \textbf{Tabella \workson}
 \lstinputlisting{../basi_di_dati/create_tables/works_on.sql}\bigskip
 
@@ -54,18 +147,21 @@ Estensione utilizzata per generare codici univoci causali.
 \noindent \textbf{Tabella equipment}
 \lstinputlisting{../basi_di_dati/create_tables/equipment.sql}\bigskip
 
+\newpage
 \noindent \textbf{Tabella purchase}
 \lstinputlisting{../basi_di_dati/create_tables/purchase.sql}\bigskip
 
 \noindent \textbf{Tabella \worksat}
 \lstinputlisting{../basi_di_dati/create_tables/works_at.sql}\bigskip
 
+\newpage
 \noindent \textbf{Tabella \equipmentrequest}
 \lstinputlisting{../basi_di_dati/create_tables/equipment_request.sql}\bigskip
 
 \noindent \textbf{Tabella project}
 \lstinputlisting{../basi_di_dati/create_tables/project.sql}\bigskip
 
+\newpage
 \subsection{Trigger e trigger function}\label{trigger}
 La descrizione dei seguenti trigger è riportata nella \hyperref[vincoli_inter_relazionali]{\textcolor{red}{\underline{sezione dei vincoli inter-relazionali}}}\meskip
 \noindent \textbf{check\_equipment\_funds}
@@ -74,18 +170,21 @@ La descrizione dei seguenti trigger è riportata nella \hyperref[vincoli_inter_r
 \noindent \textbf{check\_funds\_to\_hire}
 \lstinputlisting[firstline=3]{../basi_di_dati/triggers/check_funds_to_hire.sql}\bigskip
 
+\newpage
 \noindent \textbf{check\_laboratory\_assignment}
 \lstinputlisting[firstline=4]{../basi_di_dati/triggers/check_laboratory_assignment.sql}\bigskip
-
+\newpage
 \noindent \textbf{check\_project\_assignment}
 \lstinputlisting[firstline=4]{../basi_di_dati/triggers/check_project_assignment.sql}\bigskip
 
+\newpage
 \noindent \textbf{check\_works\_on\_date}
 \lstinputlisting[firstline=2]{../basi_di_dati/triggers/check_works_on_date.sql}\bigskip
 
 \noindent \textbf{crypt\_password}
 \lstinputlisting{../basi_di_dati/triggers/crypt_password.sql}\bigskip
 
+\newpage
 \noindent \textbf{employee\_hiring}
 \lstinputlisting[firstline=3]{../basi_di_dati/triggers/employee_hiring.sql}\bigskip
 
@@ -95,18 +194,23 @@ La descrizione dei seguenti trigger è riportata nella \hyperref[vincoli_inter_r
 \noindent \textbf{max\_lab\_in\_project}
 \lstinputlisting[firstline=2]{../basi_di_dati/triggers/max_lab_in_project.sql}\bigskip
 
-\noindent \textbf{take\_part\_no\_duplicates}
-\lstinputlisting[firstline=2]{../basi_di_dati/triggers/take_part_no_duplicates.sql}\bigskip
-
 \noindent \textbf{update\_emp\_type}
 \lstinputlisting[firstline=4]{../basi_di_dati/triggers/update_emp_type.sql}\bigskip
+
+\newpage
+\noindent \textbf{take\_part\_no\_duplicates}
+\lstinputlisting[firstline=2]{../basi_di_dati/triggers/take_part_no_duplicates.sql}\bigskip
 
 \noindent \textbf{validate\_equipment\_request}
 \lstinputlisting[firstline=2]{../basi_di_dati/triggers/validate_equipment_request.sql}\bigskip
 
 \noindent \textbf{works\_at\_no\_duplicates}
-\lstinputlisting[firstline=2]{../basi_di_dati/triggers/works_at_no_duplicates.sql}
+\lstinputlisting[firstline=2]{../basi_di_dati/triggers/works_at_no_duplicates.sql}\bigskip
 
+\noindent \textbf{end\_project}
+\lstinputlisting[]{../basi_di_dati/triggers/end_project.sql}
+
+\newpage
 \subsection{Procedure e funzioni}
 \noindent \textbf{base\_emp\_login}\sskip
 Effettua il login di un \textit{\baseemp} con \textit{email} e \textit{password}.
@@ -114,12 +218,20 @@ Effettua il login di un \textit{\baseemp} con \textit{email} e \textit{password}
 Restituisce il tipo (junior, middle, senior, manager) se il login è avvenuto con successo, \textit{NULL} altrimenti.
 \lstinputlisting[firstline=3]{../basi_di_dati/functions/base_emp_login.sql}\bigskip
 
+\noindent \textbf{project\_salaried\_login}\sskip
+Effettua il login di un \textit{\projectsalaried} con \textit{email} e \textit{password}.
+
+Restituisce vero o falso a seconda della riuscita del login.
+\lstinputlisting[firstline=2]{../basi_di_dati/functions/project_salaried_login.sql}\bigskip
+
+\newpage
 \noindent \textbf{buy\_equipment}\sskip
 Prende in ingresso un codice di una richiesta attrezzatura e il prezzo per singolo prodotto.
 
 Soddisfa la richiesta effettuando gli acquisti richiesti.
 \lstinputlisting{../basi_di_dati/functions/buy_equipment.sql}\bigskip
 
+\newpage
 \noindent \textbf{change\_lab\_afference}\sskip
 Prende in ingresso il \textit{cf} di un impiegato e il codice di un laboratorio nel quale spostare l'impiegato.
 
@@ -128,6 +240,7 @@ Se l'impiegato sta lavorando in un laboratorio diverso rispetto al quale lo si v
 Successivamente si inserisce in \textit{\worksat} l'impiegato per quel laboratorio.
 \lstinputlisting[firstline=2]{../basi_di_dati/functions/change_lab_afference.sql}\bigskip
 
+\newpage
 \noindent \textbf{check\_seniority}\sskip
 Controlla il grado di anzianità degli impiegati e li aggiorna nel caso.\\
 Si suppone che il controllo dell'avanzamento di grado verrà fatto una volta al mese dopo il giorno di paga.
@@ -145,16 +258,12 @@ Licenzia l'impiegato passato come parametro, ossia inserisce una tupla in
 \textit{\careerlog} con \textit{new\_role} = ' '
 \lstinputlisting[firstline=2]{../basi_di_dati/functions/fire.sql}\bigskip
 
+\newpage
 \noindent \textbf{hire\_project\_salaried}\sskip
 Assume un impiegato a progetto. Se questo è già stato inserito nella tabella \textit{\projectsalaried}, verrà inserita solo la tupla in \textit{workson}.
 \lstinputlisting{../basi_di_dati/functions/hire_project_salaried.sql}\bigskip
 
-\noindent \textbf{project\_salaried\_login}\sskip
-Effettua il login di un \textit{\projectsalaried} con \textit{email} e \textit{password}.
-
-Restituisce vero o falso a seconda della riuscita del login.
-\lstinputlisting[firstline=2]{../basi_di_dati/functions/project_salaried_login.sql}\bigskip
-
+\newpage
 \noindent \textbf{promotion\_to\_manager}\sskip
 Promuove l'impiegato preso in input a \textit{manager}.
 
@@ -162,6 +271,7 @@ Se è gia \textit{manager} oppure è \textit{referente scientifico} o \textit{ma
 Altrimenti inserisce in \textit{\careerlog} con \textit{new\_role} = 'manager'
 \lstinputlisting{../basi_di_dati/functions/promotion_to_manager.sql}\bigskip
 
+\newpage
 \noindent \textbf{revoke\_manager}\sskip
 Declassa l'impiegato preso in input da \textit{manager} al ruolo che aveva precedentemente.
 
@@ -403,6 +513,7 @@ Se nel mentre che era \textit{manager} è avanzato di grado per anzianità, non 
 	\hline
 \end{tabular}
 
+\newpage
 \subsubsection{Vincoli inter-relazionali}\label{vincoli_inter_relazionali}
 L'implementazione SQL dei seguenti trigger è riportata nella \hyperref[trigger]{\textcolor{red}{\underline{sezione dei trigger e trigger functions}}}\medskip
 \begin{itemize}
@@ -450,20 +561,8 @@ L'implementazione SQL dei seguenti trigger è riportata nella \hyperref[trigger]
 
 	\item \textbf{emp\_works\_at\_one\_lab}\\
 	      Controlla che un impiegato lavori ad un unico laboratorio
+
+
+	\item \textbf{end\_project}\\
+	      Quando un progetto termina, aggiorna l'\textit{end\_date} anche in \textit{\takepart}
 \end{itemize}
-
-% \begin{tabular}{@{}| p{.3\textwidth} | p{.6\textwidth} |@{}} % purchase
-% 	\hline
-% 	\multicolumn{2}{|c|}{\textbf{}}         \\
-% 	\hline
-% 	\textbf{Vincolo} & \textbf{Descrizione} \\
-% 	\hline
-% 	                 &                      \\
-% 	\hline
-% \end{tabular}\bskip
-
-% \begin{minipage}[t]{.6\textwidth}
-% 	\raggedright
-% 	Vincolo di chiave esterna.\\
-% 	Se viene eliminato il progetto (o modificato il cup), verrà eliminata (o aggiornata) anche la tupla in \textit{\equipmentrequest}
-% \end{minipage}

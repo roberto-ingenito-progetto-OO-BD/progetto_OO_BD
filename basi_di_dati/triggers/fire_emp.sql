@@ -3,8 +3,6 @@ RETURNS trigger
 language 'plpgsql'
 AS $$
 
-DECLARE
-
 BEGIN
     -- se l'impiegato da licenziare è un referente scientifico oppure manager di progetto
     -- e il progetto è in corso (end_date NULL)

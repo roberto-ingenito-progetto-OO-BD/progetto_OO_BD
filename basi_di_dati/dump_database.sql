@@ -770,6 +770,27 @@ CREATE OR REPLACE TRIGGER validate_equipment_request
 BEFORE INSERT ON equipment_request 
 FOR EACH ROW
 EXECUTE FUNCTION validate_equipment_request(); 
+
+
+CREATE OR REPLACE FUNCTION end_project() 
+RETURNS TRIGGER 
+language 'plpgsql'
+AS $$
+
+BEGIN 
+    UPDATE take_part
+    SET end_date = NEW.end_date
+    WHERE end_date IS NULL AND CUP = NEW.CUP;
+
+    RETURN NEW; 
+END $$; 
+
+CREATE OR REPLACE TRIGGER end_project
+AFTER UPDATE OF end_date ON project
+FOR EACH ROW
+EXECUTE FUNCTION end_project();
+
+
 -- Ad un progetto non può lavorare lo STESSO laboratorio più di una volta nello stesso momemento 
 CREATE OR REPLACE FUNCTION take_part_no_duplicates() 
 RETURNS trigger
