@@ -123,7 +123,7 @@ CREATE TABLE site(
 CREATE TABLE project(
     CUP             cup_type,
     funds           DECIMAL(10,2)   NOT NULL,
-    "name"          VARCHAR(50),
+    "name"          VARCHAR(50)     UNIQUE,
     description     VARCHAR(100)    NOT NULL,
     start_date      DATE            NOT NULL DEFAULT CURRENT_DATE,
     end_date        DATE,

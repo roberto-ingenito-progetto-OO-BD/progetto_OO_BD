@@ -14,9 +14,9 @@ Le estensioni possono essere attivate solo da un superuser (\textit{postgres} in
 
 Le estensioni vengono create sullo schema \textit{projects\_schema} così che l'utente \textit{project\_admin} ne abbia l'accesso.\meskip
 Estensione utilizzata per la cifratura delle password, usata per l'autenticazione lato client.
-\lstinputlisting{../basi_di_dati/extension/enable_crypt.sql}\medskip
+\lstinputlisting{../extension/enable_crypt.sql}\medskip
 Estensione utilizzata per generare codici univoci causali.
-\lstinputlisting{../basi_di_dati/extension/enable_uuid.sql}
+\lstinputlisting{../extension/enable_uuid.sql}
 
 \subsection{Gestione ruoli e permessi}
 All'utente \textit{project\_admin} è affidata la gestione dello schema \textit{projects\_schema}. Si occuperà di tutto, dalla creazione delle tabelle ai trigger \dots\\
@@ -111,104 +111,104 @@ GRANT SELECT ON project_salaried, works_on, project
 \end{lstlisting}
 
 \subsection{Creazione domini}
-\lstinputlisting{../basi_di_dati/domains/cf_type.sql}
-\lstinputlisting{../basi_di_dati/domains/cup_type.sql}
-\lstinputlisting{../basi_di_dati/domains/emp_type.sql}
-\lstinputlisting{../basi_di_dati/domains/equipment_name_type.sql}
-\lstinputlisting{../basi_di_dati/domains/name_type.sql}
-\lstinputlisting{../basi_di_dati/domains/password_type.sql}
-\lstinputlisting{../basi_di_dati/domains/salary_type.sql}
+\lstinputlisting{../domains/cf_type.sql}
+\lstinputlisting{../domains/cup_type.sql}
+\lstinputlisting{../domains/emp_type.sql}
+\lstinputlisting{../domains/equipment_name_type.sql}
+\lstinputlisting{../domains/name_type.sql}
+\lstinputlisting{../domains/password_type.sql}
+\lstinputlisting{../domains/salary_type.sql}
 
 \newpage
 \subsection{Creazione tabelle}
 \noindent \textbf{Tabella \baseemp}
-\lstinputlisting[lastline=14]{../basi_di_dati/create_tables/base_emp.sql}\bigskip
+\lstinputlisting[lastline=14]{../create_tables/base_emp.sql}\bigskip
 
 \noindent \textbf{Tabella \careerlog}
-\lstinputlisting[lastline=33]{../basi_di_dati/create_tables/career_log.sql}\bigskip
+\lstinputlisting[lastline=33]{../create_tables/career_log.sql}\bigskip
 
 \newpage
 \noindent \textbf{Tabella laboratory}
-\lstinputlisting{../basi_di_dati/create_tables/laboratory.sql}\bigskip
+\lstinputlisting{../create_tables/laboratory.sql}\bigskip
 
 \noindent \textbf{Tabella \takepart}
-\lstinputlisting{../basi_di_dati/create_tables/take_part.sql}\bigskip
+\lstinputlisting{../create_tables/take_part.sql}\bigskip
 
 \noindent \textbf{Tabella \projectsalaried}
-\lstinputlisting{../basi_di_dati/create_tables/project_salaried.sql}\bigskip
+\lstinputlisting{../create_tables/project_salaried.sql}\bigskip
 
 \newpage
 \noindent \textbf{Tabella \workson}
-\lstinputlisting{../basi_di_dati/create_tables/works_on.sql}\bigskip
+\lstinputlisting{../create_tables/works_on.sql}\bigskip
 
 \noindent \textbf{Tabella site}
-\lstinputlisting{../basi_di_dati/create_tables/site.sql}\bigskip
+\lstinputlisting{../create_tables/site.sql}\bigskip
 
 \noindent \textbf{Tabella equipment}
-\lstinputlisting{../basi_di_dati/create_tables/equipment.sql}\bigskip
+\lstinputlisting{../create_tables/equipment.sql}\bigskip
 
 \newpage
 \noindent \textbf{Tabella purchase}
-\lstinputlisting{../basi_di_dati/create_tables/purchase.sql}\bigskip
+\lstinputlisting{../create_tables/purchase.sql}\bigskip
 
 \noindent \textbf{Tabella \worksat}
-\lstinputlisting{../basi_di_dati/create_tables/works_at.sql}\bigskip
+\lstinputlisting{../create_tables/works_at.sql}\bigskip
 
 \newpage
 \noindent \textbf{Tabella \equipmentrequest}
-\lstinputlisting{../basi_di_dati/create_tables/equipment_request.sql}\bigskip
+\lstinputlisting{../create_tables/equipment_request.sql}\bigskip
 
 \noindent \textbf{Tabella project}
-\lstinputlisting{../basi_di_dati/create_tables/project.sql}\bigskip
+\lstinputlisting{../create_tables/project.sql}\bigskip
 
 \newpage
 \subsection{Trigger e trigger function}\label{trigger}
 La descrizione dei seguenti trigger è riportata nella \hyperref[vincoli_inter_relazionali]{\textcolor{red}{\underline{sezione dei vincoli inter-relazionali}}}\meskip
 \noindent \textbf{check\_equipment\_funds}
-\lstinputlisting[firstline=3]{../basi_di_dati/triggers/check_equipment_funds.sql}\bigskip
+\lstinputlisting[firstline=3]{../triggers/check_equipment_funds.sql}\bigskip
 
 \noindent \textbf{check\_funds\_to\_hire}
-\lstinputlisting[firstline=3]{../basi_di_dati/triggers/check_funds_to_hire.sql}\bigskip
+\lstinputlisting[firstline=3]{../triggers/check_funds_to_hire.sql}\bigskip
 
 \newpage
 \noindent \textbf{check\_laboratory\_assignment}
-\lstinputlisting[firstline=4]{../basi_di_dati/triggers/check_laboratory_assignment.sql}\bigskip
+\lstinputlisting[firstline=4]{../triggers/check_laboratory_assignment.sql}\bigskip
 \newpage
 \noindent \textbf{check\_project\_assignment}
-\lstinputlisting[firstline=4]{../basi_di_dati/triggers/check_project_assignment.sql}\bigskip
+\lstinputlisting[firstline=4]{../triggers/check_project_assignment.sql}\bigskip
 
 \newpage
 \noindent \textbf{check\_works\_on\_date}
-\lstinputlisting[firstline=2]{../basi_di_dati/triggers/check_works_on_date.sql}\bigskip
+\lstinputlisting[firstline=2]{../triggers/check_works_on_date.sql}\bigskip
 
 \noindent \textbf{crypt\_password}
-\lstinputlisting{../basi_di_dati/triggers/crypt_password.sql}\bigskip
+\lstinputlisting{../triggers/crypt_password.sql}\bigskip
 
 \newpage
 \noindent \textbf{employee\_hiring}
-\lstinputlisting[firstline=3]{../basi_di_dati/triggers/employee_hiring.sql}\bigskip
+\lstinputlisting[firstline=3]{../triggers/employee_hiring.sql}\bigskip
 
 \noindent \textbf{fire\_emp}
-\lstinputlisting{../basi_di_dati/triggers/fire_emp.sql}\bigskip
+\lstinputlisting{../triggers/fire_emp.sql}\bigskip
 
 \noindent \textbf{max\_lab\_in\_project}
-\lstinputlisting[firstline=2]{../basi_di_dati/triggers/max_lab_in_project.sql}\bigskip
+\lstinputlisting[firstline=2]{../triggers/max_lab_in_project.sql}\bigskip
 
 \noindent \textbf{update\_emp\_type}
-\lstinputlisting[firstline=4]{../basi_di_dati/triggers/update_emp_type.sql}\bigskip
+\lstinputlisting[firstline=4]{../triggers/update_emp_type.sql}\bigskip
 
 \newpage
 \noindent \textbf{take\_part\_no\_duplicates}
-\lstinputlisting[firstline=2]{../basi_di_dati/triggers/take_part_no_duplicates.sql}\bigskip
+\lstinputlisting[firstline=2]{../triggers/take_part_no_duplicates.sql}\bigskip
 
 \noindent \textbf{validate\_equipment\_request}
-\lstinputlisting[firstline=2]{../basi_di_dati/triggers/validate_equipment_request.sql}\bigskip
+\lstinputlisting[firstline=2]{../triggers/validate_equipment_request.sql}\bigskip
 
 \noindent \textbf{works\_at\_no\_duplicates}
-\lstinputlisting[firstline=2]{../basi_di_dati/triggers/works_at_no_duplicates.sql}\bigskip
+\lstinputlisting[firstline=2]{../triggers/works_at_no_duplicates.sql}\bigskip
 
 \noindent \textbf{end\_project}
-\lstinputlisting[]{../basi_di_dati/triggers/end_project.sql}
+\lstinputlisting[]{../triggers/end_project.sql}
 
 \newpage
 \subsection{Procedure e funzioni}
@@ -216,20 +216,20 @@ La descrizione dei seguenti trigger è riportata nella \hyperref[vincoli_inter_r
 Effettua il login di un \textit{\baseemp} con \textit{email} e \textit{password}.
 
 Restituisce il tipo (junior, middle, senior, manager) se il login è avvenuto con successo, \textit{NULL} altrimenti.
-\lstinputlisting[firstline=3]{../basi_di_dati/functions/base_emp_login.sql}\bigskip
+\lstinputlisting[firstline=3]{../functions/base_emp_login.sql}\bigskip
 
 \noindent \textbf{project\_salaried\_login}\sskip
 Effettua il login di un \textit{\projectsalaried} con \textit{email} e \textit{password}.
 
 Restituisce vero o falso a seconda della riuscita del login.
-\lstinputlisting[firstline=2]{../basi_di_dati/functions/project_salaried_login.sql}\bigskip
+\lstinputlisting[firstline=2]{../functions/project_salaried_login.sql}\bigskip
 
 \newpage
 \noindent \textbf{buy\_equipment}\sskip
 Prende in ingresso un codice di una richiesta attrezzatura e il prezzo per singolo prodotto.
 
 Soddisfa la richiesta effettuando gli acquisti richiesti.
-\lstinputlisting{../basi_di_dati/functions/buy_equipment.sql}\bigskip
+\lstinputlisting{../functions/buy_equipment.sql}\bigskip
 
 \newpage
 \noindent \textbf{change\_lab\_afference}\sskip
@@ -238,22 +238,22 @@ Prende in ingresso il \textit{cf} di un impiegato e il codice di un laboratorio 
 Se l'impiegato sta lavorando in un laboratorio diverso rispetto al quale lo si vuole spostare, lo rimuove prima da quello vecchio (aggiornando la data di fine \textit{end\_date} a \textit{CURRENT\_DATE}).
 
 Successivamente si inserisce in \textit{\worksat} l'impiegato per quel laboratorio.
-\lstinputlisting[firstline=2]{../basi_di_dati/functions/change_lab_afference.sql}\bigskip
+\lstinputlisting[firstline=2]{../functions/change_lab_afference.sql}\bigskip
 
 \newpage
 \noindent \textbf{check\_seniority}\sskip
 Controlla il grado di anzianità degli impiegati e li aggiorna nel caso. Si suppone che il controllo dell'avanzamento di grado verrà fatto una volta al mese dopo il giorno di paga.
-\lstinputlisting[firstline=2, lastline=62]{../basi_di_dati/functions/check_seniority.sql}\bigskip
+\lstinputlisting[firstline=2, lastline=62]{../functions/check_seniority.sql}\bigskip
 
 \noindent \textbf{fire}\sskip
 Licenzia l'impiegato passato come parametro, ossia inserisce una tupla in
 
 \textit{\careerlog} con \textit{new\_role} = ' '
-\lstinputlisting[firstline=2]{../basi_di_dati/functions/fire.sql}\bigskip
+\lstinputlisting[firstline=2]{../functions/fire.sql}\bigskip
 
 \noindent \textbf{hire\_project\_salaried}\sskip
 Assume un impiegato a progetto. Se questo è già stato inserito nella tabella \textit{\projectsalaried}, verrà inserita solo la tupla in \textit{workson}.
-\lstinputlisting{../basi_di_dati/functions/hire_project_salaried.sql}\bigskip
+\lstinputlisting{../functions/hire_project_salaried.sql}\bigskip
 
 \newpage
 \noindent \textbf{promotion\_to\_manager}\sskip
@@ -261,14 +261,14 @@ Promuove l'impiegato preso in input a \textit{manager}.
 
 Se è gia \textit{manager} oppure è \textit{referente scientifico} o \textit{manager scientifico} non può essere promosso. \\
 Altrimenti inserisce in \textit{\careerlog} con \textit{new\_role} = 'manager'
-\lstinputlisting{../basi_di_dati/functions/promotion_to_manager.sql}\bigskip
+\lstinputlisting{../functions/promotion_to_manager.sql}\bigskip
 
 \newpage
 \noindent \textbf{revoke\_manager}\sskip
 Declassa l'impiegato preso in input da \textit{manager} al ruolo che aveva precedentemente.
 
 Se nel mentre che era \textit{manager} è avanzato di grado per anzianità, non dovrà essere declassato al ruolo precedente ma al nuovo grado (in base all'anzianità).
-\lstinputlisting{../basi_di_dati/functions/revoke_manager.sql}
+\lstinputlisting{../functions/revoke_manager.sql}
 
 \subsection{Dizionario dei vincoli}
 \subsubsection{Vincoli intra-relazionali}
