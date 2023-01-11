@@ -75,6 +75,9 @@ GRANT UPDATE(end_date) ON take_part TO senior_user;
 
 -- Modificare la richiesta di attrezzatura
 GRANT UPDATE(specs, quantity) ON equipment_request TO senior_user;
+
+-- il manager di un progetto ne imposta la fine
+GRANT UPDATE(end_date) ON project TO manager_user; 
 \end{lstlisting}
 \begin{lstlisting}
 CREATE USER manager_user WITH

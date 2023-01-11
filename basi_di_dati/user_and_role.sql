@@ -112,3 +112,4 @@ GRANT DELETE ON equipment_request TO manager_user, senior_user;
 -- update
 GRANT UPDATE(end_date) ON take_part TO senior_user;  -- scientific manager che termina di partecipare ad un progetto con quel lab
 GRANT UPDATE(specs, quantity) ON equipment_request TO senior_user; -- scientific manager
+GRANT UPDATE(end_date) ON project TO manager_user; -- il manager di un progetto ne imposta la fine
