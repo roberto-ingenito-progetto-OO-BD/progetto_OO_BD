@@ -27,6 +27,7 @@ public class LoginDAOImplementation implements LoginDAO {
                 case "middle" -> EmpType.middle;
                 case "senior" -> EmpType.senior;
                 case "manager" -> EmpType.manager;
+                default -> null;
             };
         } catch (SQLException e) {
             throw new RuntimeException(e);
