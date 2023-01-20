@@ -33,9 +33,8 @@ gli attributi con un asterisco * alla fine sono chiavi esterne\meskip
 \begin{tabular}{@{}l l@{}}
 	\textbf{\textit{\baseemp}}          & (\underline{CF}, first\_name, last\_name, email, passw, birth\_date, type, role, salary)         \medskip   \\
 
-	\textbf{\textit{\careerlog}}        & \makecell[lt]{(\underline{lab\_code}, lab\_name, topic, cf\_scientific\_manager*, site\_number*) \smallskip \\
-	cf\_scientific\_manager $\mapsto$ \baseemp.CF                                                                                                     \\
-	site\_number $\mapsto$ site.site\_number}                                                                                               \medskip  \\
+	\textbf{\textit{\careerlog}}        & \makecell[lt]{(ex\_role, new\_role, new\_role\_date, cf\_base\_emp*) \smallskip                             \\
+	cf\_base\_emp $\mapsto$ \baseemp.CF }                                                                                               \medskip      \\
 
 	\textbf{\textit{laboratory}}        & \makecell[lt]{(\underline{lab\_code}, lab\_name, topic, cf\_scientific\_manager*, site\_number*) \smallskip \\
 	cf\_scientific\_manager $\mapsto$ \baseemp.CF                                                                                                     \\

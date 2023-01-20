@@ -36,7 +36,7 @@ L'amministratore, a cui è affidata la gestione del database, si occupa di:
 \end{itemize}\smallskip
 Per ogni progetto viene stabilita una data di inizio, una \textit{deadline} per la conclusione del progetto e dei fondi.
 
-Inoltre, si tiene traccia dell'effettiva data in cui il progetto è terminato \textit{end\_date}; può accadere che il progetto si protragga oltre la deadline\sskip
+Inoltre, si tiene traccia dell'effettiva data in cui il progetto è terminato \textit{end\_date}; può accadere che il progetto si protragga oltre la deadline.\sskip
 Ad un progetto possono prendere parte massimo 3 laboratori contemporaneamente.\\
 Ogni impiegato che afferisce ad un laboratorio prende parte automaticamente a tutti i progetti a cui quel laboratorio sta lavorando.
 
@@ -59,7 +59,7 @@ La relazione \textit{\workson} infatti, tiene traccia di tutte le volte in cui u
 \subsection{Dizionario delle entità}
 \begin{longtable}{@{}| p{0.2\textwidth} | p{0.4\textwidth} | p{0.3\textwidth} |}
 	\hline
-	Entità               & Descrizione                                                                                            & Attributi \\
+	Entità               & Descrizione                                                                                           & Attributi \\
 	\hline
 	employee             & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
@@ -74,7 +74,7 @@ La relazione \textit{\workson} infatti, tiene traccia di tutte le volte in cui u
 		                       \textbf{role}: Professione (sviluppatore, designer, \dots)\sskip
 		                       \textbf{email}: Email necessaria per l'accesso al gestionale\sskip
 		                       \textbf{passw}: Password necessaria per l'accesso al gestionale
-	                       \end{minipage}                                                  \\[140pt]
+	                       \end{minipage}                                                 \\[140pt]
 	\hline
 	\baseemp             & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
@@ -84,7 +84,7 @@ La relazione \textit{\workson} infatti, tiene traccia di tutte le volte in cui u
 		                       \raggedright
 		                       \textbf{salary}: Stipendio\sskip
 		                       \textbf{hire\_date}: Data assunzione
-	                       \end{minipage}                                                                                \\[20pt]
+	                       \end{minipage}                                                                               \\[20pt]
 	\hline
 	\careerlog           & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
@@ -95,49 +95,49 @@ La relazione \textit{\workson} infatti, tiene traccia di tutte le volte in cui u
 		                       \textbf{ex\_role}: Ruolo precedente (stringa vuota quando è assunto)\sskip
 		                       \textbf{new\_role}: Ruolo successivo (stringa vuota quando è licenziato)\sskip
 		                       \textbf{new\_role\_date}: Data scatto di carriera
-	                       \end{minipage}                                      \\[90pt]
+	                       \end{minipage}                                     \\[90pt]
 	\hline
 	\projectsalaried     & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
 		                       Specializzazione di \textit{employee}. Assunto per lavorare esclusivamente ad un progetto.
 	                       \end{minipage}
-	                     &                                                                                                                    \\[25pt]
+	                     &                                                                                                                   \\[25pt]
 	\hline
 	junior               & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
 		                       Specializzazione di \textit{\baseemp}. Impiegato che lavora da meno di 3 anni.
 	                       \end{minipage}
-	                     &                                                                                                                    \\[25pt]
+	                     &                                                                                                                   \\[25pt]
 	\hline
 	middle               & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
 		                       Specializzazione di \textit{\baseemp}. Impiegato che lavora dai 4 ai 7 anni.
 	                       \end{minipage}
-	                     &                                                                                                                    \\[15pt]
+	                     &                                                                                                                   \\[15pt]
 	\hline
 	senior               & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
 		                       Specializzazione di \textit{\baseemp}. Impiegato che lavora da più di 7 anni.
 	                       \end{minipage}
-	                     &                                                                                                                    \\[15pt]
+	                     &                                                                                                                   \\[15pt]
 	\hline
 	manager              & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
 		                       Specializzazione di \textit{\baseemp}. Impiegato che ha ricevuto una promozione in base al merito.
 	                       \end{minipage}
-	                     &                                                                                                                    \\[25pt]
+	                     &                                                                                                                   \\[25pt]
 	\hline
 	scientific\_referent & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
 		                       Specializzazione di \textit{senior}. Impiegato a cui è stata affidata la gestione di un progetto.
 	                       \end{minipage}
-	                     &                                                                                                                    \\[25pt]
+	                     &                                                                                                                   \\[25pt]
 	\hline
 	scientific\_manager  & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
-		                       Specializzazione di \textit{senior}.  Impiegato a cui è stata affidata la gestione di un laborfatorio.
+		                       Specializzazione di \textit{senior}.  Impiegato a cui è stata affidata la gestione di un laboratorio.
 	                       \end{minipage}
-	                     &                                                                                                                    \\[25pt]
+	                     &                                                                                                                   \\[25pt]
 	\hline
 	project              & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
@@ -152,7 +152,7 @@ La relazione \textit{\workson} infatti, tiene traccia di tutte le volte in cui u
 		                       \textbf{end\_date}: Data di effettiva fine del progetto\sskip
 		                       \textbf{deadline}: Data prevista per la fine del progetto\sskip
 		                       \textbf{funds}: Somma di denaro disponibile per l'acquisto di attrezzatura e personale
-	                       \end{minipage}                              \\[175pt]
+	                       \end{minipage}                             \\[175pt]
 	\hline
 	laboratory           & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
@@ -162,7 +162,7 @@ La relazione \textit{\workson} infatti, tiene traccia di tutte le volte in cui u
 		                       \raggedright
 		                       \textbf{topic}: Campo di studi del laboratorio\sskip
 		                       \textbf{lab\_name}: Nome del laboratorio
-	                       \end{minipage}                                                                \\[40pt]
+	                       \end{minipage}                                                               \\[40pt]
 	\hline
 	site                 & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
@@ -178,7 +178,7 @@ La relazione \textit{\workson} infatti, tiene traccia di tutte le volte in cui u
 			\item \textbf{postal\_code}: CAP
 			\item \textbf{city}: Città
 		\end{itemize}
-	                       \end{minipage}                                                                                \\[90pt]
+	                       \end{minipage}                                                                               \\[90pt]
 	\hline
 	equipment            & \begin{minipage}[t]{0.4\textwidth}
 		                       \raggedright
@@ -190,7 +190,7 @@ La relazione \textit{\workson} infatti, tiene traccia di tutte le volte in cui u
 		                       \textbf{name}: Nome del prodotto\sskip
 		                       \textbf{type}: Tipo di prodotto (computer, microscopio, \dots)\sskip
 		                       \textbf{techspecs}: Specifiche tecniche del prodotto
-	                       \end{minipage}                                                \\[70pt]
+	                       \end{minipage}                                               \\[70pt]
 	\hline
 \end{longtable}
 
