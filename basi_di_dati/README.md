@@ -20,6 +20,7 @@ CREATE SCHEMA projects_schema;
 GRANT ALL PRIVILEGES ON SCHEMA projects_schema TO project_admin;
 ALTER USER project_admin IN DATABASE company SET search_path TO projects_schema;
 
+GRANT USAGE ON SCHEMA projects_schema TO login_user;
 ALTER USER login_user IN DATABASE company SET search_path TO projects_schema;
 
 CREATE EXTENSION IF NOT EXISTS "pgcrypto" SCHEMA projects_schema;
