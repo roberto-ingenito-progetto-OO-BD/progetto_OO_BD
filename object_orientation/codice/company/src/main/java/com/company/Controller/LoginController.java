@@ -1,7 +1,6 @@
 package com.company.Controller;
 
-import com.company.GUI.Dashboard;
-import com.company.Model.EmpType;
+import com.company.GUI.EmployeeDashboard;
 import com.company.PostgresDAO.EmployeeDAOImplementation;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -77,19 +76,28 @@ public class LoginController {
 
         // interazione db - login
         employeeLogin = new EmployeeDAOImplementation();
-        Dashboard.empType = employeeLogin.baseEmpLogin(emailField.getText(), passwordField.getText());
+        EmployeeDashboard.empType = employeeLogin.baseEmpLogin(emailField.getText(), passwordField.getText());
+
+        // login fallito
+        if (EmployeeDashboard.empType == null) return;
 
         // interazione db - nuova connessione attraverso il ruolo corretto
 
         // chiusura del login
         stage = (Stage) emailField.getScene().getWindow();
 
+        // Istanzio il controller e imposto il campo email
+        EmployeeDashboardController controller = new EmployeeDashboardController();
+        controller.email = emailField.getText();
+
         // caricamento della nuova scena
-        Dashboard dashboard = new Dashboard();
+        //
+        // passo il controller al costruttore della dashboard
+        // il quale impostera il controller in input, come il controller dello scene
+        EmployeeDashboard dashboard = new EmployeeDashboard(controller);
         Scene dashboardScene = dashboard.getScene();
 
         stage.close();
-
         stage.setTitle("Employee Dashboard");
         stage.setScene(dashboardScene);
         stage.setResizable(false);

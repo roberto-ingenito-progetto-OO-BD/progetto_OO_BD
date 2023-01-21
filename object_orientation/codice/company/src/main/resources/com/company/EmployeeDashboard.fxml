@@ -1,52 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="800.0" prefWidth="1200.0"
-            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.company.Controller.EmployeeDashboardController">
-    <left>
-        <AnchorPane prefHeight="800.0" prefWidth="153.0" style="-fx-background-color: #3c6e71;"
-                    BorderPane.alignment="CENTER">
-            <Label layoutX="53.0" layoutY="738.0" text="Log Out" textFill="WHITE"/>
-            <Label layoutX="31.0" layoutY="273.0" text="Laboratorio" textFill="WHITE">
-                <font>
-                    <Font name="System Bold" size="17.0"/>
-                </font>
-            </Label>
-            <Label layoutX="45.0" layoutY="314.0" text="Progetti" textFill="WHITE">
-                <font>
-                    <Font name="System Bold" size="16.0"/>
-                </font>
-            </Label>
-            <Label layoutX="30.0" layoutY="36.0" text="DashBoard" textFill="WHITE">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0"
+          prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+>
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <Pane style="-fx-background-color: #3c6e71;">
+        <GridPane prefHeight="700.0" prefWidth="150.0">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308"
+                                   minWidth="10.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" valignment="CENTER"
+                                vgrow="SOMETIMES"/>
+                <RowConstraints valignment="CENTER" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" valignment="CENTER"
+                                vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <Label text="Dashboard" textFill="WHITE">
                 <font>
                     <Font name="System Bold" size="18.0"/>
                 </font>
             </Label>
-        </AnchorPane>
-    </left>
-    <center>
-        <AnchorPane prefHeight="443.0" prefWidth="534.0" style="-fx-background-color: #D9D9D9;"
-                    BorderPane.alignment="CENTER">
-            <Pane layoutY="144.0" prefHeight="662.0" prefWidth="1047.0" style="-fx-background-color: #FFFFFF;"/>
-            <Label layoutX="26.0" layoutY="60.0" style="-fx-alignment: #3C6E71;" text="Benvenuto"
-                   textFill="#3c6e71">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" GridPane.rowIndex="1">
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+                <cursor>
+                    <Cursor fx:constant="DEFAULT"/>
+                </cursor>
+                <padding>
+                    <Insets bottom="50.0" top="50.0"/>
+                </padding>
+                <Label text="Progetti" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="18.0"/>
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Label>
+                <Label text="Laboratorio" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="18.0"/>
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Label>
+            </VBox>
+            <Label text="Log Out" textFill="WHITE" GridPane.rowIndex="2">
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Label>
+        </GridPane>
+    </Pane>
+    <GridPane GridPane.columnIndex="1">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        </rowConstraints>
+        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #D9D9D9;">
+            <Label contentDisplay="CENTER" text="Benvenuto" textFill="#3c6e71">
                 <font>
                     <Font name="System Bold" size="22.0"/>
                 </font>
+                <padding>
+                    <Insets left="20.0" right="20.0"/>
+                </padding>
             </Label>
-            <Label fx:id="userNameLabel" layoutX="144.0" layoutY="63.0" style="-fx-text-fill: #000000;"
-                   text="Nome Cognome">
+            <Label fx:id="userNameLabel" contentDisplay="CENTER" text="Nome Cognome">
                 <font>
                     <Font name="System Bold" size="18.0"/>
                 </font>
             </Label>
-        </AnchorPane>
-    </center>
-</BorderPane>
+        </HBox>
+    </GridPane>
+</GridPane>
