@@ -11,7 +11,5 @@ public class Employee {
     private String role;
     private float salary;
     private EmpType type;
-
     private Laboratory laboratory;
-
 }

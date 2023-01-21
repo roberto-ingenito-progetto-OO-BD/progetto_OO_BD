@@ -10,10 +10,10 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         Login loginGUI = new Login();
-        Scene scene = loginGUI.getScene();
+        Scene loginScene = loginGUI.getScene();
 
         stage.setTitle("Azienda Dashboard");
-        stage.setScene(scene);
+        stage.setScene(loginScene);
         stage.setResizable(false);
         stage.show();
     }

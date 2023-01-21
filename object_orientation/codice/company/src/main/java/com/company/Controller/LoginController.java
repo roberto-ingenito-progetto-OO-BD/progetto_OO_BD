@@ -1,71 +1,99 @@
 package com.company.Controller;
 
+import com.company.GUI.Dashboard;
 import com.company.Model.EmpType;
-import com.company.PostgresDAO.LoginDAOImplementation;
+import com.company.PostgresDAO.EmployeeDAOImplementation;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.stage.Stage;
 
 
 public class LoginController {
     @FXML
-    public Button loginButton;
+    private TextField passwordField;
     @FXML
-    public TextField passwordTextLabel;
+    private TextField emailField;
     @FXML
-    public TextField emailTextLabel;
+    private ToggleButton projectButton;
     @FXML
-    public ToggleButton projButton;
-    @FXML
-    public ToggleButton labButton;
+    private ToggleButton laboratoryButton;
 
     @FXML
-    public void signIn() {
-        if (projButton.isSelected()) {
+    private void signIn() {
+        if (projectButton.isSelected()) {
             projectLogin();
         }
 
-        if (labButton.isSelected()) {
+        if (laboratoryButton.isSelected()) {
             laboratoryLogin();
         }
     }
 
     @FXML
-    public void toggleProjectButton() {
+    private void toggleProjectButton() {
         // se sto portando il bottone a false, allora lo riporto a true
-        if (!projButton.isSelected()) {
-            projButton.setSelected(true);
+        if (!projectButton.isSelected()) {
+            projectButton.setSelected(true);
         }
         // altrimenti sto portando il bottone a true, quindi disattivo l'altro
         else {
-            labButton.setSelected(false);
+            laboratoryButton.setSelected(false);
         }
+        projectButton.setStyle("-fx-background-color: #3c6e71");
+        laboratoryButton.setStyle("-fx-background-color: #C2C2C2");
     }
 
     @FXML
-    public void toggleLaboratoryButton() {
+    private void toggleLaboratoryButton() {
         // se sto portando il bottone a false, allora lo riporto a true
-        if (!labButton.isSelected()) {
-            labButton.setSelected(true);
+        if (!laboratoryButton.isSelected()) {
+            laboratoryButton.setSelected(true);
         }
         // altrimenti sto portando il bottone a true, quindi disattivo l'altro
         else {
-            projButton.setSelected(false);
+            projectButton.setSelected(false);
         }
+        laboratoryButton.setStyle("-fx-background-color: #3c6e71");
+        projectButton.setStyle("-fx-background-color: #C2C2C2");
     }
 
 
     private void projectLogin() {
-        LoginDAOImplementation login = new LoginDAOImplementation();
-        boolean logged = login.projectSalariedLogin(emailTextLabel.getText(), passwordTextLabel.getText());
+        EmployeeDAOImplementation login = new EmployeeDAOImplementation();
+        boolean logged = login.projectSalariedLogin(emailField.getText(), passwordField.getText());
         System.out.println(logged);
     }
 
     private void laboratoryLogin() {
-        LoginDAOImplementation login = new LoginDAOImplementation();
-        EmpType empType = login.baseEmpLogin(emailTextLabel.getText(), passwordTextLabel.getText());
-        System.out.println(empType);
+        EmployeeDAOImplementation employeeLogin;
+        Stage stage;
+        // controllo dei TextField
+        if (emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+            System.out.println("testo vuoto");
+            return;
+        }
+
+        // interazione db - login
+        employeeLogin = new EmployeeDAOImplementation();
+        Dashboard.empType = employeeLogin.baseEmpLogin(emailField.getText(), passwordField.getText());
+
+        // interazione db - nuova connessione attraverso il ruolo corretto
+
+        // chiusura del login
+        stage = (Stage) emailField.getScene().getWindow();
+
+        // caricamento della nuova scena
+        Dashboard dashboard = new Dashboard();
+        Scene dashboardScene = dashboard.getScene();
+
+        stage.close();
+
+        stage.setTitle("Employee Dashboard");
+        stage.setScene(dashboardScene);
+        stage.setResizable(false);
+        stage.show();
     }
 
 }
