@@ -12,4 +12,62 @@ public class Employee {
     private float salary;
     private EmpType type;
     private Laboratory laboratory;
+
+    public void setSalary(float salary) {
+        this.salary = salary;
+    }
+
+    // GETTERS
+    public String getCf() {
+        return cf;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public float getSalary() {
+        return salary;
+    }
+
+    public EmpType getType() {
+        return type;
+    }
+
+    public Laboratory getLaboratory() {
+        return laboratory;
+    }
+
+    // SETTER
+    public void setLaboratory(Laboratory lab) {
+        this.laboratory = lab;
+    }
+
+    // CONSTRUCTOR
+    public Employee(String cf, String firstName, String lastName, String email, String role, float salary, EmpType type) {
+        this.cf = cf;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.role = role;
+        this.salary = salary;
+        this.type = type;
+    }
+
 }

@@ -1,6 +1,6 @@
 package com.company.Connection;
 
-import com.company.GUI.EmployeeDashboard;
+import com.company.Model.EmpType;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -34,8 +34,8 @@ public class DatabaseConnection {
     /**
      * Crea un istanza in base all'empType dell'utente loggato
      */
-    public static DatabaseConnection baseEmpInstance() throws SQLException {
-        return switch (EmployeeDashboard.empType) {
+    public static DatabaseConnection baseEmpInstance(EmpType empType) throws SQLException {
+        return switch (empType) {
             case junior -> getInstance("junior_user", "junior");
             case middle -> getInstance("middle_user", "middle");
             case senior -> getInstance("senior_user", "senior");

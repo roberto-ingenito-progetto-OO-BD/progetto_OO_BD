@@ -1,6 +1,8 @@
 package com.company.Controller;
 
 import com.company.GUI.EmployeeDashboard;
+import com.company.Model.EmpType;
+import com.company.Model.Employee;
 import com.company.PostgresDAO.EmployeeDAOImplementation;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -23,9 +25,7 @@ public class LoginController {
     private void signIn() {
         if (projectButton.isSelected()) {
             projectLogin();
-        }
-
-        if (laboratoryButton.isSelected()) {
+        } else if (laboratoryButton.isSelected()) {
             laboratoryLogin();
         }
     }
@@ -68,6 +68,9 @@ public class LoginController {
     private void laboratoryLogin() {
         EmployeeDAOImplementation employeeLogin;
         Stage stage;
+        EmpType loggedEmpType;
+        Employee loggedEmployee;
+
         // controllo dei TextField
         if (emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
             System.out.println("testo vuoto");
@@ -76,19 +79,19 @@ public class LoginController {
 
         // interazione db - login
         employeeLogin = new EmployeeDAOImplementation();
-        EmployeeDashboard.empType = employeeLogin.baseEmpLogin(emailField.getText(), passwordField.getText());
-
-        // login fallito
-        if (EmployeeDashboard.empType == null) return;
+        loggedEmpType = employeeLogin.baseEmpLogin(emailField.getText(), passwordField.getText());
 
         // interazione db - nuova connessione attraverso il ruolo corretto
 
         // chiusura del login
         stage = (Stage) emailField.getScene().getWindow();
 
+
+        loggedEmployee = employeeLogin.getEmployeeData(loggedEmpType, emailField.getText());
+
+
         // Istanzio il controller e imposto il campo email
-        EmployeeDashboardController controller = new EmployeeDashboardController();
-        controller.email = emailField.getText();
+        EmployeeDashboardController controller = new EmployeeDashboardController(loggedEmployee);
 
         // caricamento della nuova scena
         //

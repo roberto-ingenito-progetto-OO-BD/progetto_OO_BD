@@ -2,6 +2,7 @@ package com.company.DAO;
 
 
 import com.company.Model.EmpType;
+import com.company.Model.Employee;
 
 public interface EmployeeDAO {
     /**
@@ -15,4 +16,6 @@ public interface EmployeeDAO {
      * <p> false altrimenti
      */
     boolean projectSalariedLogin(String email, String password);
+
+    Employee getEmployeeData(EmpType empType, String email);
 }
