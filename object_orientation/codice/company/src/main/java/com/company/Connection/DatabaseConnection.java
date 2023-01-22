@@ -30,16 +30,4 @@ public class DatabaseConnection {
         return instance;
     }
 
-
-    /**
-     * Crea un istanza in base all'empType dell'utente loggato
-     */
-    public static DatabaseConnection baseEmpInstance() throws SQLException {
-        return switch (EmployeeDashboard.empType) {
-            case junior -> getInstance("junior_user", "junior");
-            case middle -> getInstance("middle_user", "middle");
-            case senior -> getInstance("senior_user", "senior");
-            case manager -> getInstance("manager_user", "manager");
-        };
-    }
 }

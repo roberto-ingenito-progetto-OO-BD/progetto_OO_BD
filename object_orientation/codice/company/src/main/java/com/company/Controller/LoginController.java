@@ -1,15 +1,19 @@
 package com.company.Controller;
 
 import com.company.GUI.EmployeeDashboard;
+import com.company.Model.EmpType;
+import com.company.Model.Employee;
 import com.company.PostgresDAO.EmployeeDAOImplementation;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 
 
 public class LoginController {
+    public Label userNameLabel;
     @FXML
     private TextField passwordField;
     @FXML
@@ -67,6 +71,8 @@ public class LoginController {
 
     private void laboratoryLogin() {
         EmployeeDAOImplementation employeeLogin;
+        Employee loggedEmployee;
+        EmpType loggedEmpType;
         Stage stage;
         // controllo dei TextField
         if (emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
@@ -74,21 +80,23 @@ public class LoginController {
             return;
         }
 
-        // interazione db - login
+        // interazione db - login - restituzione del tipo di impiegato loggato (necessario alle prossime interazioni col db per stabilire la connessione)
         employeeLogin = new EmployeeDAOImplementation();
-        EmployeeDashboard.empType = employeeLogin.baseEmpLogin(emailField.getText(), passwordField.getText());
+        loggedEmpType = employeeLogin.baseEmpLogin(emailField.getText(), passwordField.getText());
 
-        // login fallito
-        if (EmployeeDashboard.empType == null) return;
-
-        // interazione db - nuova connessione attraverso il ruolo corretto
+        if(loggedEmpType == null){
+            System.out.println("credenziali errate");
+            return;
+        }
 
         // chiusura del login
         stage = (Stage) emailField.getScene().getWindow();
 
+        // interazione col db - recupero delle informazioni dell'utente loggato
+        loggedEmployee = employeeLogin.getEmployeeInformation(loggedEmpType , emailField.getText());
+
         // Istanzio il controller e imposto il campo email
-        EmployeeDashboardController controller = new EmployeeDashboardController();
-        controller.email = emailField.getText();
+        EmployeeDashboardController controller = new EmployeeDashboardController(loggedEmployee);
 
         // caricamento della nuova scena
         //
@@ -102,6 +110,7 @@ public class LoginController {
         stage.setScene(dashboardScene);
         stage.setResizable(false);
         stage.show();
+
     }
 
 }

@@ -3,13 +3,13 @@ package com.company.GUI;
 import com.company.Controller.EmployeeDashboardController;
 import com.company.Main;
 import com.company.Model.EmpType;
+import com.company.Model.Employee;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
 import java.io.IOException;
 
 public class EmployeeDashboard {
-    public static EmpType empType;
 
     private final FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("EmployeeDashboard.fxml"));
 
