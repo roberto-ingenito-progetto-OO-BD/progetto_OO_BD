@@ -73,7 +73,6 @@ public class LoginController {
         Employee loggedEmployee;
         Laboratory employeeWorkingLab;
 
-        EmployeeDashboardController employeeDashboardController;
         EmployeeDashboard dashboard;
 
         Stage oldStage;
@@ -94,15 +93,12 @@ public class LoginController {
         employeeWorkingLab = employeeDAO.getWorkingLaboratory(loggedEmpType, loggedEmployee.getCf());
         loggedEmployee.setLaboratory(employeeWorkingLab);
 
-        // Istanzio il controller passando l'employee loggato
-        employeeDashboardController = new EmployeeDashboardController(loggedEmployee);
-
         // caricamento della nuova scena
         //
         // passo il controller al costruttore della dashboard
         // il quale lo imposterà come il controller della scena
-        dashboard = new EmployeeDashboard(employeeDashboardController);
-        dashboardScene = dashboard.getScene();
+        dashboard = new EmployeeDashboard();
+        dashboardScene = dashboard.getScene(loggedEmployee);
 
         // prendo lo stage corrente
         oldStage = (Stage) emailField.getScene().getWindow();

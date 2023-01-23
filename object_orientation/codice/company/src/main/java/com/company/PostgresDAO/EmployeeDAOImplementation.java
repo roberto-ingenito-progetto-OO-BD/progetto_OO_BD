@@ -38,7 +38,7 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
 
     @Override
     public boolean projectSalariedLogin(String email, String password) {
-        // TODO: Implementare dashboard
+        // TODO: Implementare dashboard del salariato a progetto
         try {
             DatabaseConnection db = DatabaseConnection.getInstance("login_user", "login");
             ResultSet resultSet = db.connection.createStatement().executeQuery("select project_salaried_login('" + email + "', '" + password + "')");
