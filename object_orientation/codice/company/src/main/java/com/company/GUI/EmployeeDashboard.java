@@ -2,6 +2,7 @@ package com.company.GUI;
 
 import com.company.Controller.EmployeeDashboardController;
 import com.company.Main;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
@@ -22,4 +23,6 @@ public class EmployeeDashboard {
             throw new RuntimeException(e);
         }
     }
+
+
 }

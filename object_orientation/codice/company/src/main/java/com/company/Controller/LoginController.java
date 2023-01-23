@@ -65,45 +65,55 @@ public class LoginController {
         System.out.println(logged);
     }
 
+    /**
+     * aa
+     */
     private void laboratoryLogin() {
-        EmployeeDAOImplementation employeeLogin;
-        Stage stage;
+        EmployeeDAOImplementation employeeDAO;
+
         EmpType loggedEmpType;
         Employee loggedEmployee;
 
-        // controllo dei TextField
+        EmployeeDashboardController employeeDashboardController;
+        EmployeeDashboard dashboard;
+
+        Stage stage;
+        Scene dashboardScene;
+
+        // se la email o la password sono vuote, termina il login
         if (emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
             System.out.println("testo vuoto");
             return;
         }
 
         // interazione db - login
-        employeeLogin = new EmployeeDAOImplementation();
-        loggedEmpType = employeeLogin.baseEmpLogin(emailField.getText(), passwordField.getText());
+        employeeDAO = new EmployeeDAOImplementation();
+        loggedEmpType = employeeDAO.baseEmpLogin(emailField.getText(), passwordField.getText());
 
-        // interazione db - nuova connessione attraverso il ruolo corretto
+        loggedEmployee = employeeDAO.getEmployeeData(loggedEmpType, emailField.getText());
 
-        // chiusura del login
-        stage = (Stage) emailField.getScene().getWindow();
-
-
-        loggedEmployee = employeeLogin.getEmployeeData(loggedEmpType, emailField.getText());
-
-
-        // Istanzio il controller e imposto il campo email
-        EmployeeDashboardController controller = new EmployeeDashboardController(loggedEmployee);
+        // Istanzio il controller passando l'employee loggato
+        employeeDashboardController = new EmployeeDashboardController(loggedEmployee);
 
         // caricamento della nuova scena
         //
         // passo il controller al costruttore della dashboard
-        // il quale impostera il controller in input, come il controller dello scene
-        EmployeeDashboard dashboard = new EmployeeDashboard(controller);
-        Scene dashboardScene = dashboard.getScene();
+        // il quale lo imposterà come il controller della scena
+        dashboard = new EmployeeDashboard(employeeDashboardController);
+        dashboardScene = dashboard.getScene();
 
+        // prendo lo stage corrente
+        stage = (Stage) emailField.getScene().getWindow();
+
+        // chiusura della pagina login
         stage.close();
+
+        stage.setMinHeight(700);
+        stage.setMinWidth(1000);
         stage.setTitle("Employee Dashboard");
         stage.setScene(dashboardScene);
-        stage.setResizable(false);
+        stage.setResizable(true);
+
         stage.show();
     }
 
