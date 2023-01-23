@@ -12,5 +12,14 @@ public class Laboratory {
     private ScientificManager scientificManager;
     private ArrayList<Employee> employees;
 
+    public Laboratory(String labCode, String name, String topic) {
+        this.labCode = labCode;
+        this.name = name;
+        this.topic = topic;
+    }
 
+    // GETTERS
+    public String getName() {
+        return name;
+    }
 }

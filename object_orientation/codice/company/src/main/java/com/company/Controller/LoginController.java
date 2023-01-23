@@ -3,6 +3,7 @@ package com.company.Controller;
 import com.company.GUI.EmployeeDashboard;
 import com.company.Model.EmpType;
 import com.company.Model.Employee;
+import com.company.Model.Laboratory;
 import com.company.PostgresDAO.EmployeeDAOImplementation;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -65,19 +66,18 @@ public class LoginController {
         System.out.println(logged);
     }
 
-    /**
-     * aa
-     */
     private void laboratoryLogin() {
         EmployeeDAOImplementation employeeDAO;
 
         EmpType loggedEmpType;
         Employee loggedEmployee;
+        Laboratory employeeWorkingLab;
 
         EmployeeDashboardController employeeDashboardController;
         EmployeeDashboard dashboard;
 
-        Stage stage;
+        Stage oldStage;
+        Stage newStage;
         Scene dashboardScene;
 
         // se la email o la password sono vuote, termina il login
@@ -91,6 +91,8 @@ public class LoginController {
         loggedEmpType = employeeDAO.baseEmpLogin(emailField.getText(), passwordField.getText());
 
         loggedEmployee = employeeDAO.getEmployeeData(loggedEmpType, emailField.getText());
+        employeeWorkingLab = employeeDAO.getWorkingLaboratory(loggedEmpType, loggedEmployee.getCf());
+        loggedEmployee.setLaboratory(employeeWorkingLab);
 
         // Istanzio il controller passando l'employee loggato
         employeeDashboardController = new EmployeeDashboardController(loggedEmployee);
@@ -103,18 +105,18 @@ public class LoginController {
         dashboardScene = dashboard.getScene();
 
         // prendo lo stage corrente
-        stage = (Stage) emailField.getScene().getWindow();
+        oldStage = (Stage) emailField.getScene().getWindow();
 
-        // chiusura della pagina login
-        stage.close();
+        // creo un nuovo stage
+        newStage = new Stage();
+        newStage.setMinHeight(700);
+        newStage.setMinWidth(1000);
+        newStage.setTitle("Employee Dashboard");
+        newStage.setScene(dashboardScene);
 
-        stage.setMinHeight(700);
-        stage.setMinWidth(1000);
-        stage.setTitle("Employee Dashboard");
-        stage.setScene(dashboardScene);
-        stage.setResizable(true);
-
-        stage.show();
+        // chiudo il vecchio e apro il nuovo
+        oldStage.close();
+        newStage.show();
     }
 
 }

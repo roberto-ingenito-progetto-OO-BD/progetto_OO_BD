@@ -23,6 +23,4 @@ public class EmployeeDashboard {
             throw new RuntimeException(e);
         }
     }
-
-
 }

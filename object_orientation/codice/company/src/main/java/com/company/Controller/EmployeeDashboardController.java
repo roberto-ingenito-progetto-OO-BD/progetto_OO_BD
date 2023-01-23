@@ -5,8 +5,6 @@ import com.company.Model.Employee;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.SingleSelectionModel;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 
@@ -22,6 +20,9 @@ public class EmployeeDashboardController {
     @FXML
     private TabPane tabPane;
 
+    @FXML
+    private Label lablabel;
+
     public EmployeeDashboardController(Employee employee) {
         this.employee = employee;
     }
@@ -30,6 +31,7 @@ public class EmployeeDashboardController {
     public void initialize() {
         userNameLabel.setText(employee.getFirstName() + " " + employee.getLastName());
         typeLabel.setText(employee.getType().toString());
+        lablabel.setText(employee.getLaboratory().getName());
     }
 
     @FXML
@@ -44,17 +46,20 @@ public class EmployeeDashboardController {
 
     @FXML
     private void onLogOut() {
-        Stage stage = (Stage) userNameLabel.getScene().getWindow();
+        Stage oldStage = (Stage) userNameLabel.getScene().getWindow();
+        Stage newStage;
         Login loginGUI = new Login();
         Scene loginScene = loginGUI.getScene();
 
-        stage.close();
-        stage.setHeight(586);
-        stage.setWidth(436);
-        stage.setTitle("Azienda Dashboard");
-        stage.setScene(loginScene);
-        stage.setResizable(false);
-        stage.show();
+        // creo un nuovo stage
+        newStage = new Stage();
+        newStage.setTitle("Azienda Dashboard");
+        newStage.setScene(loginScene);
+        newStage.setResizable(false);
+
+        // chiudo il vecchio e apro il nuovo
+        oldStage.close();
+        newStage.show();
     }
 
 }

@@ -4,6 +4,7 @@ import com.company.Connection.DatabaseConnection;
 import com.company.DAO.EmployeeDAO;
 import com.company.Model.EmpType;
 import com.company.Model.Employee;
+import com.company.Model.Laboratory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -84,6 +85,33 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Laboratory getWorkingLaboratory(EmpType loggedEmpType, String empCf) {
+        String query = "SELECT L.lab_code, L.lab_name, L.topic\n" +
+                "FROM works_at AS W   NATURAL JOIN   laboratory AS L\n" +
+                "WHERE W.cf_base_emp = '" + empCf + "' AND\n" +
+                "W.end_date IS NULL;";
+        ResultSet resultSet;
+        DatabaseConnection db;
+
+        try {
+            db = DatabaseConnection.baseEmpInstance(loggedEmpType);
+            resultSet = db.connection.createStatement().executeQuery(query);
+            db.connection.close();
+            resultSet.next();
+
+            return new Laboratory(
+                    resultSet.getString("lab_code"),
+                    resultSet.getString("lab_name"),
+                    resultSet.getString("topic")
+            );
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
 }

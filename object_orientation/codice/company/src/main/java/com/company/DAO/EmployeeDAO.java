@@ -3,6 +3,7 @@ package com.company.DAO;
 
 import com.company.Model.EmpType;
 import com.company.Model.Employee;
+import com.company.Model.Laboratory;
 
 public interface EmployeeDAO {
     /**
@@ -18,4 +19,6 @@ public interface EmployeeDAO {
     boolean projectSalariedLogin(String email, String password);
 
     Employee getEmployeeData(EmpType empType, String email);
+
+    Laboratory getWorkingLaboratory(EmpType loggedEmpType, String empCf);
 }
