@@ -4,15 +4,21 @@ import com.company.GUI.EmployeeDashboard;
 import com.company.Model.EmpType;
 import com.company.Model.Employee;
 import com.company.Model.Laboratory;
+import com.company.Model.Project;
 import com.company.PostgresDAO.EmployeeDAOImplementation;
+import com.company.PostgresDAO.LaboratoryDAOImplementation;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 
 public class LoginController {
+    /// FXML Objects
     @FXML
     private TextField passwordField;
     @FXML
@@ -21,7 +27,10 @@ public class LoginController {
     private ToggleButton projectButton;
     @FXML
     private ToggleButton laboratoryButton;
+    @FXML
+    private Label incorrectCredentialsLabel;
 
+    /// FXML METHODS
     @FXML
     private void signIn() {
         if (projectButton.isSelected()) {
@@ -60,18 +69,25 @@ public class LoginController {
     }
 
 
+    /// METHODS
     private void projectLogin() {
         EmployeeDAOImplementation login = new EmployeeDAOImplementation();
         boolean logged = login.projectSalariedLogin(emailField.getText(), passwordField.getText());
-        System.out.println(logged);
+        if (!logged) {
+            incorrectCredentialsLabel.setVisible(true);
+            return;
+        }
+        // TODO: implementare project salaried dashboard
     }
 
     private void laboratoryLogin() {
         EmployeeDAOImplementation employeeDAO;
+        LaboratoryDAOImplementation laboratoryDAO;
 
-        EmpType loggedEmpType;
         Employee loggedEmployee;
-        Laboratory employeeWorkingLab;
+        EmpType loggedEmpType; // emp type dell'impiegato loggato
+        Laboratory employeeWorkingLab; // laboratorio in cui lavora l'impiegato
+        ArrayList<Project> laboratoryWorkingProjects; // progetti a cui lavora il laboratorio
 
         EmployeeDashboard dashboard;
 
@@ -87,11 +103,25 @@ public class LoginController {
 
         // interazione db - login
         employeeDAO = new EmployeeDAOImplementation();
+        laboratoryDAO = new LaboratoryDAOImplementation();
+
         loggedEmpType = employeeDAO.baseEmpLogin(emailField.getText(), passwordField.getText());
 
+        if (loggedEmpType == null) {
+            incorrectCredentialsLabel.setVisible(true);
+            return;
+        }
+
+        // prende le informazioni dell'impiegato loggato
         loggedEmployee = employeeDAO.getEmployeeData(loggedEmpType, emailField.getText());
+
+        // imposta il laboratorio in cui lavora l'impiegato
         employeeWorkingLab = employeeDAO.getWorkingLaboratory(loggedEmpType, loggedEmployee.getCf());
         loggedEmployee.setLaboratory(employeeWorkingLab);
+
+        // imposta i proggetti a cui lavora quel laboratorio
+        laboratoryWorkingProjects = laboratoryDAO.getProjects(employeeWorkingLab, loggedEmpType);
+        employeeWorkingLab.setProjects(laboratoryWorkingProjects);
 
         // caricamento della nuova scena
         //

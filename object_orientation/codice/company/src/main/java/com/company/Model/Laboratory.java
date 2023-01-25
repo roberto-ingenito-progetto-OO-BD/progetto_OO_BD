@@ -3,7 +3,7 @@ package com.company.Model;
 import java.util.ArrayList;
 
 public class Laboratory {
-    private String labCode;
+    private int labCode;
     private String name;
     private String topic;
 
@@ -12,7 +12,11 @@ public class Laboratory {
     private ScientificManager scientificManager;
     private ArrayList<Employee> employees;
 
-    public Laboratory(String labCode, String name, String topic) {
+    public Laboratory(
+            int labCode,
+            String name,
+            String topic
+    ) {
         this.labCode = labCode;
         this.name = name;
         this.topic = topic;
@@ -21,5 +25,22 @@ public class Laboratory {
     // GETTERS
     public String getName() {
         return name;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public int getLabCode() {
+        return labCode;
+    }
+
+    public ArrayList<Project> getProjects() {
+        return projects;
+    }
+
+    // SETTER
+    public void setProjects(ArrayList<Project> projects) {
+        this.projects = projects;
     }
 }

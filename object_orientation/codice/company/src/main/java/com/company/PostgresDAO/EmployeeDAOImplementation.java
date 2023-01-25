@@ -20,9 +20,7 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
             resultSet.next();
             String baseEmpLogin = resultSet.getString("base_emp_login");
 
-            if (baseEmpLogin == null) {
-                throw new RuntimeException("Credenziali errate");
-            }
+            if (baseEmpLogin == null) return null;
 
             return switch (baseEmpLogin) {
                 case "junior" -> EmpType.junior;
@@ -103,7 +101,7 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
             resultSet.next();
 
             return new Laboratory(
-                    resultSet.getString("lab_code"),
+                    resultSet.getInt("lab_code"),
                     resultSet.getString("lab_name"),
                     resultSet.getString("topic")
             );
