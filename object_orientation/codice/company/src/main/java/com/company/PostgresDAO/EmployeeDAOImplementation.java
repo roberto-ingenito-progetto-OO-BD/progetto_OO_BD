@@ -5,6 +5,7 @@ import com.company.DAO.EmployeeDAO;
 import com.company.Model.EmpType;
 import com.company.Model.Employee;
 import com.company.Model.Laboratory;
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -85,7 +86,7 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
         }
     }
 
-    @Override
+    @Override @Nullable
     public Laboratory getWorkingLaboratory(EmpType loggedEmpType, String empCf) {
         String query = "SELECT L.lab_code, L.lab_name, L.topic\n" +
                 "FROM works_at AS W   NATURAL JOIN   laboratory AS L\n" +
@@ -98,6 +99,9 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
             db = DatabaseConnection.baseEmpInstance(loggedEmpType);
             resultSet = db.connection.createStatement().executeQuery(query);
             db.connection.close();
+
+            if(!resultSet.isBeforeFirst()) return null;
+
             resultSet.next();
 
             return new Laboratory(

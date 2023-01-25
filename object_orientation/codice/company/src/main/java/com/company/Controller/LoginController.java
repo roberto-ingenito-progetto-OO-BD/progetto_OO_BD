@@ -86,7 +86,7 @@ public class LoginController {
 
         Employee loggedEmployee;
         EmpType loggedEmpType; // emp type dell'impiegato loggato
-        Laboratory employeeWorkingLab; // laboratorio in cui lavora l'impiegato
+        Laboratory empWorkingLaboratory; // laboratorio in cui lavora l'impiegato
         ArrayList<Project> laboratoryWorkingProjects; // progetti a cui lavora il laboratorio
 
         EmployeeDashboard dashboard;
@@ -115,13 +115,18 @@ public class LoginController {
         // prende le informazioni dell'impiegato loggato
         loggedEmployee = employeeDAO.getEmployeeData(loggedEmpType, emailField.getText());
 
-        // imposta il laboratorio in cui lavora l'impiegato
-        employeeWorkingLab = employeeDAO.getWorkingLaboratory(loggedEmpType, loggedEmployee.getCf());
-        loggedEmployee.setLaboratory(employeeWorkingLab);
+        // prende il laboratorio in cui lavora l'impiegato
+        empWorkingLaboratory = employeeDAO.getWorkingLaboratory(loggedEmpType, loggedEmployee.getCf());
 
-        // imposta i proggetti a cui lavora quel laboratorio
-        laboratoryWorkingProjects = laboratoryDAO.getProjects(employeeWorkingLab, loggedEmpType);
-        employeeWorkingLab.setProjects(laboratoryWorkingProjects);
+        // controllo se non è null dato che l'impiegato potrebbe non lavorare a nessun laboratorio
+        if (empWorkingLaboratory != null) {
+            // imposta il laboratorio in cui lavora l'impiegato
+            loggedEmployee.setLaboratory(empWorkingLaboratory);
+
+            // imposta i proggetti a cui lavora quel laboratorio
+            laboratoryWorkingProjects = laboratoryDAO.getProjects(empWorkingLaboratory, loggedEmpType);
+            empWorkingLaboratory.setProjects(laboratoryWorkingProjects);
+        }
 
         // caricamento della nuova scena
         //

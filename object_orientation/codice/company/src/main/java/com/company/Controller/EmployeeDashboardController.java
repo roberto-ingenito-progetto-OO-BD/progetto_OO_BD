@@ -52,15 +52,18 @@ public class EmployeeDashboardController {
         userNameLabel.setText(employee.getFirstName() + " " + employee.getLastName());
         empTypeLabel.setText(employee.getType().toString());
 
-        // imposta il nome e il topic del laboratorio
-        laboratoryNameLabel.setText("Laboratorio: " + employee.getLaboratory().getName());
-        laboratoryTopicLabel.setText("Topic: " + employee.getLaboratory().getTopic());
 
-        // TODO: attualmente riempie la lista di progetti solo con i nomi dei progetti
-        for (Project project : employee.getLaboratory().getProjects()) {
-            Label label = new Label();
-            label.setText(project.getName());
-            labProjectsVBox.getChildren().add(label);
+        if (employee.getLaboratory() != null) {
+            // imposta il nome e il topic del laboratorio
+            laboratoryNameLabel.setText("Laboratorio: " + employee.getLaboratory().getName());
+            laboratoryTopicLabel.setText("Topic: " + employee.getLaboratory().getTopic());
+
+            // TODO: attualmente riempie la lista di progetti solo con i nomi dei progetti
+            for (Project project : employee.getLaboratory().getProjects()) {
+                Label label = new Label();
+                label.setText(project.getName());
+                labProjectsVBox.getChildren().add(label);
+            }
         }
 
         // imposta quali elementi possono essere visualizzati in base al tipo dell'impiegato loggato

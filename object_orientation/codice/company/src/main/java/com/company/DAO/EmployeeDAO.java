@@ -4,6 +4,7 @@ package com.company.DAO;
 import com.company.Model.EmpType;
 import com.company.Model.Employee;
 import com.company.Model.Laboratory;
+import org.jetbrains.annotations.Nullable;
 
 public interface EmployeeDAO {
     /**
@@ -20,5 +21,6 @@ public interface EmployeeDAO {
 
     Employee getEmployeeData(EmpType empType, String email);
 
+    @Nullable
     Laboratory getWorkingLaboratory(EmpType loggedEmpType, String empCf);
 }

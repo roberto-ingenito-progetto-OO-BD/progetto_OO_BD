@@ -1,6 +1,10 @@
 package com.company.Model;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.time.LocalDate;
+
 
 public class Employee {
     private String cf;
@@ -11,7 +15,9 @@ public class Employee {
     private String role;
     private float salary;
     private EmpType type;
-    private Laboratory laboratory;
+
+    @Nullable
+    private Laboratory laboratory = null;
 
     public void setSalary(float salary) {
         this.salary = salary;
@@ -50,12 +56,13 @@ public class Employee {
         return type;
     }
 
+    @Nullable
     public Laboratory getLaboratory() {
         return laboratory;
     }
 
     // SETTER
-    public void setLaboratory(Laboratory lab) {
+    public void setLaboratory(@NotNull Laboratory lab) {
         this.laboratory = lab;
     }
 
