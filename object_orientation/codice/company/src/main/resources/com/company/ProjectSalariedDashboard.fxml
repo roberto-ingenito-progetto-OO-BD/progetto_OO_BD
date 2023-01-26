@@ -133,7 +133,7 @@
                                 <Font name="System Bold" size="21.0" />
                             </font>
                         </Label>
-                        <TableView fx:id="currentContractsTable" prefHeight="470.0" prefWidth="290.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TableView fx:id="currentContractsTable" onMouseClicked="#getCurrentContractSelectedRow" prefHeight="470.0" prefWidth="290.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <columns>
                                 <TableColumn fx:id="currAssunzione" prefWidth="75.0" text="Assunzione" />
                                 <TableColumn fx:id="currScadenza" prefWidth="123.0" text="Scadenza" />
@@ -143,7 +143,7 @@
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                             </columnResizePolicy>
                         </TableView>
-                        <TableView fx:id="oldContractsTable" prefHeight="504.0" prefWidth="348.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                        <TableView fx:id="oldContractsTable" onMouseClicked="#getOldContractSelectedRow" prefHeight="504.0" prefWidth="348.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                             <columns>
                                 <TableColumn fx:id="oldAssunzione" prefWidth="75.0" text="Assunzione" />
                                 <TableColumn fx:id="oldScadenza" prefWidth="123.0" text="Scadenza" />

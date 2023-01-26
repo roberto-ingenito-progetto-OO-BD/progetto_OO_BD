@@ -45,4 +45,7 @@ public class DatabaseConnection {
     public static DatabaseConnection projSalariedInstance() throws SQLException {
         return getInstance("project_salaried_user", "proj_sal");
     }
+    public static DatabaseConnection ProjAdminInstance() throws SQLException {
+        return getInstance("project_admin", "proj_admin");
+    }
 }

@@ -39,7 +39,7 @@
           </Label>
       
                 <!--    TODO: togliere il campo "text"-->
-          <TextField fx:id="emailField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: d9d9d9; -fx-border-radius: 10px; -fx-border-color: #212529;" text="ingenitoroby@gmail.com">
+          <TextField fx:id="emailField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: d9d9d9; -fx-border-radius: 10px; -fx-border-color: #212529;" text="bruna.lollo@gmail.com">
             <VBox.margin>
                <Insets bottom="15.0" top="5.0" />
             </VBox.margin>
@@ -51,7 +51,7 @@
           </Label>
       
                 <!--    TODO: togliere il campo "text"-->
-          <TextField fx:id="passwordField" maxWidth="-Infinity" prefWidth="200.0" style="-fx-background-color: d9d9d9; -fx-border-color: #212529; -fx-border-radius: 10px;" text="password">
+          <TextField fx:id="passwordField" maxWidth="-Infinity" prefWidth="200.0" style="-fx-background-color: d9d9d9; -fx-border-color: #212529; -fx-border-radius: 10px;" text="brun123">
             <VBox.margin>
                <Insets bottom="15.0" top="5.0" />
             </VBox.margin>

@@ -13,7 +13,11 @@ public class Project {
     private LocalDate endDate;
     private LocalDate deadline;
 
-    private final Laboratory[] laboratories = new Laboratory[3];
+    public void setLaboratories(Laboratory[] laboratories) {
+        this.laboratories = laboratories;
+    }
+
+    private Laboratory[] laboratories = new Laboratory[3];
     private Manager manager;
     private ScientificReferent scientificReferent;
     private ArrayList<EquipmentRequest> equipmentRequests;

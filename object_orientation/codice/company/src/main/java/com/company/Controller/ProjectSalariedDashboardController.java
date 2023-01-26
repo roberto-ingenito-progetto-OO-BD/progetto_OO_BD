@@ -1,6 +1,7 @@
 package com.company.Controller;
 
 import com.company.GUI.Login;
+import com.company.GUI.ProjectCard;
 import com.company.Model.Contract;
 import com.company.Model.ProjectSalaried;
 import javafx.collections.ObservableList;
@@ -10,7 +11,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 
@@ -90,4 +93,35 @@ public class ProjectSalariedDashboardController {
         oldStage.close();
         newStage.show();
     }
+
+    public void getCurrentContractSelectedRow(MouseEvent mouseEvent) {
+        displayRow(currentContractsTable);
+    }
+
+    public void getOldContractSelectedRow(MouseEvent mouseEvent) {
+        displayRow(oldContractsTable);
+    }
+
+    public void displayRow(@NotNull TableView table) {
+        ProjectCard projectCard;
+        Stage newStage;
+        Scene newScene;
+        Contract currentContract = (Contract) table.getSelectionModel().getSelectedItem();
+        if (currentContract == null) {
+            System.out.println("no row selected");
+        } else {
+            System.out.println(currentContract.getProject().getCup());
+            table.getSelectionModel().clearSelection();
+
+            // creare nuova schermata con informazioni di project ed aprirla
+            projectCard = new ProjectCard();
+            newScene = projectCard.getScene(currentContract.getProject(), null);
+            newStage = new Stage();
+            newStage.setTitle("Project informations");
+            newStage.setScene(newScene);
+            newStage.setResizable(false);
+            newStage.show();
+        }
+    }
+
 }
