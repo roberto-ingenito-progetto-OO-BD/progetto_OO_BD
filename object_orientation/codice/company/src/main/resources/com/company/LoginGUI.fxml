@@ -39,7 +39,9 @@
           </Label>
       
                 <!--    TODO: togliere il campo "text"-->
-          <TextField fx:id="emailField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: d9d9d9; -fx-border-radius: 10px; -fx-border-color: #212529;" text="bruna.lollo@gmail.com">
+
+          <TextField fx:id="emailField" maxWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: d9d9d9; -fx-background-radius: 20; -fx-border-width: 0;" text="ingenitoroby@gmail.com">
+
             <VBox.margin>
                <Insets bottom="15.0" top="5.0" />
             </VBox.margin>
@@ -51,10 +53,15 @@
           </Label>
       
                 <!--    TODO: togliere il campo "text"-->
-          <TextField fx:id="passwordField" maxWidth="-Infinity" prefWidth="200.0" style="-fx-background-color: d9d9d9; -fx-border-color: #212529; -fx-border-radius: 10px;" text="brun123">
+
+          <TextField fx:id="passwordField" maxWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: d9d9d9; -fx-background-radius: 20; -fx-border-width: 0;" text="password">
+
             <VBox.margin>
                <Insets bottom="15.0" top="5.0" />
             </VBox.margin>
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
          </TextField>
           <Label fx:id="incorrectCredentialsLabel" text="Credenziali Errate" textFill="#ff0000" visible="false" />
          <HBox maxWidth="-Infinity" prefHeight="30.0" prefWidth="200.0">

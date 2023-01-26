@@ -111,29 +111,39 @@
                 </GridPane>
                 <GridPane GridPane.rowIndex="1">
                     <columnConstraints>
-                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="482.0" minWidth="10.0" prefWidth="108.0" />
-                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="482.0" minWidth="10.0" prefWidth="339.0" />
-                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="482.0" minWidth="10.0" prefWidth="95.0" />
-                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="507.0" minWidth="10.0" prefWidth="374.0" />
-                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="451.0" minWidth="10.0" prefWidth="73.0" />
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="70.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="300.0" />
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="300.0" />
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="70.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="295.0" minHeight="10.0" prefHeight="73.0" valignment="CENTER" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="550.0" minHeight="10.0" prefHeight="473.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="541.0" minHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="70.0" valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="31.0" text="Progetti in corso " textFill="#3c6e71" GridPane.columnIndex="1">
-                            <font>
-                                <Font name="System Bold" size="21.0" />
-                            </font>
-                        </Label>
-                        <Label contentDisplay="CENTER" text="Storico Progetti" GridPane.columnIndex="3">
-                            <font>
-                                <Font name="System Bold" size="21.0" />
-                            </font>
-                        </Label>
-                        <TableView fx:id="currentContractsTable" onMouseClicked="#getCurrentContractSelectedRow" prefHeight="470.0" prefWidth="290.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+
+                  <StackPane GridPane.columnIndex="1">
+                     <children>
+                              <Label contentDisplay="CENTER" text="Progetti in corso " textFill="#3c6e71">
+                                  <font>
+                                      <Font name="System Bold" size="21.0" />
+                                  </font>
+                              </Label>
+                     </children>
+                  </StackPane>
+                  <StackPane GridPane.columnIndex="3">
+                     <children>
+                              <Label contentDisplay="CENTER" text="Storico Progetti">
+                                  <font>
+                                      <Font name="System Bold" size="21.0" />
+                                  </font>
+                              </Label>
+                     </children>
+                  </StackPane>
+                        <TableView fx:id="currentContractsTable" onMouseClicked="#getCurrentContractSelectedRow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+
                             <columns>
                                 <TableColumn fx:id="currAssunzione" prefWidth="75.0" text="Assunzione" />
                                 <TableColumn fx:id="currScadenza" prefWidth="123.0" text="Scadenza" />
@@ -143,7 +153,9 @@
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                             </columnResizePolicy>
                         </TableView>
-                        <TableView fx:id="oldContractsTable" onMouseClicked="#getOldContractSelectedRow" prefHeight="504.0" prefWidth="348.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+
+                        <TableView fx:id="oldContractsTable" onMouseClicked="#getOldContractSelectedRow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="300.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+
                             <columns>
                                 <TableColumn fx:id="oldAssunzione" prefWidth="75.0" text="Assunzione" />
                                 <TableColumn fx:id="oldScadenza" prefWidth="123.0" text="Scadenza" />
