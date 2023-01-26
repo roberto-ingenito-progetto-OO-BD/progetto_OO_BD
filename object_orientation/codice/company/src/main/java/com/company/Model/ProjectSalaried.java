@@ -36,7 +36,8 @@ public class ProjectSalaried {
     }
 
     public String getRole() {
-        return role;
+        // restituisce il ruolo con la prima lettera in maiuscolo
+        return role.substring(0, 1).toUpperCase() + role.substring(1);
     }
 
     public String getCf() {
