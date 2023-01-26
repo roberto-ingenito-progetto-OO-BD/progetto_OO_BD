@@ -123,6 +123,7 @@
                         <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
+
                   <StackPane GridPane.columnIndex="1">
                      <children>
                               <Label contentDisplay="CENTER" text="Progetti in corso " textFill="#3c6e71">
@@ -141,7 +142,8 @@
                               </Label>
                      </children>
                   </StackPane>
-                        <TableView fx:id="currentContractsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TableView fx:id="currentContractsTable" onMouseClicked="#getCurrentContractSelectedRow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+
                             <columns>
                                 <TableColumn fx:id="currAssunzione" prefWidth="75.0" text="Assunzione" />
                                 <TableColumn fx:id="currScadenza" prefWidth="123.0" text="Scadenza" />
@@ -151,7 +153,9 @@
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                             </columnResizePolicy>
                         </TableView>
-                        <TableView fx:id="oldContractsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="300.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+
+                        <TableView fx:id="oldContractsTable" onMouseClicked="#getOldContractSelectedRow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="300.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+
                             <columns>
                                 <TableColumn fx:id="oldAssunzione" prefWidth="75.0" text="Assunzione" />
                                 <TableColumn fx:id="oldScadenza" prefWidth="123.0" text="Scadenza" />

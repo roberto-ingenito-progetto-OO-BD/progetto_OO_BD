@@ -5,6 +5,7 @@ import com.company.GUI.ProjectSalariedDashboard;
 import com.company.Model.*;
 import com.company.PostgresDAO.EmployeeDAOImplementation;
 import com.company.PostgresDAO.LaboratoryDAOImplementation;
+import com.company.PostgresDAO.ProjectDAOImplementation;
 import com.company.PostgresDAO.ProjectSalariedDAOImplementation;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -71,6 +72,7 @@ public class LoginController {
     /// METHODS
     private void projectLogin() {
         ProjectSalariedDAOImplementation projectSalariedDAO;
+        ProjectDAOImplementation projectDAO;
         ProjectSalaried loggedProjectSalaried;
         ArrayList<Contract> contracts;
         ProjectSalariedDashboard dashboard;
@@ -95,6 +97,19 @@ public class LoginController {
             // interazione col db - ricerca del project salaried / inizializzazione del model
             loggedProjectSalaried = projectSalariedDAO.getProjectSalariedData(emailField.getText());
             contracts = projectSalariedDAO.getContracts(loggedProjectSalaried);
+            // per ogni contratto - settare il referente e il manager / serviranno nella schermata di visualizzazione progetto
+            projectDAO = new ProjectDAOImplementation();
+            contracts.forEach(contract -> {
+                contract.getProject().setLaboratories(
+                        projectDAO.getWorkingLaboratories(contract.getProject().getCup())
+                );
+                contract.getProject().setManager(
+                        projectDAO.getProjectManager(contract.getProject().getCup())
+                );
+                contract.getProject().setScientificReferent(
+                        projectDAO.getProjectReferent(contract.getProject().getCup())
+                );
+            });
             loggedProjectSalaried.setContracts(contracts);
 
             // istanziare dashboard
