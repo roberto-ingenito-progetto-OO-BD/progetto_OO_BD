@@ -16,6 +16,7 @@ public class Main extends Application {
         stage.setScene(loginScene);
         stage.setResizable(false);
         stage.show();
+        // controllo pull request
     }
 
     public static void main(String[] args) {
