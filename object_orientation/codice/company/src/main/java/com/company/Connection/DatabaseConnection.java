@@ -9,8 +9,8 @@ import java.sql.SQLException;
 public class DatabaseConnection {
     private static DatabaseConnection instance;
     public Connection connection = null;
-    private String url = "jdbc:postgresql://localhost:5432/company";
-    private String driver = "org.postgresql.Driver";
+    private final String url = "jdbc:postgresql://localhost:5432/company";
+    private final String driver = "org.postgresql.Driver";
 
     public DatabaseConnection(String nome, String psw) throws SQLException {
         try {
@@ -30,7 +30,6 @@ public class DatabaseConnection {
         return instance;
     }
 
-
     /**
      * Crea un istanza in base all'empType dell'utente loggato
      */
@@ -41,5 +40,9 @@ public class DatabaseConnection {
             case senior -> getInstance("senior_user", "senior");
             case manager -> getInstance("manager_user", "manager");
         };
+    }
+
+    public static DatabaseConnection projSalariedInstance() throws SQLException {
+        return getInstance("project_salaried_user", "proj_sal");
     }
 }

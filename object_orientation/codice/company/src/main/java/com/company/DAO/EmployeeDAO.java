@@ -17,7 +17,6 @@ public interface EmployeeDAO {
      * @return true se il login è avvenuto correttamente
      * <p> false altrimenti
      */
-    boolean projectSalariedLogin(String email, String password);
 
     Employee getEmployeeData(EmpType empType, String email);
 

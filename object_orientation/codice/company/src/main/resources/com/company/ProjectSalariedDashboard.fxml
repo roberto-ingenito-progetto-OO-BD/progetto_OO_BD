@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.Controller.ProjectSalariedDashboardController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+        <GridPane maxHeight="1.7976931348623157E308" prefWidth="150.0">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="1.7976931348623157E308" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" valignment="CENTER" vgrow="ALWAYS" />
+            </rowConstraints>
+            <children>
+                <StackPane style="-fx-background-color: #3c6e71;">
+                    <children>
+                        <Label text="Dashboard" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </StackPane>
+                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="30.0" style="-fx-background-color: #3c6e71;" GridPane.rowIndex="1">
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                    <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                    </cursor>
+                    <padding>
+                        <Insets bottom="50.0" top="50.0" />
+                    </padding>
+                </VBox>
+                <StackPane style="-fx-background-color: #3c6e71;" GridPane.rowIndex="2">
+                    <children>
+                        <Label onMouseClicked="#onLogOut" text="Log Out" textFill="WHITE">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Label>
+                    </children>
+                </StackPane>
+            </children>
+        </GridPane>
+        <GridPane GridPane.columnIndex="1">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="732.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #D9D9D9;">
+                            <children>
+                                <Label contentDisplay="CENTER" text="Benvenuto" textFill="#3c6e71">
+                                    <font>
+                                        <Font name="System Bold" size="22.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="20.0" right="20.0" />
+                                    </padding>
+                                </Label>
+                                <Label fx:id="userNameLabel" contentDisplay="CENTER" text="Nome Cognome">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <StackPane style="-fx-background-color: #D9D9D9;" GridPane.columnIndex="1">
+                            <children>
+                                <Label fx:id="roleLabel" contentDisplay="CENTER" text="role">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </StackPane>
+                    </children>
+                </GridPane>
+                <GridPane GridPane.rowIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="482.0" minWidth="10.0" prefWidth="108.0" />
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="482.0" minWidth="10.0" prefWidth="339.0" />
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="482.0" minWidth="10.0" prefWidth="95.0" />
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="507.0" minWidth="10.0" prefWidth="374.0" />
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="451.0" minWidth="10.0" prefWidth="73.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="295.0" minHeight="10.0" prefHeight="73.0" valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="550.0" minHeight="10.0" prefHeight="473.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="541.0" minHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="31.0" text="Progetti in corso " textFill="#3c6e71" GridPane.columnIndex="1">
+                            <font>
+                                <Font name="System Bold" size="21.0" />
+                            </font>
+                        </Label>
+                        <Label contentDisplay="CENTER" text="Storico Progetti" GridPane.columnIndex="3">
+                            <font>
+                                <Font name="System Bold" size="21.0" />
+                            </font>
+                        </Label>
+                        <TableView fx:id="currentContractsTable" prefHeight="470.0" prefWidth="290.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <columns>
+                                <TableColumn fx:id="currAssunzione" prefWidth="75.0" text="Assunzione" />
+                                <TableColumn fx:id="currScadenza" prefWidth="123.0" text="Scadenza" />
+                                <TableColumn fx:id="currCompenso" prefWidth="75.0" text="Compenso" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                        </TableView>
+                        <TableView fx:id="oldContractsTable" prefHeight="504.0" prefWidth="348.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                            <columns>
+                                <TableColumn fx:id="oldAssunzione" prefWidth="75.0" text="Assunzione" />
+                                <TableColumn fx:id="oldScadenza" prefWidth="123.0" text="Scadenza" />
+                                <TableColumn fx:id="oldCompenso" prefWidth="157.0" text="Compenso" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                        </TableView>
+                    </children>
+                </GridPane>
+            </children>
+        </GridPane>
+    </children>
+</GridPane>

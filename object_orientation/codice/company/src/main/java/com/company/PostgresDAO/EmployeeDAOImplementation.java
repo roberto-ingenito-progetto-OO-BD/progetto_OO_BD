@@ -36,21 +36,6 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
     }
 
     @Override
-    public boolean projectSalariedLogin(String email, String password) {
-        // TODO: Implementare dashboard del salariato a progetto
-        try {
-            DatabaseConnection db = DatabaseConnection.getInstance("login_user", "login");
-            ResultSet resultSet = db.connection.createStatement().executeQuery("select project_salaried_login('" + email + "', '" + password + "')");
-            db.connection.close();
-
-            resultSet.next();
-            return resultSet.getString("project_salaried_login").equals("t");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
     public Employee getEmployeeData(EmpType empType, String email) {
         String query = "SELECT * FROM base_emp WHERE email = '" + email + "'";
         Employee loggedEmployee;
@@ -86,7 +71,8 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
         }
     }
 
-    @Override @Nullable
+    @Override
+    @Nullable
     public Laboratory getWorkingLaboratory(EmpType loggedEmpType, String empCf) {
         String query = "SELECT L.lab_code, L.lab_name, L.topic\n" +
                 "FROM works_at AS W   NATURAL JOIN   laboratory AS L\n" +
@@ -100,7 +86,7 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
             resultSet = db.connection.createStatement().executeQuery(query);
             db.connection.close();
 
-            if(!resultSet.isBeforeFirst()) return null;
+            if (!resultSet.isBeforeFirst()) return null;
 
             resultSet.next();
 

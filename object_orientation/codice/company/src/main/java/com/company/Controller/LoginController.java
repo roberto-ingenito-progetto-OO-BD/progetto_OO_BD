@@ -1,12 +1,11 @@
 package com.company.Controller;
 
 import com.company.GUI.EmployeeDashboard;
-import com.company.Model.EmpType;
-import com.company.Model.Employee;
-import com.company.Model.Laboratory;
-import com.company.Model.Project;
+import com.company.GUI.ProjectSalariedDashboard;
+import com.company.Model.*;
 import com.company.PostgresDAO.EmployeeDAOImplementation;
 import com.company.PostgresDAO.LaboratoryDAOImplementation;
+import com.company.PostgresDAO.ProjectSalariedDAOImplementation;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -71,13 +70,51 @@ public class LoginController {
 
     /// METHODS
     private void projectLogin() {
-        EmployeeDAOImplementation login = new EmployeeDAOImplementation();
-        boolean logged = login.projectSalariedLogin(emailField.getText(), passwordField.getText());
-        if (!logged) {
-            incorrectCredentialsLabel.setVisible(true);
+        ProjectSalariedDAOImplementation projectSalariedDAO;
+        ProjectSalaried loggedProjectSalaried;
+        ArrayList<Contract> contracts;
+        ProjectSalariedDashboard dashboard;
+
+        Stage oldStage;
+        Stage newStage;
+        Scene dashboardScene;
+
+        // se la email o la password sono vuote, termina il login
+        if (emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+            System.out.println("testo vuoto");
             return;
         }
-        // TODO: implementare project salaried dashboard
+
+        // interazione col db - login
+        projectSalariedDAO = new ProjectSalariedDAOImplementation();
+
+        // login errato
+        if (!projectSalariedDAO.projectSalariedLogin(emailField.getText(), passwordField.getText())) {
+            incorrectCredentialsLabel.setVisible(true);
+        } else {
+            // interazione col db - ricerca del project salaried / inizializzazione del model
+            loggedProjectSalaried = projectSalariedDAO.getProjectSalariedData(emailField.getText());
+            contracts = projectSalariedDAO.getContracts(loggedProjectSalaried);
+            loggedProjectSalaried.setContracts(contracts);
+
+            // istanziare dashboard
+            dashboard = new ProjectSalariedDashboard();
+            dashboardScene = dashboard.getScene(loggedProjectSalaried);
+
+            // prendo lo stage corrente
+            oldStage = (Stage) emailField.getScene().getWindow();
+
+            // creo un nuovo stage
+            newStage = new Stage();
+            newStage.setMinHeight(700);
+            newStage.setMinWidth(1000);
+            newStage.setTitle("Project Salaried Dashboard");
+            newStage.setScene(dashboardScene);
+
+            // chiudo il vecchio e apro il nuovo
+            oldStage.close();
+            newStage.show();
+        }
     }
 
     private void laboratoryLogin() {
