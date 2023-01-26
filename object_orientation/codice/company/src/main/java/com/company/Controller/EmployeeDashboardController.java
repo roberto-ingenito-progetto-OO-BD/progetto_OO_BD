@@ -5,10 +5,9 @@ import com.company.Model.Employee;
 import com.company.Model.Project;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class EmployeeDashboardController {
@@ -21,6 +20,9 @@ public class EmployeeDashboardController {
     private Tab projectsTab;
 
     @FXML
+    private Button viewAllProjects;
+
+    @FXML
     private Label projectsLabel;
     @FXML
     private Label userNameLabel;
@@ -30,15 +32,18 @@ public class EmployeeDashboardController {
     private Label laboratoryTopicLabel;
     @FXML
     private Label laboratoryNameLabel;
-
-    /**
-     * vbox dove andranno i progetti al quale lavora il laboratorio
-     */
     @FXML
-    private VBox labProjectsVBox;
+    private StackPane noWorkingProjectLabel;
 
     @FXML
     private TabPane tabPane;
+
+    @FXML
+    private TableView<Project> labWorkingProjectsTableView;
+    @FXML
+    private TableColumn<Project, String> cupColumn;
+    @FXML
+    private TableColumn<Project, String> nameColumn;
 
     /// CONSTRUCTOR
     public EmployeeDashboardController(Employee employee) {
@@ -52,25 +57,40 @@ public class EmployeeDashboardController {
         userNameLabel.setText(employee.getFirstName() + " " + employee.getLastName());
         empTypeLabel.setText(employee.getType().toString());
 
-
+        // l'impiegato lavora in un laboratorio
         if (employee.getLaboratory() != null) {
             // imposta il nome e il topic del laboratorio
-            laboratoryNameLabel.setText("Laboratorio: " + employee.getLaboratory().getName());
-            laboratoryTopicLabel.setText("Topic: " + employee.getLaboratory().getTopic());
+            laboratoryNameLabel.setText(employee.getLaboratory().getName());
+            laboratoryTopicLabel.setText(employee.getLaboratory().getTopic());
 
-            // TODO: attualmente riempie la lista di progetti solo con i nomi dei progetti
+            // imposta il tipo delle colonne della tabella "labWorkingProjectsTableView"
+            cupColumn.setCellValueFactory(new PropertyValueFactory<>("cup"));
+            nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+            // riempie la tabella "labWorkingProjectsTableView"
             for (Project project : employee.getLaboratory().getProjects()) {
-                Label label = new Label();
-                label.setText(project.getName());
-                labProjectsVBox.getChildren().add(label);
+                labWorkingProjectsTableView.getItems().add(project);
             }
+        } else // l'impiegato non lavora in un laboratorio
+        {
+            // rendo non visibile l'intera tab
+            // il doppio getParent arriva al padre di tutti gli elementi nella tab
+            labWorkingProjectsTableView.getParent().getParent().setVisible(false);
+
+            // rendo visibile la label "noWorkingProjectLabel" per fornire il messaggio
+            noWorkingProjectLabel.setVisible(true);
         }
 
         // imposta quali elementi possono essere visualizzati in base al tipo dell'impiegato loggato
         switch (employee.getType()) {
             case junior, middle:
-                projectsLabel.setVisible(false);
-                projectsTab.setDisable(true);
+                projectsLabel.setVisible(false); // rendo non visibile il pulsante "Proggetti"
+                projectsTab.setDisable(true); // Disabilito la tab dei progetti
+
+                // rendo non visibile il pulsante per visualizzare tutti i progetti sul database
+                // il compito spetta solo al manager di laboratorio
+                viewAllProjects.setVisible(false);
+
                 break;
             case senior:
                 // break;
@@ -114,4 +134,12 @@ public class EmployeeDashboardController {
         newStage.show();
     }
 
+    public void onTableRowClick() {
+        Project selected = labWorkingProjectsTableView.getSelectionModel().getSelectedItem();
+        labWorkingProjectsTableView.getSelectionModel().clearSelection();
+
+        if (selected != null) {
+            System.out.println(selected);
+        }
+    }
 }
