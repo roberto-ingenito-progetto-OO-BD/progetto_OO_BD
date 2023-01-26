@@ -19,21 +19,19 @@ public class Employee {
     @Nullable
     private Laboratory laboratory = null;
 
-    public void setSalary(float salary) {
-        this.salary = salary;
-    }
-
     // GETTERS
     public String getCf() {
         return cf;
     }
 
     public String getFirstName() {
-        return firstName;
+        // restituisce firstName capitalizzato
+        return firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
     }
 
     public String getLastName() {
-        return lastName;
+        // restituisce lastName capitalizzato
+        return lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
     }
 
     public String getEmail() {
@@ -45,7 +43,7 @@ public class Employee {
     }
 
     public String getRole() {
-        // restituisce il ruolo con la prima lettera in maiuscolo
+        // restituisce il ruolo capitalizzato
         return role.substring(0, 1).toUpperCase() + role.substring(1);
     }
 
@@ -62,12 +60,16 @@ public class Employee {
         return laboratory;
     }
 
-    // SETTER
+    /// SETTER
     public void setLaboratory(@NotNull Laboratory lab) {
         this.laboratory = lab;
     }
 
-    // CONSTRUCTOR
+    public void setSalary(float salary) {
+        this.salary = salary;
+    }
+
+    /// CONSTRUCTOR
     public Employee(String cf, String firstName, String lastName, String email, String role, float salary, EmpType type) {
         this.cf = cf;
         this.firstName = firstName;
@@ -78,4 +80,8 @@ public class Employee {
         this.type = type;
     }
 
+    /// METHODS
+    public String getFirstAndLastName() {
+        return getFirstName() + " " + getLastName();
+    }
 }

@@ -3,11 +3,9 @@ package com.company.PostgresDAO;
 import com.company.Connection.DatabaseConnection;
 import com.company.DAO.ProjectDAO;
 import com.company.Model.*;
-import javafx.scene.chart.PieChart;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class ProjectDAOImplementation implements ProjectDAO {
     @Override

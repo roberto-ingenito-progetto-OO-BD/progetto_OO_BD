@@ -1,6 +1,5 @@
 package com.company.Controller;
 
-import com.company.GUI.Login;
 import com.company.GUI.ProjectCard;
 import com.company.Model.Contract;
 import com.company.Model.ProjectSalaried;
@@ -11,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,33 +19,26 @@ import java.time.LocalDate;
 public class ProjectSalariedDashboardController {
     private final ProjectSalaried employee;
 
-    @FXML
-    public TableColumn<Contract, LocalDate> currAssunzione;
-    @FXML
-    public TableColumn<Contract, LocalDate> currScadenza;
-    @FXML
-    public TableColumn<Contract, Float> currCompenso;
+    /// FXML OBJECTS
+    private @FXML TableView<Contract> oldContractsTable;
+    private @FXML TableColumn<Contract, LocalDate> currAssunzione;
+    private @FXML TableColumn<Contract, LocalDate> currScadenza;
+    private @FXML TableColumn<Contract, Float> currCompenso;
 
-    @FXML
-    public TableColumn<Contract, LocalDate> oldAssunzione;
-    @FXML
-    public TableColumn<Contract, LocalDate> oldScadenza;
-    @FXML
-    public TableColumn<Contract, Float> oldCompenso;
-    @FXML
-    private TableView<Contract> oldContractsTable;
-    @FXML
-    private TableView<Contract> currentContractsTable;
+    private @FXML TableView<Contract> currentContractsTable;
+    private @FXML TableColumn<Contract, LocalDate> oldAssunzione;
+    private @FXML TableColumn<Contract, LocalDate> oldScadenza;
+    private @FXML TableColumn<Contract, Float> oldCompenso;
 
-    @FXML
-    private Label userNameLabel;
-    @FXML
-    private Label roleLabel;
+    private @FXML Label userNameLabel;
+    private @FXML Label roleLabel;
 
+    /// CONSTRUCTOR
     public ProjectSalariedDashboardController(ProjectSalaried employee) {
         this.employee = employee;
     }
 
+    /// FXML METHODS
     @FXML
     public void initialize() {
         userNameLabel.setText(employee.getFirstName() + " " + employee.getLastName());
@@ -79,47 +71,41 @@ public class ProjectSalariedDashboardController {
     @FXML
     private void onLogOut() {
         Stage oldStage = (Stage) userNameLabel.getScene().getWindow();
-        Stage newStage;
-        Login loginGUI = new Login();
-        Scene loginScene = loginGUI.getScene();
-
-        // creo un nuovo stage
-        newStage = new Stage();
-        newStage.setTitle("Azienda Dashboard");
-        newStage.setScene(loginScene);
-        newStage.setResizable(false);
-
-        // chiudo il vecchio e apro il nuovo
-        oldStage.close();
-        newStage.show();
+        LoginController.logOut(oldStage);
     }
 
-    public void getCurrentContractSelectedRow(MouseEvent mouseEvent) {
+    private @FXML void getCurrentContractSelectedRow() {
         displayRow(currentContractsTable);
     }
 
-    public void getOldContractSelectedRow(MouseEvent mouseEvent) {
+    private @FXML void getOldContractSelectedRow() {
         displayRow(oldContractsTable);
     }
 
-    public void displayRow(@NotNull TableView table) {
+    /// METHODS
+    public void displayRow(@NotNull TableView<Contract> table) {
         ProjectCard projectCard;
+
         Stage newStage;
         Scene newScene;
-        Contract currentContract = (Contract) table.getSelectionModel().getSelectedItem();
-        if (currentContract == null) {
-            System.out.println("no row selected");
-        } else {
-            System.out.println(currentContract.getProject().getCup());
-            table.getSelectionModel().clearSelection();
 
-            // creare nuova schermata con informazioni di project ed aprirla
+        Contract currentContract = table.getSelectionModel().getSelectedItem();
+
+        if (currentContract != null) {
+            table.getSelectionModel().clearSelection(); // deseleziona l'elemento cliccato
+
+            // crea una nuova schermata con le informazioni del progetto riferito al contratto selezionato
             projectCard = new ProjectCard();
             newScene = projectCard.getScene(currentContract.getProject(), null);
+
             newStage = new Stage();
             newStage.setTitle("Project informations");
             newStage.setScene(newScene);
             newStage.setResizable(false);
+
+            // imposta la nuova finistra come "modal",
+            // quindi blocca tutti gli eventi delle altre finestre finché questa non viene chiusa
+            newStage.initModality(Modality.APPLICATION_MODAL);
             newStage.show();
         }
     }

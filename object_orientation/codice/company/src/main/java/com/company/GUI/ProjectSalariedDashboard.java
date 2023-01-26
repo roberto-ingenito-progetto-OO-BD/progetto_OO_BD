@@ -1,9 +1,7 @@
 package com.company.GUI;
 
-import com.company.Controller.EmployeeDashboardController;
 import com.company.Controller.ProjectSalariedDashboardController;
 import com.company.Main;
-import com.company.Model.Employee;
 import com.company.Model.ProjectSalaried;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

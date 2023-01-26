@@ -1,6 +1,7 @@
 package com.company.Controller;
 
 import com.company.GUI.EmployeeDashboard;
+import com.company.GUI.Login;
 import com.company.GUI.ProjectSalariedDashboard;
 import com.company.Model.*;
 import com.company.PostgresDAO.EmployeeDAOImplementation;
@@ -19,20 +20,16 @@ import java.util.ArrayList;
 
 public class LoginController {
     /// FXML Objects
-    @FXML
-    private TextField passwordField;
-    @FXML
-    private TextField emailField;
-    @FXML
-    private ToggleButton projectButton;
-    @FXML
-    private ToggleButton laboratoryButton;
-    @FXML
-    private Label incorrectCredentialsLabel;
+    private @FXML TextField passwordField;
+    private @FXML TextField emailField;
+
+    private @FXML ToggleButton projectButton;
+    private @FXML ToggleButton laboratoryButton;
+
+    private @FXML Label incorrectCredentialsLabel;
 
     /// FXML METHODS
-    @FXML
-    private void signIn() {
+    private @FXML void signIn() {
         if (projectButton.isSelected()) {
             projectLogin();
         } else if (laboratoryButton.isSelected()) {
@@ -40,8 +37,7 @@ public class LoginController {
         }
     }
 
-    @FXML
-    private void toggleProjectButton() {
+    private @FXML void toggleProjectButton() {
         // se sto portando il bottone a false, allora lo riporto a true
         if (!projectButton.isSelected()) {
             projectButton.setSelected(true);
@@ -54,8 +50,7 @@ public class LoginController {
         laboratoryButton.setStyle("-fx-background-color: #C2C2C2");
     }
 
-    @FXML
-    private void toggleLaboratoryButton() {
+    private @FXML void toggleLaboratoryButton() {
         // se sto portando il bottone a false, allora lo riporto a true
         if (!laboratoryButton.isSelected()) {
             laboratoryButton.setSelected(true);
@@ -202,4 +197,19 @@ public class LoginController {
         newStage.show();
     }
 
+    public static void logOut(Stage oldStage) {
+        Stage newStage;
+        Login loginGUI = new Login();
+        Scene loginScene = loginGUI.getScene();
+
+        // creo un nuovo stage
+        newStage = new Stage();
+        newStage.setTitle("Azienda Dashboard");
+        newStage.setScene(loginScene);
+        newStage.setResizable(false);
+
+        // chiudo il vecchio e apro il nuovo
+        oldStage.close();
+        newStage.show();
+    }
 }

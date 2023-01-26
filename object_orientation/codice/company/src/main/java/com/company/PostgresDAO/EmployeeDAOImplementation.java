@@ -54,7 +54,14 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
                 default -> null;
             };
 
-            // chiamare il costruttore di employee passando i dati ottenuti dal db
+
+            // TODO: se è junior o middle, istanzia un Employee
+            //       se è senior, istanzia un Senior
+            //       se è manager, istanzia un Manager
+            // TODO: rimuovere Scientific Manager e Scientific Referent e sostituirlo con Senior
+            //  per i motivi gia discussi
+
+            // chiama il costruttore di employee passando i dati ottenuti dal db
             loggedEmployee = new Employee(
                     resultSet.getString("cf"),
                     resultSet.getString("first_name"),

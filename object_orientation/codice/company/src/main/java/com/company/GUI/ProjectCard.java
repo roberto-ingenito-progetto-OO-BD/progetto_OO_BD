@@ -2,7 +2,6 @@ package com.company.GUI;
 
 import com.company.Controller.ProjectCardController;
 import com.company.Main;
-import com.company.Model.EmpType;
 import com.company.Model.Employee;
 import com.company.Model.Project;
 import javafx.fxml.FXMLLoader;

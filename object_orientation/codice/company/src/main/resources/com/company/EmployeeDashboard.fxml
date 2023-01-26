@@ -73,7 +73,7 @@
             </Label>
         </VBox>
         <StackPane style="-fx-background-color: #3c6e71;" GridPane.rowIndex="2">
-            <Label onMouseClicked="#onLogOut" text="Log Out" textFill="WHITE">
+            <Label onMouseClicked="#onLogOutClick" text="Log Out" textFill="WHITE">
                 <cursor>
                     <Cursor fx:constant="HAND"/>
                 </cursor>
@@ -129,69 +129,61 @@
                 <AnchorPane maxHeight="1.7976931348623157E308" style="-fx-background-color: #FFFFFF;">
                     <HBox layoutX="20.0" layoutY="10.0" spacing="20.0" AnchorPane.bottomAnchor="20.0"
                           AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
-                        <children>
-                            <VBox spacing="10.0">
-                                <children>
-                                    <Label contentDisplay="CENTER" text="Progetti a cui lavora" textFill="#3c6e71">
-                                        <font>
-                                            <Font name="System Bold" size="16.0"/>
-                                        </font>
-                                    </Label>
-                                    <TableView fx:id="labWorkingProjectsTableView" maxHeight="1.7976931348623157E308"
-                                               minHeight="-Infinity" minWidth="-Infinity"
-                                               onMouseClicked="#onTableRowClick" VBox.vgrow="ALWAYS">
-                                        <columns>
-                                            <TableColumn fx:id="cupColumn" maxWidth="1.7976931348623157E308"
-                                                         minWidth="50.0" prefWidth="150.0" resizable="false"
-                                                         text="CUP"/>
-                                            <TableColumn fx:id="nameColumn" maxWidth="1.7976931348623157E308"
-                                                         minWidth="50.0" prefWidth="200.0" resizable="false"
-                                                         text="Nome"/>
-                                        </columns>
-                                    </TableView>
-                                </children>
-                            </VBox>
-                            <VBox spacing="10.0" HBox.hgrow="ALWAYS">
-                                <children>
-                                    <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                        <Label text="Laboratorio:">
-                                            <font>
-                                                <Font name="System Bold" size="14.0"/>
-                                            </font>
-                                        </Label>
-                                        <Label fx:id="laboratoryNameLabel" text="lab name"/>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                        <Label text="Topic:">
-                                            <font>
-                                                <Font name="System Bold" size="14.0"/>
-                                            </font>
-                                        </Label>
-                                        <Label fx:id="laboratoryTopicLabel" text="lab topic"/>
-                                    </HBox>
-                                    <Button fx:id="viewAllProjects" mnemonicParsing="false"
-                                            prefHeight="34.0" prefWidth="200.0" style="-fx-background-color: #3c6e71;"
-                                            text="Visualizza tutti i progetti" textFill="WHITE">
-                                        <font>
-                                            <Font size="14.0"/>
-                                        </font>
-                                    </Button>
-                                </children>
-                            </VBox>
-                        </children>
-                    </HBox>
-                    <StackPane fx:id="noWorkingProjectLabel" prefHeight="150.0" prefWidth="200.0" visible="false"
-                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                               AnchorPane.topAnchor="0.0">
-                        <children>
-                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="230.0"
-                                   text="Al momento non lavori in nessun laboratorio" textAlignment="CENTER"
-                                   textFill="#3c6e71" wrapText="true" StackPane.alignment="CENTER">
+                        <VBox spacing="10.0">
+                            <Label contentDisplay="CENTER" text="Progetti a cui lavora" textFill="#3c6e71">
                                 <font>
                                     <Font name="System Bold" size="16.0"/>
                                 </font>
                             </Label>
-                        </children>
+                            <TableView fx:id="labWorkingProjectsTableView" maxHeight="1.7976931348623157E308"
+                                       minHeight="-Infinity" minWidth="-Infinity"
+                                       onMouseClicked="#onTableRowClick" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="cupColumn" maxWidth="1.7976931348623157E308"
+                                                 minWidth="50.0" prefWidth="150.0" resizable="false"
+                                                 text="CUP"/>
+                                    <TableColumn fx:id="nameColumn" maxWidth="1.7976931348623157E308"
+                                                 minWidth="50.0" prefWidth="200.0" resizable="false"
+                                                 text="Nome"/>
+                                </columns>
+                            </TableView>
+                        </VBox>
+                        <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                <Label text="Laboratorio:">
+                                    <font>
+                                        <Font name="System Bold" size="14.0"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="laboratoryNameLabel" text="lab name"/>
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                <Label text="Topic:">
+                                    <font>
+                                        <Font name="System Bold" size="14.0"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="laboratoryTopicLabel" text="lab topic"/>
+                            </HBox>
+                            <Button fx:id="viewAllProjects" mnemonicParsing="false"
+                                    prefHeight="34.0" prefWidth="200.0" style="-fx-background-color: #3c6e71;"
+                                    text="Visualizza tutti i progetti" textFill="WHITE">
+                                <font>
+                                    <Font size="14.0"/>
+                                </font>
+                            </Button>
+                        </VBox>
+                    </HBox>
+                    <StackPane fx:id="noWorkingProjectLabel" prefHeight="150.0" prefWidth="200.0" visible="false"
+                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                               AnchorPane.topAnchor="0.0">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="230.0"
+                               text="Al momento non lavori in nessun laboratorio" textAlignment="CENTER"
+                               textFill="#3c6e71" wrapText="true" StackPane.alignment="CENTER">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                        </Label>
                     </StackPane>
                 </AnchorPane>
             </Tab>
