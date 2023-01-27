@@ -4,8 +4,11 @@ import com.company.Connection.DatabaseConnection;
 import com.company.DAO.ProjectDAO;
 import com.company.Model.*;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ProjectDAOImplementation implements ProjectDAO {
@@ -119,6 +122,24 @@ public class ProjectDAOImplementation implements ProjectDAO {
             throw new RuntimeException(err);
         }
 
+    }
+
+    @Override
+    public void endProject(String cup, EmpType empType) {
+        DatabaseConnection db;
+        PreparedStatement sts;
+        LocalDate localDate = LocalDate.now();
+        Date currentDate = Date.valueOf(localDate);
+        String query = "UPDATE project SET end_date = '" + currentDate + "'" + " WHERE cup = '" + cup + "'";
+
+        try {
+                db = DatabaseConnection.baseEmpInstance(empType);
+                sts = db.connection.prepareStatement(query);
+                sts.executeUpdate();
+                db.connection.close();
+        } catch (SQLException err) {
+            throw new RuntimeException(err);
+        }
     }
 
     @Override

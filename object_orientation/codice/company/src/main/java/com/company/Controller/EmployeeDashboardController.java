@@ -112,11 +112,11 @@ public class EmployeeDashboardController {
                 break;
             case senior, manager :
 
-                if (employee instanceof Senior){
+                if (employee.getType() == EmpType.senior){
                     currentSenior = new Senior(employee);
                     SeniorDAOImplementation seniorDAO = new SeniorDAOImplementation();
                     currentSenior.setProjects(
-                            seniorDAO.isReferentProjects(currentManager.getCf(), currentManager.getType())
+                            seniorDAO.isReferentProjects(currentSenior.getCf(), currentSenior.getType())
                     );
                     // caricare informazioni del project tab
                     currentSenior.getProjects().forEach(project -> {

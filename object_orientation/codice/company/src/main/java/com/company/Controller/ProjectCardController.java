@@ -1,16 +1,18 @@
 package com.company.Controller;
 
-import com.company.Model.Employee;
-import com.company.Model.Project;
-import com.company.Model.Senior;
+import com.company.Model.*;
+import com.company.PostgresDAO.ProjectDAOImplementation;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import org.jetbrains.annotations.Nullable;
 
 public class ProjectCardController {
     private final Project project;
     private final Employee employee;
+    public Button endProjectButton;
 
     /// FXML OBJECTS
     private @FXML Button takePartButton;
@@ -50,9 +52,13 @@ public class ProjectCardController {
         lab2Label.setText(project.getLaboratories()[1] != null ? project.getLaboratories()[1].getName() : "");
         lab3Label.setText(project.getLaboratories()[2] != null ? project.getLaboratories()[2].getName() : "");
 
-        // soltanto chi scientific Manager (Senior) può vedere il button
-        if (!(employee instanceof Senior)) {
+        // soltanto chi è scientific Manager (Senior) può vedere il button
+        if (!(employee.getType() == EmpType.senior)) {
             takePartButton.setVisible(false);
+        }
+        // soltanto chi è Manager può vedere il button
+        if(!(employee.getType() == EmpType.manager)) {
+            endProjectButton.setVisible(false);
         }
     }
 
@@ -63,4 +69,14 @@ public class ProjectCardController {
     }
 
 
+    @FXML
+    public void endProject(ActionEvent actionEvent) {
+        ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
+        System.out.println(employee.getType().toString());
+        projectDAO.endProject(project.getCup(), employee.getType());
+        // chiudere la schermata
+        Stage currentStage = new Stage();
+        currentStage = (Stage) endProjectButton.getScene().getWindow();
+        currentStage.close();
+    }
 }
