@@ -5,6 +5,10 @@ import java.util.ArrayList;
 public class Manager extends Employee {
     private ArrayList<Project> projects;
 
+    public void setProjects(ArrayList<Project> projects) {
+        this.projects = projects;
+    }
+
     /// CONSTRUCTOR
     public Manager(
             String cf,

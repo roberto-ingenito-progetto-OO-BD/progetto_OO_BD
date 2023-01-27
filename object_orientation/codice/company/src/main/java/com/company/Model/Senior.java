@@ -39,4 +39,12 @@ public class Senior extends Employee {
     public ArrayList<Project> getProjects() {
         return projects;
     }
+
+    public void setLaboratories(ArrayList<Laboratory> laboratories) {
+        this.laboratories = laboratories;
+    }
+
+    public void setProjects(ArrayList<Project> projects) {
+        this.projects = projects;
+    }
 }

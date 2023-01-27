@@ -4,8 +4,12 @@ import com.company.Connection.DatabaseConnection;
 import com.company.DAO.ProjectDAO;
 import com.company.Model.*;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class ProjectDAOImplementation implements ProjectDAO {
     @Override
@@ -90,6 +94,102 @@ public class ProjectDAOImplementation implements ProjectDAO {
                     resultSet.getString("role"),
                     resultSet.getFloat("salary")
             );
+        } catch (SQLException err) {
+            throw new RuntimeException(err);
+        }
+
+    }
+
+    @Override
+    public void endProject(String cup, EmpType empType) {
+        DatabaseConnection db;
+        PreparedStatement sts;
+        LocalDate localDate = LocalDate.now();
+        Date currentDate = Date.valueOf(localDate);
+        String query = "UPDATE project SET end_date = '" + currentDate + "'" + " WHERE cup = '" + cup + "'";
+
+        try {
+                db = DatabaseConnection.baseEmpInstance(empType);
+                sts = db.connection.prepareStatement(query);
+                sts.executeUpdate();
+                db.connection.close();
+        } catch (SQLException err) {
+            throw new RuntimeException(err);
+        }
+    }
+
+    @Override
+    public ArrayList<Contract> getProjectContracts(String cup) {
+        DatabaseConnection db;
+        ResultSet resultSet;
+        Contract contract;
+        ProjectSalaried projectSalaried;
+        ArrayList<Contract> contracts = new ArrayList<>();
+        String query = "SELECT * FROM project_salaried as ps , project as p , works_on as w WHERE ps.cf = w.cf AND w.cup = p.cup AND p.cup = '" + cup + "'";
+
+        try {
+            db = DatabaseConnection.ProjAdminInstance();
+            resultSet = db.connection.createStatement().executeQuery(query);
+            db.connection.close();
+
+            while(resultSet.next()) {
+                contract = new Contract(
+                        resultSet.getDate("hire_date").toLocalDate(),
+                        resultSet.getDate("expiration").toLocalDate(),
+                        resultSet.getFloat("pay")
+                );
+                projectSalaried = new ProjectSalaried(
+                        resultSet.getString("cf"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("email"),
+                        resultSet.getString("role")
+                );
+                    contract.setProjectSalaried(projectSalaried);
+                    contracts.add(contract);
+            }
+                return contracts;
+        } catch (SQLException err) {
+            throw new RuntimeException(err);
+        }
+
+    }
+
+    @Override
+    public ArrayList<EquipmentRequest> getEquipmentRequests(String cup) {
+        DatabaseConnection db;
+        ResultSet rs;
+        ArrayList<EquipmentRequest> equipmentRequests = new ArrayList<>();
+        EquipmentRequest equipmentRequest;
+        Laboratory laboratory;
+        String query = "SELECT * " +
+                        "FROM equipment_request as er , project as p , laboratory as l " +
+                        "WHERE er.lab_code = l.lab_code AND p.cup = er.cup AND p.cup =  '" + cup + "'";
+
+        try {
+            db = DatabaseConnection.ProjAdminInstance();
+            rs = db.connection.createStatement().executeQuery(query);
+            db.connection.close();
+
+            while(rs.next()){
+                // per ogni richiesta salvo anche le informazioni del laboratorio che ne ha fatto richiesta
+                equipmentRequest = new EquipmentRequest(
+                        rs.getString("code"),
+                        rs.getString("name"),
+                        rs.getString("specs"),
+                        rs.getString("type"),
+                        rs.getInt("quantity")
+                );
+
+                laboratory = new Laboratory(
+                                rs.getInt("lab_code"),
+                                rs.getString("lab_name"),
+                                rs.getString("topic")
+                );
+                    equipmentRequest.setLaboratory(laboratory);
+                    equipmentRequests.add(equipmentRequest);
+            }
+                return equipmentRequests;
         } catch (SQLException err) {
             throw new RuntimeException(err);
         }
