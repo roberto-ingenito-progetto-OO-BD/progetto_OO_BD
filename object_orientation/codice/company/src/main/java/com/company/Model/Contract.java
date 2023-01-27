@@ -1,5 +1,7 @@
 package com.company.Model;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.time.LocalDate;
 
 public class Contract {
@@ -26,7 +28,7 @@ public class Contract {
         this.projectSalaried =  projectSalaried;
     }
 
-    public LocalDate getExpiration() {
+    @Nullable public LocalDate getExpiration() {
         return expiration;
     }
     public Project getProject() {

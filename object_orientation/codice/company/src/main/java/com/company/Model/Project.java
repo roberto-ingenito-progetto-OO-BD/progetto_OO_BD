@@ -1,5 +1,7 @@
 package com.company.Model;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -120,7 +122,7 @@ public class Project {
         return equipmentRequests;
     }
 
-    public void setEquipmentRequests(ArrayList<EquipmentRequest> equipmentRequests) {
+    public void setEquipmentRequests(@Nullable ArrayList<EquipmentRequest> equipmentRequests) {
         this.equipmentRequests = equipmentRequests;
     }
 
@@ -136,7 +138,7 @@ public class Project {
         return contracts;
     }
 
-    public void setContracts(ArrayList<Contract> contracts) {
+    public void setContracts(@Nullable ArrayList<Contract> contracts) {
         this.contracts = contracts;
     }
 }

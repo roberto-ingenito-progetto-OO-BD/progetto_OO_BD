@@ -2,7 +2,9 @@ package com.company.PostgresDAO;
 
 import com.company.Connection.DatabaseConnection;
 import com.company.DAO.EmployeeDAO;
-import com.company.Model.*;
+import com.company.Model.EmpType;
+import com.company.Model.Employee;
+import com.company.Model.Laboratory;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.ResultSet;
@@ -49,7 +51,7 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
                 case "middle" -> EmpType.middle;
                 case "senior" -> EmpType.senior;
                 case "manager" -> EmpType.manager;
-                default -> EmpType.junior;
+                default -> null;
             };
 
 
@@ -70,11 +72,7 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
                     currentEmployeeType
             );
 
-            return switch (currentEmployeeType) {
-                case junior, middle -> loggedEmployee;
-                case senior -> new Senior(loggedEmployee);
-                case manager -> new Manager(loggedEmployee);
-            };
+            return loggedEmployee;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

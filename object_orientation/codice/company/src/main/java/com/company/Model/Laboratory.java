@@ -12,6 +12,46 @@ public class Laboratory {
     private Senior scientificManager;
     private ArrayList<Employee> employees;
 
+    public void setLabCode(int labCode) {
+        this.labCode = labCode;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public ArrayList<EquipmentRequest> getEquipmentRequests() {
+        return equipmentRequests;
+    }
+
+    public void setEquipmentRequests(ArrayList<EquipmentRequest> equipmentRequests) {
+        this.equipmentRequests = equipmentRequests;
+    }
+
+    public void setEquipmentRequest(EquipmentRequest equipmentRequest){
+        this.equipmentRequests.add(equipmentRequest);
+    }
+
+    public Senior getScientificManager() {
+        return scientificManager;
+    }
+
+    public void setScientificManager(Senior scientificManager) {
+        this.scientificManager = scientificManager;
+    }
+
+    public ArrayList<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(ArrayList<Employee> employees) {
+        this.employees = employees;
+    }
+
     public Laboratory(
             int labCode,
             String name,
