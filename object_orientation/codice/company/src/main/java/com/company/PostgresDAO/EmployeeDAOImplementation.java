@@ -52,13 +52,6 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
                 default -> EmpType.junior;
             };
 
-
-            // TODO: se è junior o middle, istanzia un Employee
-            //       se è senior, istanzia un Senior
-            //       se è manager, istanzia un Manager
-            // TODO: rimuovere Scientific Manager e Scientific Referent e sostituirlo con Senior
-            //  per i motivi gia discussi
-
             // chiama il costruttore di employee passando i dati ottenuti dal db
             loggedEmployee = new Employee(
                     resultSet.getString("cf"),
@@ -98,7 +91,6 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
             if (!resultSet.isBeforeFirst()) return null;
 
             resultSet.next();
-
             return new Laboratory(
                     resultSet.getInt("lab_code"),
                     resultSet.getString("lab_name"),

@@ -3,10 +3,7 @@ package com.company.Model;
 import java.util.ArrayList;
 
 public class Manager extends Employee {
-
-
     private ArrayList<Project> projects;
-
 
     /// CONSTRUCTOR
     public Manager(
@@ -15,10 +12,9 @@ public class Manager extends Employee {
             String lastName,
             String email,
             String role,
-            float salary,
-            EmpType type
+            float salary
     ) {
-        super(cf, firstName, lastName, email, role, salary, type);
+        super(cf, firstName, lastName, email, role, salary, EmpType.manager);
     }
 
     public Manager(Employee employee) {
@@ -37,5 +33,4 @@ public class Manager extends Employee {
     public ArrayList<Project> getProjects() {
         return projects;
     }
-
 }

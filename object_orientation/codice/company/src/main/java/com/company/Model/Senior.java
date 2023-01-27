@@ -13,10 +13,9 @@ public class Senior extends Employee {
             String lastName,
             String email,
             String role,
-            float salary,
-            EmpType type
+            float salary
     ) {
-        super(cf, firstName, lastName, email, role, salary, type);
+        super(cf, firstName, lastName, email, role, salary, EmpType.senior);
     }
 
     public Senior(Employee employee) {
