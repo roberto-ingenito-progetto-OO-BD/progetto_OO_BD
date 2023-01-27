@@ -9,7 +9,7 @@ public class Laboratory {
 
     private ArrayList<Project> projects;
     private ArrayList<EquipmentRequest> equipmentRequests;
-    private ScientificManager scientificManager;
+    private Senior scientificManager;
     private ArrayList<Employee> employees;
 
     public Laboratory(

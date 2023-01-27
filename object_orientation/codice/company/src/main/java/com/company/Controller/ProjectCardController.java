@@ -2,16 +2,15 @@ package com.company.Controller;
 
 import com.company.Model.Employee;
 import com.company.Model.Project;
-import com.company.Model.ScientificReferent;
-import javafx.event.ActionEvent;
+import com.company.Model.Senior;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import org.jetbrains.annotations.Nullable;
 
 public class ProjectCardController {
-    private Project project;
-    private Employee employee;
+    private final Project project;
+    private final Employee employee;
 
     /// FXML OBJECTS
     private @FXML Button takePartButton;
@@ -51,14 +50,17 @@ public class ProjectCardController {
         lab2Label.setText(project.getLaboratories()[1] != null ? project.getLaboratories()[1].getName() : "");
         lab3Label.setText(project.getLaboratories()[2] != null ? project.getLaboratories()[2].getName() : "");
 
-        // TODO: fare attenzione a questo if, probabilmente bisogna verificare che sia o instanceof Manager o instanceof Senior
-        // soltanto chi è manager o scientific Referent può vedere il button
-        if (!(employee instanceof ScientificReferent)) {
+        // soltanto chi scientific Manager (Senior) può vedere il button
+        if (!(employee instanceof Senior)) {
             takePartButton.setVisible(false);
         }
     }
 
     // TODO: implementare funzione
-    private @FXML void projectTakePart(ActionEvent actionEvent) {
+    //  serve il laboratorio
+    private @FXML void projectTakePart() {
+
     }
+
+
 }

@@ -53,7 +53,7 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
     }
 
     @Override
-    public ScientificManager getScientificManager(Laboratory laboratory, EmpType empType) {
+    public Senior getScientificManager(Laboratory laboratory, EmpType empType) {
         return null;
     }
 

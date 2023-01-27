@@ -2,14 +2,12 @@ package com.company.Model;
 
 import java.util.ArrayList;
 
-public class Manager extends Employee {
-
-
+public class Senior extends Employee {
+    private ArrayList<Laboratory> laboratories;
     private ArrayList<Project> projects;
 
-
     /// CONSTRUCTOR
-    public Manager(
+    public Senior(
             String cf,
             String firstName,
             String lastName,
@@ -21,7 +19,7 @@ public class Manager extends Employee {
         super(cf, firstName, lastName, email, role, salary, type);
     }
 
-    public Manager(Employee employee) {
+    public Senior(Employee employee) {
         super(
                 employee.getCf(),
                 employee.getFirstName(),
@@ -33,9 +31,13 @@ public class Manager extends Employee {
         );
     }
 
-    /// GETTER
+
+    /// GETTERS
+    public ArrayList<Laboratory> getLaboratories() {
+        return laboratories;
+    }
+
     public ArrayList<Project> getProjects() {
         return projects;
     }
-
 }

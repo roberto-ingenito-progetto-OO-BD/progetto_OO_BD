@@ -19,7 +19,7 @@ public class Project {
 
     private Laboratory[] laboratories = new Laboratory[3];
     private Manager manager;
-    private ScientificReferent scientificReferent;
+    private Senior scientificReferent;
     private ArrayList<EquipmentRequest> equipmentRequests;
     private ArrayList<Equipment> equipments;
     private ArrayList<Contract> contracts;
@@ -108,11 +108,11 @@ public class Project {
         this.manager = manager;
     }
 
-    public ScientificReferent getScientificReferent() {
+    public Senior getScientificReferent() {
         return scientificReferent;
     }
 
-    public void setScientificReferent(ScientificReferent scientificReferent) {
+    public void setScientificReferent(Senior scientificReferent) {
         this.scientificReferent = scientificReferent;
     }
 

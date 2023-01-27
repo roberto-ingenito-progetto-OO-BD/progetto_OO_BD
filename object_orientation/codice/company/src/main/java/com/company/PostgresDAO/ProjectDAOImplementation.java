@@ -42,10 +42,10 @@ public class ProjectDAOImplementation implements ProjectDAO {
     }
 
     @Override
-    public ScientificReferent getProjectReferent(String cup) {
+    public Senior getProjectReferent(String cup) {
         DatabaseConnection db;
         ResultSet resultSet;
-        ScientificReferent scientificReferent;
+        Senior scientificReferent;
         String query = "SELECT * " +
                         "FROM base_emp , project " +
                         "WHERE project.cf_scientific_referent = base_emp.cf AND project.cup =  '" + cup + "'";
@@ -64,7 +64,7 @@ public class ProjectDAOImplementation implements ProjectDAO {
                 default -> null;
             };
 
-            scientificReferent = new ScientificReferent(
+            scientificReferent = new Senior(
                     resultSet.getString("cf"),
                     resultSet.getString("first_name"),
                     resultSet.getString("last_name"),
