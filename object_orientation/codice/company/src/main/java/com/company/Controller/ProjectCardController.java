@@ -41,7 +41,7 @@ public class ProjectCardController {
         descriptionLabel.setText(project.getDescription());
         startDateLabel.setText(project.getStartDate().toString());
 
-        deadlineLabel.setText(project.getDeadline() == null ? "Non prevista" : project.getEndDate().toString());
+        deadlineLabel.setText(project.getDeadline() == null ? "Non prevista" : project.getDeadline().toString());
         endDateLabel.setText(project.getEndDate() == null ? "Non prevista" : project.getEndDate().toString());
         managerLabel.setText(project.getManager() == null ? "" : project.getManager().getFirstAndLastName());
         referentLabel.setText(project.getScientificReferent() == null ? "" : project.getScientificReferent().getFirstAndLastName());
