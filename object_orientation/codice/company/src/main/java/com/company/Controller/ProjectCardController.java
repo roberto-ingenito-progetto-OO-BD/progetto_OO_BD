@@ -6,12 +6,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.Nullable;
+
+import java.time.LocalDate;
 
 public class ProjectCardController {
     private final Project project;
     private final Employee employee;
+    private final TableView sourceTable;
     public Button endProjectButton;
 
     /// FXML OBJECTS
@@ -29,9 +34,10 @@ public class ProjectCardController {
     private @FXML Label projectName;
 
     /// CONSTRUCTOR
-    public ProjectCardController(Project project, @Nullable Employee employee) {
+    public ProjectCardController(Project project, @Nullable Employee employee, @Nullable TableView tableView) {
         this.project = project;
         this.employee = employee;
+        this.sourceTable = tableView;
     }
 
     /// FXML METHODS
@@ -60,6 +66,10 @@ public class ProjectCardController {
         if(!(employee.getType() == EmpType.manager)) {
             endProjectButton.setVisible(false);
         }
+        if(project.getEndDate() != null){
+            endProjectButton.setDisable(true);
+            endProjectButton.setText("Già concluso");
+        }
     }
 
     // TODO: implementare funzione
@@ -74,9 +84,18 @@ public class ProjectCardController {
         ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
         System.out.println(employee.getType().toString());
         projectDAO.endProject(project.getCup(), employee.getType());
+        // aggiornare il model
+        project.setEndDate(LocalDate.now());
+        // TODO droppare i laboratori che hanno lavorato al progetto ? ma poi non possiamo più vedere chi ci ha lavorato
+        // TODO eliminare il riferimento al progetto in tutti i laboratori connessi al progetto
+        if(project.getLaboratories()[0] != null) {  project.getLaboratories()[0].dropProject(project); }
+        if(project.getLaboratories()[1] != null) {  project.getLaboratories()[1].dropProject(project); }
+        if(project.getLaboratories()[2] != null) {  project.getLaboratories()[2].dropProject(project); }
+        // TODO droppare il riferimento ai laboratori (convertire l'array in Arraylist ?)
         // chiudere la schermata
         Stage currentStage = new Stage();
         currentStage = (Stage) endProjectButton.getScene().getWindow();
         currentStage.close();
+        sourceTable.refresh();
     }
 }

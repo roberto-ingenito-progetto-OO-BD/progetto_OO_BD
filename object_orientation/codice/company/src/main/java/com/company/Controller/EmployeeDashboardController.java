@@ -220,7 +220,7 @@ public class EmployeeDashboardController {
         if(mouseEvent.getButton() == MouseButton.SECONDARY) {
                 // apre schermata del progetto
                 projectCard = new ProjectCard();
-                newScene = projectCard.getScene(selectedProject, employee);
+                newScene = projectCard.getScene(selectedProject, employee, projectsTable);
                 newStage = new Stage();
                 newStage.setTitle("Project Informations");
                 newStage.setScene(newScene);

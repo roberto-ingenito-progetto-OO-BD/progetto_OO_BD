@@ -83,4 +83,10 @@ public class Laboratory {
     public void setProjects(ArrayList<Project> projects) {
         this.projects = projects;
     }
+
+    public void dropProject(Project project){
+        if(projects.contains(project)){
+            projects.remove(project);
+        }
+    }
 }
