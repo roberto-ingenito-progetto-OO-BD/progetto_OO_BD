@@ -81,7 +81,7 @@ public class Employee {
     }
 
     /// METHODS
-    public String getFirstAndLastName() {
+    public String getFullName() {
         return getFirstName() + " " + getLastName();
     }
 }

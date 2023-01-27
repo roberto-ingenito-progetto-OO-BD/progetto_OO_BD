@@ -40,11 +40,11 @@ public class ProjectCardController {
         projectName.setText(project.getName());
         descriptionLabel.setText(project.getDescription());
         startDateLabel.setText(project.getStartDate().toString());
-        deadlineLabel.setText(project.getDeadline().toString());
 
+        deadlineLabel.setText(project.getDeadline() == null ? "Non prevista" : project.getDeadline().toString());
         endDateLabel.setText(project.getEndDate() == null ? "Non prevista" : project.getEndDate().toString());
-        managerLabel.setText(project.getManager() == null ? "" : project.getManager().getFirstAndLastName());
-        referentLabel.setText(project.getScientificReferent() == null ? "" : project.getScientificReferent().getFirstAndLastName());
+        managerLabel.setText(project.getManager() == null ? "" : project.getManager().getFullName());
+        referentLabel.setText(project.getScientificReferent() == null ? "" : project.getScientificReferent().getFullName());
 
         // label dei 3 laboratori
         lab1Label.setText(project.getLaboratories()[0] != null ? project.getLaboratories()[0].getName() : "");
