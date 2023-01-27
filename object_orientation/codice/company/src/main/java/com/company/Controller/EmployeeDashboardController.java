@@ -16,6 +16,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -46,13 +47,18 @@ public class EmployeeDashboardController {
     private @FXML Tab laboratoryTab;
     private @FXML Tab projectsTab;
 
-    private @FXML Button viewAllProjects;
+    private @FXML ListView<String> equipmentListView;
+
+    private @FXML Button viewAllProjectsButton;
 
     private @FXML Label projectsLabel;
+    private @FXML Label laboratoryLabel;
+
     private @FXML Label userNameLabel;
     private @FXML Label empTypeLabel;
     private @FXML Label laboratoryTopicLabel;
     private @FXML Label laboratoryNameLabel;
+    private @FXML Label laboratoryManagerLabel;
 
     private @FXML StackPane noWorkingProjectLabel;
 
@@ -70,6 +76,11 @@ public class EmployeeDashboardController {
     /// FXML METHODS
     private @FXML void initialize() {
         ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
+        // imposta il testo che appare quando la lista è vuota
+        equipmentListView.setPlaceholder(new Label("Non c'è attrezzatura in questo laboratorio"));
+
+        // imposta il testo che appare quando la tabella è vuota
+        labWorkingProjectsTableView.setPlaceholder(new Label("Il laboratorio non lavora a nessun progetto"));
 
         // imposta nome, cognome e tipo dell'impiegato nella barra in alto
         userNameLabel.setText(employee.getFirstName() + " " + employee.getLastName());
@@ -80,6 +91,8 @@ public class EmployeeDashboardController {
             // imposta il nome e il topic del laboratorio
             laboratoryNameLabel.setText(employee.getLaboratory().getName());
             laboratoryTopicLabel.setText(employee.getLaboratory().getTopic());
+            laboratoryManagerLabel.setText(employee.getLaboratory().getScientificManager().getFullName());
+
 
             // imposta il tipo delle colonne della tabella "labWorkingProjectsTableView"
             cupColumn.setCellValueFactory(new PropertyValueFactory<>("cup"));
@@ -89,8 +102,17 @@ public class EmployeeDashboardController {
             for (Project project : employee.getLaboratory().getProjects()) {
                 labWorkingProjectsTableView.getItems().add(project);
             }
-        } else // l'impiegato non lavora in un laboratorio
-        {
+
+            // riempie la ListView "equipmentListView"
+            for (Equipment equipment : employee.getLaboratory().getEquipment()) {
+                equipmentListView.getItems().add(
+                        equipment.getName() + ", " + equipment.getType() + ", " + equipment.getTechSpecs()
+                );
+            }
+
+        }
+        // l'impiegato non lavora in un laboratorio
+        else {
             // rendo non visibile l'intera tab
             // il doppio getParent arriva al padre di tutti gli elementi nella tab
             labWorkingProjectsTableView.getParent().getParent().setVisible(false);
@@ -104,12 +126,8 @@ public class EmployeeDashboardController {
             case junior, middle:
                 projectsLabel.setVisible(false); // rendo non visibile il pulsante "Proggetti"
                 projectsTab.setDisable(true); // Disabilito la tab dei progetti
-
-                // rendo non visibile il pulsante per visualizzare tutti i progetti sul database
-                // il compito spetta solo al manager di laboratorio
-                viewAllProjects.setVisible(false);
-
                 break;
+
             case senior, manager :
 
                 if (employee.getType() == EmpType.senior){
@@ -172,18 +190,21 @@ public class EmployeeDashboardController {
                 projectSalariedFirstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
                 projectSalariedLastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
                 projectSalariedRoleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
-
                 break;
         }
+
+        // rendo visibile il pulsante per visualizzare tutti i progetti sul database
+        // il compito spetta solo al manager di laboratorio (senior)
+        if (employee.getType() == EmpType.senior)
+            viewAllProjectsButton.setVisible(true);
     }
 
     private @FXML void goToProjectTab() {
-        tabPane.getSelectionModel().select(projectsTab);
-
+        changeTab(projectsTab);
     }
 
     private @FXML void goToLaboratoryTab() {
-        tabPane.getSelectionModel().select(laboratoryTab);
+        changeTab(laboratoryTab);
     }
 
     private @FXML void onLogOutClick() {
@@ -192,13 +213,30 @@ public class EmployeeDashboardController {
     }
 
     private @FXML void onTableRowClick() {
-        Project selected = labWorkingProjectsTableView.getSelectionModel().getSelectedItem();
+        ProjectCard projectCard;
+        @Nullable Project selected = labWorkingProjectsTableView.getSelectionModel().getSelectedItem();
         labWorkingProjectsTableView.getSelectionModel().clearSelection();
 
+        Stage newStage;
+        Scene newScene;
+
         if (selected != null) {
-            System.out.println(selected);
+            // crea una nuova schermata con le informazioni del progetto riferito al contratto selezionato
+            projectCard = new ProjectCard();
+            newScene = projectCard.getScene(selected, null);
+
+            newStage = new Stage();
+            newStage.setTitle("Project informations");
+            newStage.setScene(newScene);
+            newStage.setResizable(false);
+
+            // imposta la nuova finistra come "modal",
+            // quindi blocca tutti gli eventi delle altre finestre finché questa non viene chiusa
+            newStage.initModality(Modality.APPLICATION_MODAL);
+            newStage.show();
         }
     }
+
 
     private @FXML void showSelectedProject(MouseEvent mouseEvent) {
         ProjectCard projectCard;
@@ -272,5 +310,19 @@ public class EmployeeDashboardController {
 
     @FXML
     public void showHiringScene(ActionEvent actionEvent) {
+    }
+
+
+    /// METHODS
+    private void changeTab(Tab tab) {
+        projectsLabel.setOpacity(0.4);
+        laboratoryLabel.setOpacity(0.4);
+
+        if (tab == projectsTab) projectsLabel.setOpacity(1);
+
+        if (tab == laboratoryTab) laboratoryLabel.setOpacity(1);
+
+        tabPane.getSelectionModel().select(tab);
+
     }
 }

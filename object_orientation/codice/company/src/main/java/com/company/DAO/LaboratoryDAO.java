@@ -10,4 +10,6 @@ public interface LaboratoryDAO {
     Senior getScientificManager(Laboratory laboratory, EmpType empType);
 
     ArrayList<Employee> getEmployees(Laboratory laboratory, EmpType empType);
-}
+
+    ArrayList<Equipment> getEquipment(Laboratory laboratory, EmpType empType);
+ }

@@ -65,12 +65,16 @@ public class Employee {
         this.laboratory = lab;
     }
 
-    public void setSalary(float salary) {
-        this.salary = salary;
-    }
-
     /// CONSTRUCTOR
-    public Employee(String cf, String firstName, String lastName, String email, String role, float salary, EmpType type) {
+    public Employee(
+            String cf,
+            String firstName,
+            String lastName,
+            String email,
+            String role,
+            float salary,
+            EmpType type
+    ) {
         this.cf = cf;
         this.firstName = firstName;
         this.lastName = lastName;

@@ -9,6 +9,7 @@ public class Laboratory {
 
     private ArrayList<Project> projects;
     private ArrayList<EquipmentRequest> equipmentRequests;
+    private ArrayList<Equipment> equipment;
     private Senior scientificManager;
     private ArrayList<Employee> employees;
 
@@ -52,6 +53,7 @@ public class Laboratory {
         this.employees = employees;
     }
 
+    /// CONSTRUCTOR
     public Laboratory(
             int labCode,
             String name,
@@ -62,7 +64,7 @@ public class Laboratory {
         this.topic = topic;
     }
 
-    // GETTERS
+    /// GETTERS
     public String getName() {
         return name;
     }
@@ -79,7 +81,15 @@ public class Laboratory {
         return projects;
     }
 
-    // SETTER
+    public ArrayList<Equipment> getEquipment() {
+        return equipment;
+    }
+
+    public Senior getScientificManager() {
+        return scientificManager;
+    }
+
+    /// SETTERS
     public void setProjects(ArrayList<Project> projects) {
         this.projects = projects;
     }
@@ -89,4 +99,13 @@ public class Laboratory {
             projects.remove(project);
         }
     }
+    
+    public void setEquipment(ArrayList<Equipment> equipment) {
+        this.equipment = equipment;
+    }
+
+    public void setScientificManager(Senior scientificManager) {
+        this.scientificManager = scientificManager;
+    }
+
 }

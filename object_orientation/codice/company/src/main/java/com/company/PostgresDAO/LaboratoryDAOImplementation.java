@@ -54,11 +54,65 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
 
     @Override
     public Senior getScientificManager(Laboratory laboratory, EmpType empType) {
-        return null;
+        DatabaseConnection db;
+        ResultSet resultSet;
+
+        String query = "SELECT BE.cf, BE.first_name, BE.last_name, BE.email, BE.role, BE.salary\n" +
+                "FROM base_emp AS BE JOIN laboratory AS L  ON BE.cf = L.cf_scientific_manager\n" +
+                "WHERE L.lab_code = " + laboratory.getLabCode();
+
+        try {
+            db = DatabaseConnection.baseEmpInstance(empType);
+            resultSet = db.connection.createStatement().executeQuery(query);
+            resultSet.next();
+
+            // chiama il costruttore di employee passando i dati ottenuti dal db
+            return new Senior(
+                    resultSet.getString("cf"),
+                    resultSet.getString("first_name"),
+                    resultSet.getString("last_name"),
+                    resultSet.getString("email"),
+                    resultSet.getString("role"),
+                    resultSet.getFloat("salary")
+            );
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public ArrayList<Employee> getEmployees(Laboratory laboratory, EmpType empType) {
         return null;
+    }
+
+    @Override
+    public ArrayList<Equipment> getEquipment(Laboratory laboratory, EmpType empType) {
+        DatabaseConnection db;
+        ArrayList<Equipment> equipments = new ArrayList<>();
+        ResultSet resultSet;
+
+        String query = "SELECT name, type, tech_specs\n" +
+                "FROM equipment\n" +
+                "WHERE lab_code = " + laboratory.getLabCode();
+
+        try {
+            db = DatabaseConnection.baseEmpInstance(empType);
+            resultSet = db.connection.createStatement().executeQuery(query);
+
+            while (resultSet.next()) {
+                Equipment equipment = new Equipment(
+                        resultSet.getString("name"),
+                        resultSet.getString("type"),
+                        resultSet.getString("tech_specs")
+                );
+
+                equipments.add(equipment);
+            }
+
+            return equipments;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

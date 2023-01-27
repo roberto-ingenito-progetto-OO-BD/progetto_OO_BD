@@ -63,11 +63,9 @@ public class LoginController {
         projectButton.setStyle("-fx-background-color: #C2C2C2");
     }
 
-
     /// METHODS
     private void projectLogin() {
         ProjectSalariedDAOImplementation projectSalariedDAO;
-        ProjectDAOImplementation projectDAO;
         ProjectSalaried loggedProjectSalaried;
         ArrayList<Contract> contracts;
         ProjectSalariedDashboard dashboard;
@@ -92,19 +90,9 @@ public class LoginController {
             // interazione col db - ricerca del project salaried / inizializzazione del model
             loggedProjectSalaried = projectSalariedDAO.getProjectSalariedData(emailField.getText());
             contracts = projectSalariedDAO.getContracts(loggedProjectSalaried);
-            // per ogni contratto - settare il referente e il manager / serviranno nella schermata di visualizzazione progetto
-            projectDAO = new ProjectDAOImplementation();
-            contracts.forEach(contract -> {
-                contract.getProject().setLaboratories(
-                        projectDAO.getWorkingLaboratories(contract.getProject().getCup())
-                );
-                contract.getProject().setManager(
-                        projectDAO.getProjectManager(contract.getProject().getCup())
-                );
-                contract.getProject().setScientificReferent(
-                        projectDAO.getProjectReferent(contract.getProject().getCup())
-                );
-            });
+
+            fillProjectsData(new ArrayList<>(contracts.stream().map(contract -> contract.getProject()).toList()));
+
             loggedProjectSalaried.setContracts(contracts);
 
             // istanziare dashboard
@@ -167,12 +155,23 @@ public class LoginController {
 
         // controllo se non è null dato che l'impiegato potrebbe non lavorare a nessun laboratorio
         if (empWorkingLaboratory != null) {
+            // imposta il manager del laboratorio
+            empWorkingLaboratory.setScientificManager(laboratoryDAO.getScientificManager(empWorkingLaboratory, loggedEmpType));
+
             // imposta il laboratorio in cui lavora l'impiegato
             loggedEmployee.setLaboratory(empWorkingLaboratory);
 
+            // imposta l'attrezzatura del laboratorio
+            empWorkingLaboratory.setEquipment(laboratoryDAO.getEquipment(empWorkingLaboratory, loggedEmpType));
+
             // imposta i proggetti a cui lavora quel laboratorio
             laboratoryWorkingProjects = laboratoryDAO.getProjects(empWorkingLaboratory, loggedEmpType);
+
+            fillProjectsData(laboratoryWorkingProjects);
+
             empWorkingLaboratory.setProjects(laboratoryWorkingProjects);
+
+            System.out.println(laboratoryWorkingProjects.size());
         }
 
         // caricamento della nuova scena
@@ -197,6 +196,27 @@ public class LoginController {
         newStage.show();
     }
 
+
+    /**
+     * @param projects <p> Per ogni progetto, imposta il referente, il manager e i laboratori che vi partecipano. </p>
+     *                 <p> Serviranno nella schermata di visualizzazione progetto </p>
+     */
+    private void fillProjectsData(ArrayList<Project> projects) {
+        ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
+        projects.forEach(project -> {
+            project.setLaboratories(
+                    projectDAO.getWorkingLaboratories(project.getCup())
+            );
+            project.setManager(
+                    projectDAO.getProjectManager(project.getCup())
+            );
+            project.setScientificReferent(
+                    projectDAO.getProjectReferent(project.getCup())
+            );
+        });
+    }
+
+    /// STATIC METHODS
     public static void logOut(Stage oldStage) {
         Stage newStage;
         Login loginGUI = new Login();
@@ -212,4 +232,6 @@ public class LoginController {
         oldStage.close();
         newStage.show();
     }
+
+
 }
