@@ -33,7 +33,7 @@ public class Laboratory {
         this.equipmentRequests = equipmentRequests;
     }
 
-    public void setEquipmentRequest(EquipmentRequest equipmentRequest){
+    public void setEquipmentRequest(EquipmentRequest equipmentRequest) {
         this.equipmentRequests.add(equipmentRequest);
     }
 
@@ -86,12 +86,10 @@ public class Laboratory {
         this.projects = projects;
     }
 
-    public void dropProject(Project project){
-        if(projects.contains(project)){
-            projects.remove(project);
-        }
+    public void dropProject(Project project) {
+        projects.remove(project);
     }
-    
+
     public void setEquipment(ArrayList<Equipment> equipment) {
         this.equipment = equipment;
     }

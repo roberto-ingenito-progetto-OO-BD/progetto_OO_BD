@@ -11,10 +11,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 
+@SuppressWarnings("rawtypes")
 public class ProjectCard {
     private final FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ProjectCard.fxml"));
 
-    public Scene getScene(Project project, @Nullable Employee employee, TableView tableView) {
+    public Scene getScene(Project project, @Nullable Employee employee, @Nullable TableView tableView) {
         try {
             fxmlLoader.setControllerFactory(c -> new ProjectCardController(project, employee, tableView));
             return new Scene(fxmlLoader.load());

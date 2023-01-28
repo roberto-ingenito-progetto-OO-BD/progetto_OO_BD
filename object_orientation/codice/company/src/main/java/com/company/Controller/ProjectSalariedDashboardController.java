@@ -41,31 +41,29 @@ public class ProjectSalariedDashboardController {
     /// FXML METHODS
     @FXML
     public void initialize() {
-        userNameLabel.setText(employee.getFirstName() + " " + employee.getLastName());
+        userNameLabel.setText(employee.getFullName());
         roleLabel.setText(employee.getRole());
 
         // creazione tabella progetti in corso
         currAssunzione.setCellValueFactory(new PropertyValueFactory<>("hireDate"));
         currScadenza.setCellValueFactory(new PropertyValueFactory<>("expiration"));
         currCompenso.setCellValueFactory(new PropertyValueFactory<>("pay"));
-        ObservableList<Contract> currentContracts = currentContractsTable.getItems();
 
         oldAssunzione.setCellValueFactory(new PropertyValueFactory<>("hireDate"));
         oldScadenza.setCellValueFactory(new PropertyValueFactory<>("expiration"));
         oldCompenso.setCellValueFactory(new PropertyValueFactory<>("pay"));
-        ObservableList<Contract> oldContracts = oldContractsTable.getItems();
 
         employee.getContracts().forEach(contract -> {
-            if (contract.getExpiration().isAfter(LocalDate.now())) {
-                // contratti non ancora conclusi
-                currentContracts.add(contract);
-            } else {
-                // aggiungi in progetti conclusi
-                oldContracts.add(contract);
+            if (contract.getExpiration() != null) {
+                if (contract.getExpiration().isAfter(LocalDate.now())) {
+                    // contratti non ancora conclusi
+                    currentContractsTable.getItems().add(contract);
+                } else {
+                    // aggiungi in progetti conclusi
+                    oldContractsTable.getItems().add(contract);
+                }
             }
         });
-        currentContractsTable.setItems(currentContracts);
-        oldContractsTable.setItems(oldContracts);
     }
 
     @FXML
@@ -96,7 +94,7 @@ public class ProjectSalariedDashboardController {
 
             // crea una nuova schermata con le informazioni del progetto riferito al contratto selezionato
             projectCard = new ProjectCard();
-            newScene = projectCard.getScene(currentContract.getProject(), null, table);
+            newScene = projectCard.getScene(currentContract.getProject(), null, null);
 
             newStage = new Stage();
             newStage.setTitle("Project informations");

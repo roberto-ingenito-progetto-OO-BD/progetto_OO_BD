@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.Nullable;
@@ -14,28 +13,36 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.reflect.Array;
 import java.time.LocalDate;
 
+@SuppressWarnings("rawtypes")
 public class ProjectCardController {
     private final Project project;
-    private final Employee employee;
-    private final TableView sourceTable;
-    public Button endProjectButton;
+    private final @Nullable Employee employee;
+    private final @Nullable TableView sourceTable;
 
     /// FXML OBJECTS
     private @FXML Button takePartButton;
-    private @FXML Label lab3Label;
-    private @FXML Label lab2Label;
+    private @FXML Button endProjectButton;
+
     private @FXML Label lab1Label;
+    private @FXML Label lab2Label;
+    private @FXML Label lab3Label;
+
     private @FXML Label referentLabel;
     private @FXML Label managerLabel;
+
+    private @FXML Label cupLabel;
+    private @FXML Label projectNameLabel;
+    private @FXML Label descriptionLabel;
+    private @FXML Label startDateLabel;
     private @FXML Label endDateLabel;
     private @FXML Label deadlineLabel;
-    private @FXML Label startDateLabel;
-    private @FXML Label descriptionLabel;
-    private @FXML Label cupLabel;
-    private @FXML Label projectName;
 
     /// CONSTRUCTOR
-    public ProjectCardController(Project project, @Nullable Employee employee, @Nullable TableView tableView) {
+    public ProjectCardController(
+            Project project,
+            @Nullable Employee employee,
+            @Nullable TableView tableView
+    ) {
         this.project = project;
         this.employee = employee;
         this.sourceTable = tableView;
@@ -45,14 +52,15 @@ public class ProjectCardController {
     private @FXML void initialize() {
         // imposta tutte le label
         cupLabel.setText(project.getCup());
-        projectName.setText(project.getName());
+        projectNameLabel.setText(project.getName());
         descriptionLabel.setText(project.getDescription());
-        startDateLabel.setText(project.getStartDate().toString());
 
-        deadlineLabel.setText(project.getDeadline() == null ? "Non prevista" : project.getDeadline().toString());
+        startDateLabel.setText(project.getStartDate().toString());
         endDateLabel.setText(project.getEndDate() == null ? "Non prevista" : project.getEndDate().toString());
-        managerLabel.setText(project.getManager() == null ? "" : project.getManager().getFullName());
+        deadlineLabel.setText(project.getDeadline() == null ? "N// droppare i laboratori che hanno lavorato al progetto ? ma poi non possiamo più vedere chi ci ha lavoratoon prevista" : project.getDeadline().toString());
+
         referentLabel.setText(project.getScientificReferent() == null ? "" : project.getScientificReferent().getFullName());
+        managerLabel.setText(project.getManager() == null ? "" : project.getManager().getFullName());
 
         // label dei 3 laboratori ?? switch
         switch(project.getLaboratories().size()-1){
@@ -62,14 +70,17 @@ public class ProjectCardController {
         }
 
         // soltanto chi è scientific Manager (Senior) può vedere il button
-        if (!(employee.getType() == EmpType.senior)) {
-            takePartButton.setVisible(false);
+        if (employee != null) {
+            if (!(employee.getType() == EmpType.senior)) {
+                takePartButton.setVisible(false);
+            }
+            // soltanto chi è Manager può vedere il button
+            if (!(employee.getType() == EmpType.manager)) {
+                endProjectButton.setVisible(false);
+            }
         }
-        // soltanto chi è Manager può vedere il button
-        if(!(employee.getType() == EmpType.manager)) {
-            endProjectButton.setVisible(false);
-        }
-        if(project.getEndDate() != null){
+
+        if (project.getEndDate() != null) {
             endProjectButton.setDisable(true);
             endProjectButton.setText("Già concluso");
         }
@@ -82,24 +93,32 @@ public class ProjectCardController {
     }
 
 
-    @FXML
-    public void endProject(ActionEvent actionEvent) {
+    /**
+     * Il pulsante è visibile solo ad un impiegato Manager
+     */
+    private @FXML void endProject() {
         ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
-        System.out.println(employee.getType().toString());
-        projectDAO.endProject(project.getCup(), employee.getType());
-        // aggiornare il model
+
+        projectDAO.endProject(project.getCup(), EmpType.manager);
+
+        // aggiorna il model
         project.setEndDate(LocalDate.now());
-        // TODO droppare i laboratori che hanno lavorato al progetto ? ma poi non possiamo più vedere chi ci ha lavorato
-        //if(!project.getLaboratories().isEmpty()){
-        //   project.getLaboratories().forEach(laboratory -> {
-        //       laboratory.getProjects().remove(project);
-        //   });
-        //   project.getLaboratories().clear();
-       //}
+
+        
+        // eliminiamo il riferimento al progetto, ai laboratori che vi stavano partecipato ma non il viceversa
+        // quindi di un progetto concluso possiamo vedere gli ultimi 3 laboratori che ci hanno lavorato
+        if(!project.getLaboratories().isEmpty()){
+           project.getLaboratories().forEach(laboratory -> {
+               laboratory.getProjects().remove(project);
+           });
+        }
+        
         // chiudere la schermata
-        Stage currentStage = new Stage();
-        currentStage = (Stage) endProjectButton.getScene().getWindow();
+        Stage currentStage = (Stage) endProjectButton.getScene().getWindow();
+
         currentStage.close();
-        sourceTable.refresh();
+
+        if (sourceTable != null) sourceTable.refresh();
+
     }
 }
