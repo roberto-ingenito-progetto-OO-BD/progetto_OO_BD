@@ -11,6 +11,7 @@ public class ProjectSalaried {
     private String email;
     private String role;
 
+    /// CONSTRUCTOR
     public ProjectSalaried(String cf, String firstName, String lastName, String email, String role) {
         this.cf = cf;
         this.firstName = firstName;
@@ -19,10 +20,8 @@ public class ProjectSalaried {
         this.role = role;
     }
 
-    public void setContracts(ArrayList<Contract> contracts) {
-        this.contracts = contracts;
-    }
 
+    /// GETTER
     public ArrayList<Contract> getContracts() {
         return contracts;
     }
@@ -44,6 +43,15 @@ public class ProjectSalaried {
         return cf;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    /// SETTER
+    public void setContracts(ArrayList<Contract> contracts) {
+        this.contracts = contracts;
+    }
+
     public void setCf(String cf) {
         this.cf = cf;
     }
@@ -56,15 +64,16 @@ public class ProjectSalaried {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public void setEmail(String email) {
         this.email = email;
     }
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    /// METHODS
+    public String getFullName() {
+        return getFirstName() + " " + getLastName();
     }
 }

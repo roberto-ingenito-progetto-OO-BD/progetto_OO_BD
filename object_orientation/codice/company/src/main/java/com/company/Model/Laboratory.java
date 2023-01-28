@@ -33,16 +33,8 @@ public class Laboratory {
         this.equipmentRequests = equipmentRequests;
     }
 
-    public void setEquipmentRequest(EquipmentRequest equipmentRequest){
+    public void setEquipmentRequest(EquipmentRequest equipmentRequest) {
         this.equipmentRequests.add(equipmentRequest);
-    }
-
-    public Senior getScientificManager() {
-        return scientificManager;
-    }
-
-    public void setScientificManager(Senior scientificManager) {
-        this.scientificManager = scientificManager;
     }
 
     public ArrayList<Employee> getEmployees() {
@@ -94,12 +86,10 @@ public class Laboratory {
         this.projects = projects;
     }
 
-    public void dropProject(Project project){
-        if(projects.contains(project)){
-            projects.remove(project);
-        }
+    public void dropProject(Project project) {
+        projects.remove(project);
     }
-    
+
     public void setEquipment(ArrayList<Equipment> equipment) {
         this.equipment = equipment;
     }

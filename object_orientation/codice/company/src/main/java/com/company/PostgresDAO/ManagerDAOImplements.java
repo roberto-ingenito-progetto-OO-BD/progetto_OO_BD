@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class ManagerDAOImplements implements ManagerDAO {
     @Override
-    public ArrayList<Project> isManagerProjects(String cf, EmpType empType) {
+    public ArrayList<Project> managerWorkingProjects(String cf, EmpType empType) {
         DatabaseConnection db;
         ResultSet resultSet;
         Project project;

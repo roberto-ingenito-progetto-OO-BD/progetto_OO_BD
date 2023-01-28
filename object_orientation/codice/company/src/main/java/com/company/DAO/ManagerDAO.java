@@ -6,5 +6,8 @@ import com.company.Model.Project;
 import java.util.ArrayList;
 
 public interface ManagerDAO {
-    ArrayList<Project> isManagerProjects(String cf, EmpType empType);
+    /**
+     * @return Restituisce i progetti in cui quell'impiegato è Manager
+     */
+    ArrayList<Project> managerWorkingProjects(String cf, EmpType empType);
 }

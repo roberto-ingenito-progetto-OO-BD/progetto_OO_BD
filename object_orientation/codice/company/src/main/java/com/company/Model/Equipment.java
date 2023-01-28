@@ -2,8 +2,6 @@ package com.company.Model;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.time.LocalDate;
-
 public class Equipment {
     private String name;
     private String type;
