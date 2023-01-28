@@ -2,7 +2,6 @@ package com.company.Controller;
 
 import com.company.Model.*;
 import com.company.PostgresDAO.ProjectDAOImplementation;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,7 +10,6 @@ import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 
 @SuppressWarnings("rawtypes")

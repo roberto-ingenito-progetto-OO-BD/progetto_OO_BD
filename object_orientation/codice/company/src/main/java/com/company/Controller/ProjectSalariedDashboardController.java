@@ -3,7 +3,6 @@ package com.company.Controller;
 import com.company.GUI.ProjectCard;
 import com.company.Model.Contract;
 import com.company.Model.ProjectSalaried;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;

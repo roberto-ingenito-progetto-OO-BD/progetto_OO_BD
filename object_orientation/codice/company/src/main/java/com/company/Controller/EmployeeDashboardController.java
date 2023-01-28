@@ -24,11 +24,14 @@ public class EmployeeDashboardController {
 
     private final ArrayList<Project> employeeProjects = new ArrayList<>();
 
+
     /// FXML OBJECTS
     private @FXML TabPane tabPane;
 
     private @FXML Tab laboratoryTab;
     private @FXML Tab projectsTab;
+    private @FXML Tab hiringTab;
+    private @FXML Tab purchaseTab;
 
     private @FXML ListView<String> laboratoryEquipmentListView;
 
@@ -204,6 +207,7 @@ public class EmployeeDashboardController {
         // il compito spetta solo al manager di laboratorio (senior)
         if (employee.getType() == EmpType.senior)
             viewAllProjectsButton.setVisible(true);
+
     }
 
     private @FXML void goToProjectTab() {
@@ -212,6 +216,14 @@ public class EmployeeDashboardController {
 
     private @FXML void goToLaboratoryTab() {
         changeTab(laboratoryTab);
+    }
+
+    private @FXML void goToHiringTab() {
+        changeTab(hiringTab);
+    }
+
+    private @FXML void goToPurchaseTab() {
+        changeTab(purchaseTab);
     }
 
     private @FXML void onLogOutClick() {
@@ -307,12 +319,11 @@ public class EmployeeDashboardController {
     private @FXML void getSelectedEquipment(MouseEvent mouseEvent) {
     }
 
-    private @FXML void showHiringScene(ActionEvent actionEvent) {
-    }
-
-
     /// METHODS
     private void changeTab(Tab tab) {
+        Tab currentTab = tabPane.getSelectionModel().getSelectedItem();
+        if (currentTab == hiringTab || currentTab == purchaseTab) return;
+
         projectsButtonLabel.setOpacity(0.4);
         laboratoryButtonLabel.setOpacity(0.4);
 
@@ -321,6 +332,5 @@ public class EmployeeDashboardController {
         if (tab == laboratoryTab) laboratoryButtonLabel.setOpacity(1);
 
         tabPane.getSelectionModel().select(tab);
-
     }
 }
