@@ -106,4 +106,5 @@ GRANT DELETE ON equipment_request TO manager_user, senior_user;
 GRANT UPDATE(end_date) ON take_part TO senior_user;
 GRANT UPDATE(specs, quantity) ON equipment_request TO senior_user;
 GRANT UPDATE(end_date) ON project TO manager_user;
+GRANT UPDATE (end_date) ON take_part TO manager_user; 
 ```
