@@ -99,7 +99,7 @@ public class Project {
         return laboratories;
     }
     public void setLaboratories(ArrayList<Laboratory> laboratories) {
-        if(laboratories.size() <= 2){
+        if(laboratories.size() <= 3){
             this.laboratories = laboratories;
         }
     }
