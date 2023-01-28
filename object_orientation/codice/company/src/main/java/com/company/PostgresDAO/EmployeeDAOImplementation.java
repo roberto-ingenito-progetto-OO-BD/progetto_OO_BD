@@ -63,6 +63,7 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
                     currentEmployeeType
             );
 
+            assert currentEmployeeType != null;
             return switch (currentEmployeeType) {
                 case junior, middle -> loggedEmployee;
                 case senior -> new Senior(loggedEmployee);

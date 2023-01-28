@@ -4,10 +4,7 @@ import com.company.GUI.EmployeeDashboard;
 import com.company.GUI.Login;
 import com.company.GUI.ProjectSalariedDashboard;
 import com.company.Model.*;
-import com.company.PostgresDAO.EmployeeDAOImplementation;
-import com.company.PostgresDAO.LaboratoryDAOImplementation;
-import com.company.PostgresDAO.ProjectDAOImplementation;
-import com.company.PostgresDAO.ProjectSalariedDAOImplementation;
+import com.company.PostgresDAO.*;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -153,6 +150,42 @@ public class LoginController {
         // prende il laboratorio in cui lavora l'impiegato
         empWorkingLaboratory = employeeDAO.getWorkingLaboratory(loggedEmpType, loggedEmployee.getCf());
 
+        // se l'impiegato loggato è un senior,
+        // carica i progetti in cui è referente
+        // carica i laboratori in cui è manager
+        //
+        // altrimenti se l'impiegato loggato è un manager
+        // carica i progetti in cui è manager
+        if (loggedEmployee instanceof Senior) {
+            SeniorDAOImplementation seniorDAO = new SeniorDAOImplementation();
+
+            ((Senior) loggedEmployee).setProjects(
+                    seniorDAO.isReferentProjects(loggedEmployee.getCf(), EmpType.senior)
+            );
+
+            ((Senior) loggedEmployee).setLaboratories(
+                    seniorDAO.isManagerLaboratory(loggedEmployee.getCf(), EmpType.senior)
+            );
+
+            ((Senior) loggedEmployee).getLaboratories().forEach(
+                    laboratory -> {
+                        laboratory.setProjects(
+                                laboratoryDAO.getProjects(laboratory, EmpType.senior)
+                        );
+
+                        laboratory.setEmployees(
+                                laboratoryDAO.getEmployees(laboratory, EmpType.senior)
+                        );
+                    }
+            );
+
+        } else if (loggedEmployee instanceof Manager) {
+            ManagerDAOImplements managerDAO = new ManagerDAOImplements();
+            ((Manager) loggedEmployee).setProjects(
+                    managerDAO.managerWorkingProjects(loggedEmployee.getCf(), EmpType.manager)
+            );
+        }
+
         // controllo se non è null dato che l'impiegato potrebbe non lavorare a nessun laboratorio
         if (empWorkingLaboratory != null) {
             // imposta il manager del laboratorio
@@ -170,8 +203,6 @@ public class LoginController {
             fillProjectsData(laboratoryWorkingProjects);
 
             empWorkingLaboratory.setProjects(laboratoryWorkingProjects);
-
-            System.out.println(laboratoryWorkingProjects.size());
         }
 
         // caricamento della nuova scena

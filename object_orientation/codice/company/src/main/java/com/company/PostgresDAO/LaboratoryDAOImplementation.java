@@ -83,7 +83,46 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
 
     @Override
     public ArrayList<Employee> getEmployees(Laboratory laboratory, EmpType empType) {
-        return null;
+        DatabaseConnection db;
+        ArrayList<Employee> employees = new ArrayList<>();
+        ResultSet resultSet;
+
+        String query = "SELECT * \n" +
+                "FROM base_emp AS BE  JOIN  works_at AS W  ON BE.cf = W.cf_base_emp \n" +
+                "WHERE W.end_date IS NULL  AND  W.lab_code = " + laboratory.getLabCode();
+
+        try {
+            db = DatabaseConnection.baseEmpInstance(empType);
+            resultSet = db.connection.createStatement().executeQuery(query);
+
+            while (resultSet.next()) {
+                Employee employee;
+
+                EmpType employeeType = switch (resultSet.getString("type")) {
+                    case "junior" -> EmpType.junior;
+                    case "middle" -> EmpType.middle;
+                    case "senior" -> EmpType.senior;
+                    case "manager" -> EmpType.manager;
+                    default -> null;
+                };
+
+                employee = new Employee(
+                        resultSet.getString("cf"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("email"),
+                        resultSet.getString("role"),
+                        resultSet.getFloat("salary"),
+                        employeeType
+                );
+
+                employees.add(employee);
+            }
+
+            return employees;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

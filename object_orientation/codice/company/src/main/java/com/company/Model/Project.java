@@ -17,6 +17,7 @@ public class Project {
     private ArrayList<Laboratory> laboratories;
     private Manager manager;
     private Senior scientificReferent;
+
     private ArrayList<EquipmentRequest> equipmentRequests;
     private ArrayList<Equipment> equipments;
     private ArrayList<Contract> contracts;
