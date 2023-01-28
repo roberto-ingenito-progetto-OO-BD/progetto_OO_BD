@@ -6,6 +6,7 @@ import com.company.PostgresDAO.ManagerDAOImplements;
 import com.company.PostgresDAO.ProjectDAOImplementation;
 import com.company.PostgresDAO.SeniorDAOImplementation;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -132,7 +133,6 @@ public class EmployeeDashboardController {
         switch (employee.getType()) {
             case junior, middle:
                 projectsButtonLabel.setVisible(false); // rendo non visibile il pulsante "Proggetti"
-                projectsTab.setDisable(true); // Disabilito la tab dei progetti
                 break;
             case senior:
                 Senior senior = (Senior) employee;
@@ -208,6 +208,7 @@ public class EmployeeDashboardController {
         if (employee.getType() == EmpType.senior)
             viewAllProjectsButton.setVisible(true);
 
+        tabPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> event.consume());
     }
 
     private @FXML void goToProjectTab() {
