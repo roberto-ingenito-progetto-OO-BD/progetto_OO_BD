@@ -223,7 +223,7 @@ public class EmployeeDashboardController {
         if (selected != null) {
             // crea una nuova schermata con le informazioni del progetto riferito al contratto selezionato
             projectCard = new ProjectCard();
-            newScene = projectCard.getScene(selected, null);
+            newScene = projectCard.getScene(selected, null, labWorkingProjectsTableView);
 
             newStage = new Stage();
             newStage.setTitle("Project informations");

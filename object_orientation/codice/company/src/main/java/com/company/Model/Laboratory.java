@@ -37,14 +37,6 @@ public class Laboratory {
         this.equipmentRequests.add(equipmentRequest);
     }
 
-    public Senior getScientificManager() {
-        return scientificManager;
-    }
-
-    public void setScientificManager(Senior scientificManager) {
-        this.scientificManager = scientificManager;
-    }
-
     public ArrayList<Employee> getEmployees() {
         return employees;
     }

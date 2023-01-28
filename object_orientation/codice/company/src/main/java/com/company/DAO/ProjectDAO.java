@@ -5,7 +5,7 @@ import com.company.Model.*;
 import java.util.ArrayList;
 
 public interface ProjectDAO {
-    Laboratory[] getWorkingLaboratories(String cup);
+    ArrayList<Laboratory> getWorkingLaboratories(String cup);
     Senior getProjectReferent(String cup);
     Manager getProjectManager(String cup);
 

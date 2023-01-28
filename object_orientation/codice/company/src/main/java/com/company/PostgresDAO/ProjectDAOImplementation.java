@@ -13,11 +13,11 @@ import java.util.ArrayList;
 
 public class ProjectDAOImplementation implements ProjectDAO {
     @Override
-    public Laboratory[] getWorkingLaboratories(String cup) {
+    public ArrayList<Laboratory> getWorkingLaboratories(String cup) {
         DatabaseConnection db;
         ResultSet rs;
         Laboratory laboratory;
-        Laboratory[] laboratories = new Laboratory[3];
+        ArrayList<Laboratory> laboratories = new ArrayList<>();
         String query = "SELECT laboratory.lab_code , lab_name , topic \n" +
                 "FROM laboratory , take_part , project \n" +
                 "WHERE laboratory.lab_code = take_part.lab_code \n" +
@@ -35,7 +35,7 @@ public class ProjectDAOImplementation implements ProjectDAO {
                         rs.getString("lab_name"),
                         rs.getString("topic")
                 );
-                laboratories[i] = laboratory;
+                laboratories.add(laboratory);
                 i++;
             }
             return laboratories;

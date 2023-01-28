@@ -141,17 +141,17 @@
                 <HBox.margin>
                     <Insets top="5.0" />
                 </HBox.margin>
-                <Label fx:id="lab1Label" text="lab1" wrapText="true">
+                <Label fx:id="lab1Label" wrapText="true">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Label>
-                <Label fx:id="lab2Label" text="lab2" wrapText="true">
+                <Label fx:id="lab2Label" wrapText="true">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Label>
-                <Label fx:id="lab3Label" text="lab3" wrapText="true">
+                <Label fx:id="lab3Label" wrapText="true">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
