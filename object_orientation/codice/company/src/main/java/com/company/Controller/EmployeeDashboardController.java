@@ -22,8 +22,6 @@ import java.util.ArrayList;
 public class EmployeeDashboardController {
     private final Employee employee;
 
-    private Senior currentSenior = null;
-    private Manager currentManager = null;
     private final ArrayList<Project> employeeProjects = new ArrayList<>();
 
     /// FXML OBJECTS
@@ -134,24 +132,29 @@ public class EmployeeDashboardController {
                 projectsTab.setDisable(true); // Disabilito la tab dei progetti
                 break;
             case senior:
-                currentSenior = new Senior(employee);
+                Senior senior = (Senior) employee;
                 SeniorDAOImplementation seniorDAO = new SeniorDAOImplementation();
-                currentSenior.setProjects(
-                        seniorDAO.isReferentProjects(currentSenior.getCf(), currentSenior.getType())
+
+                senior.setProjects(
+                        seniorDAO.isReferentProjects(senior.getCf(), senior.getType())
+                );
+
+                senior.setLaboratories(
+                        seniorDAO.isManagerLaboratory(senior.getCf(), senior.getType())
                 );
 
                 // caricare informazioni del project tab
-                employeeProjects.addAll(currentSenior.getProjects());
+                employeeProjects.addAll(senior.getProjects());
                 break;
             case manager:
-                currentManager = new Manager(employee);
+                Manager manager = (Manager) employee;
                 ManagerDAOImplements managerDAO = new ManagerDAOImplements();
-                currentManager.setProjects(
-                        managerDAO.managerWorkingProjects(currentManager.getCf(), currentManager.getType())
+                manager.setProjects(
+                        managerDAO.managerWorkingProjects(manager.getCf(), manager.getType())
                 );
 
                 // caricare informazioni del project tab
-                employeeProjects.addAll(currentManager.getProjects());
+                employeeProjects.addAll(manager.getProjects());
                 break;
         }
 
@@ -217,6 +220,7 @@ public class EmployeeDashboardController {
     }
 
     // TAB LABORATORIO
+
     /**
      * Funzione che viene eseguita quando viene cliccata una riga
      * della tabella "labWorkingProjectTable"
@@ -236,7 +240,7 @@ public class EmployeeDashboardController {
             // crea una nuova schermata con le informazioni del progetto riferito al contratto selezionato
             projectCard = new ProjectCard();
 
-            newScene = projectCard.getScene(selected, null, labWorkingProjectsTableView);
+            newScene = projectCard.getScene(selectedProject, employee, labWorkingProjectsTable);
 
             newStage = new Stage();
             newStage.setTitle("Project informations");

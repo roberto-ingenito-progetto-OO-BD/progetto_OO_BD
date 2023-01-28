@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Array;
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 public class ProjectCardController {
     private final Project project;
     private final @Nullable Employee employee;
-    private final @Nullable TableView sourceTable;
+    private final @NotNull TableView sourceTable;
 
     /// FXML OBJECTS
     private @FXML Button takePartButton;
@@ -41,7 +42,7 @@ public class ProjectCardController {
     public ProjectCardController(
             Project project,
             @Nullable Employee employee,
-            @Nullable TableView tableView
+            @NotNull TableView tableView
     ) {
         this.project = project;
         this.employee = employee;
@@ -57,33 +58,49 @@ public class ProjectCardController {
 
         startDateLabel.setText(project.getStartDate().toString());
         endDateLabel.setText(project.getEndDate() == null ? "Non prevista" : project.getEndDate().toString());
-        deadlineLabel.setText(project.getDeadline() == null ? "N// droppare i laboratori che hanno lavorato al progetto ? ma poi non possiamo più vedere chi ci ha lavoratoon prevista" : project.getDeadline().toString());
+        deadlineLabel.setText(project.getDeadline() == null ? "Non prevista" : project.getDeadline().toString());
 
         referentLabel.setText(project.getScientificReferent() == null ? "" : project.getScientificReferent().getFullName());
         managerLabel.setText(project.getManager() == null ? "" : project.getManager().getFullName());
 
-        // label dei 3 laboratori ?? switch
-        switch(project.getLaboratories().size()-1){
-            case 2: lab1Label.setText(project.getLaboratories().get(2).getName());
-            case 1: lab2Label.setText(project.getLaboratories().get(1).getName());
-            case 0: lab3Label.setText(project.getLaboratories().get(0).getName());
+        // label dei 3 laboratori
+        switch (project.getLaboratories().size() - 1) {
+            case 2:
+                lab3Label.setText(project.getLaboratories().get(2).getName());
+            case 1:
+                lab2Label.setText(project.getLaboratories().get(1).getName());
+            case 0:
+                lab1Label.setText(project.getLaboratories().get(0).getName());
         }
 
-        // soltanto chi è scientific Manager (Senior) può vedere il button
+        // soltanto chi è scientific Manager (Senior) può vedere il butto
         if (employee != null) {
-            if (!(employee.getType() == EmpType.senior)) {
-                takePartButton.setVisible(false);
-            }
-            // soltanto chi è Manager può vedere il button
-            if (!(employee.getType() == EmpType.manager)) {
-                endProjectButton.setVisible(false);
+            switch (employee.getType()) {
+                case junior, middle:
+                    break;
+                case senior:
+                    // TODO: cambiare nome della tabella
+                    if (sourceTable.getId().equals("NOME TABELLA DEI PROGETTI IN CUI IL SENIOR È MANAGER"))
+                        takePartButton.setVisible(true);
+                    break;
+                case manager:
+                    // il pulsante per terminare un progetto può essere visibile solo se
+                    // la card è stata aperta dalla tabella "projectsTable"
+                    if (sourceTable.getId().equals("projectsTable")) {
+                        // soltanto chi è Manager può vedere il button
+                        endProjectButton.setVisible(true);
+
+                        // se la data di fine non è null, vuol dire che il progetto è concluso
+                        if (project.getEndDate() != null) {
+                            endProjectButton.setDisable(true);
+                            endProjectButton.setText("Già concluso");
+                        }
+                    }
+                    break;
             }
         }
 
-        if (project.getEndDate() != null) {
-            endProjectButton.setDisable(true);
-            endProjectButton.setText("Già concluso");
-        }
+
     }
 
     // TODO: implementare funzione
@@ -104,15 +121,15 @@ public class ProjectCardController {
         // aggiorna il model
         project.setEndDate(LocalDate.now());
 
-        
+
         // eliminiamo il riferimento al progetto, ai laboratori che vi stavano partecipato ma non il viceversa
         // quindi di un progetto concluso possiamo vedere gli ultimi 3 laboratori che ci hanno lavorato
-        if(!project.getLaboratories().isEmpty()){
-           project.getLaboratories().forEach(laboratory -> {
-               laboratory.getProjects().remove(project);
-           });
+        if (!project.getLaboratories().isEmpty()) {
+            project.getLaboratories().forEach(laboratory -> {
+                laboratory.getProjects().remove(project);
+            });
         }
-        
+
         // chiudere la schermata
         Stage currentStage = (Stage) endProjectButton.getScene().getWindow();
 

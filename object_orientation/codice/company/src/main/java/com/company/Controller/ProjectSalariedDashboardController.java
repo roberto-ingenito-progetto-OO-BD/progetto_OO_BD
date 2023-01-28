@@ -94,7 +94,7 @@ public class ProjectSalariedDashboardController {
 
             // crea una nuova schermata con le informazioni del progetto riferito al contratto selezionato
             projectCard = new ProjectCard();
-            newScene = projectCard.getScene(currentContract.getProject(), null, null);
+            newScene = projectCard.getScene(currentContract.getProject(), null, table);
 
             newStage = new Stage();
             newStage.setTitle("Project informations");

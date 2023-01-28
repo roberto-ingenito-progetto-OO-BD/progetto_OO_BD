@@ -1,10 +1,12 @@
 package com.company.Model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class Senior extends Employee {
-    private ArrayList<Laboratory> laboratories;
-    private ArrayList<Project> projects;
+    private ArrayList<Laboratory> laboratories = new ArrayList<>();
+    private ArrayList<Project> projects = new ArrayList<>();
 
     /// CONSTRUCTOR
     public Senior(
@@ -40,11 +42,11 @@ public class Senior extends Employee {
         return projects;
     }
 
-    public void setLaboratories(ArrayList<Laboratory> laboratories) {
+    public void setLaboratories(@NotNull ArrayList<Laboratory> laboratories) {
         this.laboratories = laboratories;
     }
 
-    public void setProjects(ArrayList<Project> projects) {
+    public void setProjects(@NotNull ArrayList<Project> projects) {
         this.projects = projects;
     }
 }

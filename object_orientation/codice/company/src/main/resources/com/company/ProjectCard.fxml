@@ -160,7 +160,7 @@
         </HBox>
     </VBox>
     <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="3">
-      <Button fx:id="endProjectButton" mnemonicParsing="false" onAction="#endProject" prefHeight="34.0" prefWidth="200.0" style="-fx-background-color: #3c6e71;" text="Concludi" textFill="WHITE">
+      <Button fx:id="endProjectButton" mnemonicParsing="false" onAction="#endProject" prefHeight="34.0" prefWidth="200.0" style="-fx-background-color: #3c6e71;" text="Concludi" textFill="WHITE" visible="false">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -168,7 +168,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-        <Button fx:id="takePartButton" mnemonicParsing="false" onAction="#projectTakePart" prefHeight="34.0" prefWidth="200.0" style="-fx-background-color: #3c6e71;" text="Partecipa" textFill="WHITE">
+        <Button fx:id="takePartButton" mnemonicParsing="false" onAction="#projectTakePart" prefHeight="34.0" prefWidth="200.0" style="-fx-background-color: #3c6e71;" text="Partecipa" textFill="WHITE" visible="false">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font>

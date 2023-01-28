@@ -1,5 +1,5 @@
 package com.company.Model;
 
 public enum EmpType {
-    junior, senior, middle, manager
+    junior, middle, senior, manager
 }
