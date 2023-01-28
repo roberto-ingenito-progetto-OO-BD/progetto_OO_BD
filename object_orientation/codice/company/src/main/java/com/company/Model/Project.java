@@ -14,17 +14,14 @@ public class Project {
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalDate deadline;
-
-    public void setLaboratories(Laboratory[] laboratories) {
-        this.laboratories = laboratories;
-    }
-
-    private Laboratory[] laboratories = new Laboratory[3];
+    private ArrayList<Laboratory> laboratories;
     private Manager manager;
     private Senior scientificReferent;
     private ArrayList<EquipmentRequest> equipmentRequests;
     private ArrayList<Equipment> equipments;
     private ArrayList<Contract> contracts;
+
+    private final int maxLabs = 3;
 
     public Project(
             String cup,
@@ -98,10 +95,19 @@ public class Project {
         this.deadline = deadline;
     }
 
-    public Laboratory[] getLaboratories() {
+    public ArrayList<Laboratory> getLaboratories() {
         return laboratories;
     }
-
+    public void setLaboratories(ArrayList<Laboratory> laboratories) {
+        if(laboratories.size() <= 3){
+            this.laboratories = laboratories;
+        }
+    }
+    public void addLaboratory(Laboratory laboratory){
+        if(laboratories.size() <= 2){
+            laboratories.add(laboratory);
+        }
+    }
     public Manager getManager() {
         return manager;
     }
@@ -141,4 +147,5 @@ public class Project {
     public void setContracts(@Nullable ArrayList<Contract> contracts) {
         this.contracts = contracts;
     }
+
 }

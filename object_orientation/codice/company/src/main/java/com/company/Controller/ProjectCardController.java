@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 
 @SuppressWarnings("rawtypes")
@@ -56,15 +57,17 @@ public class ProjectCardController {
 
         startDateLabel.setText(project.getStartDate().toString());
         endDateLabel.setText(project.getEndDate() == null ? "Non prevista" : project.getEndDate().toString());
-        deadlineLabel.setText(project.getDeadline() == null ? "Non prevista" : project.getDeadline().toString());
+        deadlineLabel.setText(project.getDeadline() == null ? "N// droppare i laboratori che hanno lavorato al progetto ? ma poi non possiamo più vedere chi ci ha lavoratoon prevista" : project.getDeadline().toString());
 
         referentLabel.setText(project.getScientificReferent() == null ? "" : project.getScientificReferent().getFullName());
         managerLabel.setText(project.getManager() == null ? "" : project.getManager().getFullName());
 
-        // label dei 3 laboratori
-        lab1Label.setText(project.getLaboratories()[0] != null ? project.getLaboratories()[0].getName() : "");
-        lab2Label.setText(project.getLaboratories()[1] != null ? project.getLaboratories()[1].getName() : "");
-        lab3Label.setText(project.getLaboratories()[2] != null ? project.getLaboratories()[2].getName() : "");
+        // label dei 3 laboratori ?? switch
+        switch(project.getLaboratories().size()-1){
+            case 2: lab1Label.setText(project.getLaboratories().get(2).getName());
+            case 1: lab2Label.setText(project.getLaboratories().get(1).getName());
+            case 0: lab3Label.setText(project.getLaboratories().get(0).getName());
+        }
 
         // soltanto chi è scientific Manager (Senior) può vedere il button
         if (employee != null) {
@@ -101,20 +104,18 @@ public class ProjectCardController {
         // aggiorna il model
         project.setEndDate(LocalDate.now());
 
-        // TODO droppare i laboratori che hanno lavorato al progetto ? ma poi non possiamo più vedere chi ci ha lavorato
-        // TODO eliminare il riferimento al progetto in tutti i laboratori connessi al progetto
-        if (project.getLaboratories()[0] != null) {
-            project.getLaboratories()[0].dropProject(project);
+        
+        // eliminiamo il riferimento al progetto, ai laboratori che vi stavano partecipato ma non il viceversa
+        // quindi di un progetto concluso possiamo vedere gli ultimi 3 laboratori che ci hanno lavorato
+        if(!project.getLaboratories().isEmpty()){
+           project.getLaboratories().forEach(laboratory -> {
+               laboratory.getProjects().remove(project);
+           });
         }
-        if (project.getLaboratories()[1] != null) {
-            project.getLaboratories()[1].dropProject(project);
-        }
-        if (project.getLaboratories()[2] != null) {
-            project.getLaboratories()[2].dropProject(project);
-        }
-        // TODO droppare il riferimento ai laboratori (convertire l'array in Arraylist ?)
-        // chiude la schermata
+        
+        // chiudere la schermata
         Stage currentStage = (Stage) endProjectButton.getScene().getWindow();
+
         currentStage.close();
 
         if (sourceTable != null) sourceTable.refresh();
