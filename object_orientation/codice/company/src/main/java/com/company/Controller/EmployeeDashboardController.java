@@ -14,7 +14,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.Nullable;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class EmployeeDashboardController {
@@ -46,32 +45,18 @@ public class EmployeeDashboardController {
     // laboratory working projects table
     // tabella dei progetti in cui lavora il laboratorio dove lavora l'impiegato loggato
     private @FXML TableView<Project> labWorkingProjectsTable;
-    private @FXML TableColumn<Project, String> cupColumn;
-    private @FXML TableColumn<Project, String> labWorkingProjectNameColumn;
 
     // tabella dei laboratori in cui l'impiegato loggato ne è manager
     private @FXML TableView<Laboratory> empManagerLabsTable;
-    private @FXML TableColumn<Laboratory, String> labCodeColumn;
-    private @FXML TableColumn<Laboratory, String> labNameColumn;
 
-    // equipment request table
+    // tabella delle richieste di attrezzzatura
     private @FXML TableView<EquipmentRequest> equipmentRequestTable;
-    private @FXML TableColumn<EquipmentRequest, String> equipmentNameColumn;
-    private @FXML TableColumn<EquipmentRequest, String> equipmentTypeColumn;
-    private @FXML TableColumn<EquipmentRequest, Integer> equipmentQuantityColumn;
 
-    // project salaried table
+    // tabella degli impiegati assunti
     private @FXML TableView<ProjectSalaried> hiredProjectSalariedTable;
-    private @FXML TableColumn<ProjectSalaried, String> hiredProjSalFirstNameColumn;
-    private @FXML TableColumn<ProjectSalaried, String> hiredProjSalRoleColumn;
-    private @FXML TableColumn<ProjectSalaried, String> hiredProjSalLastNameColumn;
 
-    // projects table
     // tabella dei progetti di cui un impiegato (manager) è manager
     private @FXML TableView<Project> projectsTable;
-    private @FXML TableColumn<Project, String> projectCUPColumn;
-    private @FXML TableColumn<Project, String> projectNameColumn;
-    private @FXML TableColumn<Project, LocalDate> projectEndDateColumn;
 
     /// CONSTRUCTOR
     public EmployeeDashboardController(Employee employee) {
@@ -80,118 +65,24 @@ public class EmployeeDashboardController {
 
     /// FXML METHODS
     private @FXML void initialize() {
-        ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
-        ArrayList<Project> employeeProjects = new ArrayList<>();
-
-        // imposta il testo che appare quando la lista è vuota
-        laboratoryEquipmentListView.setPlaceholder(new Label("Non c'è attrezzatura in questo laboratorio"));
-
-        // imposta il testo che appare quando la tabella è vuota
-        labWorkingProjectsTable.setPlaceholder(new Label("Il laboratorio non lavora a nessun progetto"));
-        equipmentRequestTable.setPlaceholder(new Label("Nessuna richiesta pendente"));
-        hiredProjectSalariedTable.setPlaceholder(new Label("Nessun impiegato assunto"));
-        empManagerLabsTable.setPlaceholder(new Label("Non ci sono laboratori in cui sei manager"));
-
         // imposta nome, cognome e tipo dell'impiegato nella barra in alto
         userNameLabel.setText(employee.getFirstName() + " " + employee.getLastName());
         empTypeLabel.setText(employee.getType().toString());
 
-        // l'impiegato lavora in un laboratorio
-        if (employee.getLaboratory() != null) {
-            // imposta (nelle apposite label) il nome, il topic e il manager
-            // del laboratorio in cui lavora l'impiegato loggato
-            laboratoryNameLabel.setText(employee.getLaboratory().getName());
-            laboratoryTopicLabel.setText(employee.getLaboratory().getTopic());
-            laboratoryManagerLabel.setText(employee.getLaboratory().getScientificManager().getFullName());
+        setPlaceholders();
 
-            // imposta il tipo delle colonne della tabella "labWorkingProjectsTableView"
-            // poi riempie la tabella "labWorkingProjectsTableView"
-            cupColumn.setCellValueFactory(new PropertyValueFactory<>("cup"));
-            labWorkingProjectNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-            labWorkingProjectsTable.getItems().addAll(
-                    employee.getLaboratory().getProjects()
-            );
+        loadProjectTab();
 
-            // riempie la ListView "equipmentListView"
-            for (Equipment equipment : employee.getLaboratory().getEquipment()) {
-                laboratoryEquipmentListView.getItems().add(
-                        equipment.getName() + ", " + equipment.getType() + ", " + equipment.getTechSpecs()
-                );
-            }
-
-            labCodeColumn.setCellValueFactory(new PropertyValueFactory<>("labCode"));
-            labNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-            if (employee instanceof Senior) {
-                empManagerLabsTable.getItems().addAll(
-                        ((Senior) employee).getLaboratories()
-                );
-            }
-        }
-        // l'impiegato non lavora in un laboratorio
-        else {
-            // rendo non visibile l'intera tab
-            // il doppio getParent arriva al padre di tutti gli elementi nella tab
-            labWorkingProjectsTable.getParent().getParent().setVisible(false);
-
-            // rendo visibile la label "noWorkingProjectLabel" per fornire il messaggio
-            noWorkingProjectLabel.setVisible(true);
-        }
+        loadLaboratoryTab();
 
         // imposta quali elementi possono essere visualizzati in base al tipo dell'impiegato loggato
         switch (employee.getType()) {
             case junior, middle:
                 projectsButtonLabel.setVisible(false); // rendo non visibile il pulsante "Proggetti"
                 break;
-            case senior:
-                Senior senior = (Senior) employee;
-                employeeProjects.addAll(senior.getProjects()); // carica le informazioni della tabella "projectsTable" nella tab "Progetti"
-                break;
-            case manager:
-                Manager manager = (Manager) employee;
-                employeeProjects.addAll(manager.getProjects()); // carica le informazioni della tabella "projectsTable" nella tab "Progetti"
-                break;
         }
 
-        switch (employee.getType()) {
-            case senior, manager:
-                // per ogni progetto caricare le richieste di attrezzatura e informazioni aggiuntive
-                employeeProjects.forEach(project -> {
-                    project.setEquipmentRequests(
-                            projectDAO.getEquipmentRequests(project.getCup())
-                    );
-                    project.setLaboratories(
-                            projectDAO.getWorkingLaboratories(project.getCup())
-                    );
-                    project.setManager(
-                            projectDAO.getProjectManager(project.getCup())
-                    );
-                    project.setScientificReferent(
-                            projectDAO.getProjectReferent(project.getCup())
-                    );
-                    project.setContracts(
-                            projectDAO.getProjectContracts(project.getCup())
-                    );
-                });
-
-                // caricare la tabella gui con i project
-                projectCUPColumn.setCellValueFactory(new PropertyValueFactory<>("cup"));
-                projectNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-                projectEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
-
-                projectsTable.getItems().addAll(employeeProjects);
-
-                // carica le colonne della tabella equipment Request
-                equipmentNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-                equipmentTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-                equipmentQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-
-                // carica le colonne della tabella project Salaried
-                hiredProjSalFirstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-                hiredProjSalLastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-                hiredProjSalRoleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
-                break;
-        }
-
+        // impedisce al tabPane di cambiare pagina con la shortcut CTRL+TAB da tastiera
         tabPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> event.consume());
     }
 
@@ -262,7 +153,19 @@ public class EmployeeDashboardController {
         // toglie la selezione dall'elementi cliccato, altrimenti rimane selezionato
         empManagerLabsTable.getSelectionModel().clearSelection();
 
-        if (selectedLaboratory != null) showSelectedLaboratory(selectedLaboratory);
+        if (selectedLaboratory != null) {
+
+            // se l'impiegato lavora ad un laboratorio e questo è il laboratorio che sta andando a modificare
+            // allora imposta i progetti del laboratorio selezionato "selectedLaboratory" uguale al riferimento
+            //      dei progetti del laboratorio in cui lavora l'impiegato
+            // In questo modo si andranno a modificare i progetti direttamente nella lista dei progetti del laboratorio dell'impiegato
+            //      per poi andare ad aggiornare la tabella "labWorkingProjectsTable"
+            if (employee.getLaboratory() != null && employee.getLaboratory().getLabCode() == selectedLaboratory.getLabCode()) {
+                selectedLaboratory.setProjects(employee.getLaboratory().getProjects());
+            }
+
+            showSelectedLaboratory(selectedLaboratory);
+        }
     }
 
     // TAB PROGETTI
@@ -282,24 +185,23 @@ public class EmployeeDashboardController {
         Project selectedProject = projectsTable.getSelectionModel().getSelectedItem();
 
         if (selectedProject != null) {
-
             if (mouseEvent.getButton() == MouseButton.SECONDARY) {
                 // apre schermata del progetto
                 projectCard = new ProjectCard();
                 newScene = projectCard.getScene(selectedProject, employee, projectsTable);
+
                 newStage = new Stage();
                 newStage.setTitle("Project Informations");
                 newStage.setScene(newScene);
                 newStage.setResizable(false);
+
                 newStage.initModality(Modality.APPLICATION_MODAL);
                 newStage.show();
             }
 
             // carica tutti gli equipment request del progetto selezionato nella tabella di equipment
             // riempie la tabella delle richieste
-            for (EquipmentRequest request : selectedProject.getEquipmentRequests())
-                equipmentRequestTable.getItems().add(request);
-
+            equipmentRequestTable.getItems().addAll(selectedProject.getEquipmentRequests());
 
             // carica tutti i project salaried del progetto selezionato nella tabella degli impiegati
             // riempire lista e caricare la tabella
@@ -337,7 +239,8 @@ public class EmployeeDashboardController {
 
     private void showSelectedLaboratory(Laboratory laboratory) {
         SelectedLaboratoryCard selectedLaboratoryCard = new SelectedLaboratoryCard();
-        Scene scene = selectedLaboratoryCard.getScene(laboratory);
+
+        Scene scene = selectedLaboratoryCard.getScene(laboratory, ((Senior) employee).getProjects());
 
         Stage currentStage = (Stage) tabPane.getScene().getWindow();
         Stage newStage = new Stage();
@@ -357,7 +260,125 @@ public class EmployeeDashboardController {
         //      oppure ne lascia uno, allora dovrà essere aggiornata anche la tabella che mostra i progetti a cui lavora quel laboratorio
         newStage.setOnCloseRequest(event -> {
             currentStage.show();
+
+            // se il laboratorio aggiornato è lo stesso in cui l'impiegato lavora
+            // allora aggiorna la tabella "labWorkingProjectsTable" in cui sono mostrati i progetti ai quali partecipa
+            //   il laboratorio dove lavora l'impiegato
+            if (employee.getLaboratory() != null && employee.getLaboratory().getLabCode() == laboratory.getLabCode()) {
+                labWorkingProjectsTable.getItems().clear();
+                labWorkingProjectsTable.getItems().addAll(laboratory.getProjects());
+            }
             labWorkingProjectsTable.refresh();
+
+            projectsTable.refresh();
         });
+    }
+
+    /**
+     * Imposta i placeholder delle TableView e delle ListView presenti nella GUI
+     */
+    private void setPlaceholders() {
+        laboratoryEquipmentListView.setPlaceholder(new Label("Non c'è attrezzatura in questo laboratorio"));
+
+        labWorkingProjectsTable.setPlaceholder(new Label("Il laboratorio non lavora a nessun progetto"));
+        equipmentRequestTable.setPlaceholder(new Label("Nessuna richiesta pendente"));
+        hiredProjectSalariedTable.setPlaceholder(new Label("Nessun impiegato assunto"));
+        empManagerLabsTable.setPlaceholder(new Label("Non ci sono laboratori in cui sei manager"));
+    }
+
+    /**
+     * Carica ed imposta tutti gli elementi presenti nella tab "Laboratorio"
+     */
+    private void loadLaboratoryTab() {
+        // l'impiegato lavora in un laboratorio
+        if (employee.getLaboratory() != null) {
+            // imposta (nelle apposite label) il nome, il topic e il manager
+            // del laboratorio in cui lavora l'impiegato loggato
+            laboratoryNameLabel.setText(employee.getLaboratory().getName());
+            laboratoryTopicLabel.setText(employee.getLaboratory().getTopic());
+            laboratoryManagerLabel.setText(employee.getLaboratory().getScientificManager().getFullName());
+
+            // imposta il tipo delle colonne della tabella "labWorkingProjectsTableView"
+            // poi riempie la tabella "labWorkingProjectsTableView"
+            labWorkingProjectsTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("cup"));
+            labWorkingProjectsTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
+            labWorkingProjectsTable.getItems().addAll(
+                    employee.getLaboratory().getProjects()
+            );
+
+            // riempie la ListView "equipmentListView"
+            for (Equipment equipment : employee.getLaboratory().getEquipment()) {
+                laboratoryEquipmentListView.getItems().add(
+                        equipment.getName() + ", " + equipment.getType() + ", " + equipment.getTechSpecs()
+                );
+            }
+
+            empManagerLabsTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("labCode"));
+            empManagerLabsTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
+            if (employee instanceof Senior) {
+                empManagerLabsTable.getItems().addAll(
+                        ((Senior) employee).getLaboratories()
+                );
+            }
+        } else {
+            // rendo non visibile l'intera tab
+            // il doppio getParent arriva al padre di tutti gli elementi nella tab
+            labWorkingProjectsTable.getParent().getParent().setVisible(false);
+
+            // rendo visibile la label "noWorkingProjectLabel" per fornire il messaggio
+            noWorkingProjectLabel.setVisible(true);
+        }
+    }
+
+    /**
+     * Carica ed imposta tutti gli elementi presenti nella tab "Progetti"
+     */
+    private void loadProjectTab() {
+        ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
+        ArrayList<Project> employeeProjects = new ArrayList<>();
+
+        if (employee instanceof Senior)
+            employeeProjects.addAll(((Senior) employee).getProjects());
+        else if (employee instanceof Manager)
+            employeeProjects.addAll(((Manager) employee).getProjects());
+
+        switch (employee.getType()) {
+            case senior, manager:
+                // per ogni progetto caricare le informazioni aggiuntive
+                employeeProjects.forEach(project -> {
+                    project.setEquipmentRequests(
+                            projectDAO.getEquipmentRequests(project.getCup())
+                    );
+                    project.setLaboratories(
+                            projectDAO.getWorkingLaboratories(project.getCup())
+                    );
+                    project.setManager(
+                            projectDAO.getProjectManager(project.getCup())
+                    );
+                    project.setScientificReferent(
+                            projectDAO.getProjectReferent(project.getCup())
+                    );
+                    project.setContracts(
+                            projectDAO.getProjectContracts(project.getCup())
+                    );
+                });
+
+                // carica la tabella con i project
+                projectsTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("cup"));
+                projectsTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
+                projectsTable.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("endDate"));
+                projectsTable.getItems().addAll(employeeProjects);
+
+                // carica le colonne della tabella equipment Request
+                equipmentRequestTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
+                equipmentRequestTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("type"));
+                equipmentRequestTable.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("quantity"));
+
+                // carica le colonne della tabella project Salaried
+                hiredProjectSalariedTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("firstName"));
+                hiredProjectSalariedTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("lastName"));
+                hiredProjectSalariedTable.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("role"));
+                break;
+        }
     }
 }

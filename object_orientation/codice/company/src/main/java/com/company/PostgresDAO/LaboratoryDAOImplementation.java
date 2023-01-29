@@ -6,6 +6,7 @@ import com.company.Model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class LaboratoryDAOImplementation implements LaboratoryDAO {
@@ -150,6 +151,35 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
             }
 
             return equipments;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int leaveProject(int labCode, String projectCUP, EmpType empType) {
+        DatabaseConnection db;
+        String query = "UPDATE take_part " +
+                "SET end_date = '" + LocalDate.now() + "' " +
+                "WHERE cup = '" + projectCUP + "' AND  lab_code = " + labCode + " AND end_date IS NULL";
+
+        try {
+            db = DatabaseConnection.baseEmpInstance(empType);
+            return db.connection.createStatement().executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void joinProject(int labCode, String projectCUP, EmpType empType) {
+        DatabaseConnection db;
+        String query = "INSERT INTO take_part (start_date, end_date, cup, lab_code) " +
+                "VALUES ( '" + LocalDate.now() + "', null, '" + projectCUP + "', " + labCode + " )";
+
+        try {
+            db = DatabaseConnection.baseEmpInstance(empType);
+            db.connection.createStatement().execute(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

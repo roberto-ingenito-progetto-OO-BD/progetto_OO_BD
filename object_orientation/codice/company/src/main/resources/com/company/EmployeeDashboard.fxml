@@ -142,9 +142,9 @@
                                  <children>
                                     <GridPane prefHeight="181.0" prefWidth="810.0">
                                        <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" prefWidth="100.0" />
                                        </columnConstraints>
                                        <rowConstraints>
                                           <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
@@ -198,35 +198,35 @@
                                     </GridPane>
                                     <GridPane maxHeight="1.7976931348623157E308" prefHeight="181.0" prefWidth="810.0" VBox.vgrow="ALWAYS">
                                        <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" prefWidth="100.0" />
                                        </columnConstraints>
                                        <rowConstraints>
                                           <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
                                           <RowConstraints minHeight="-Infinity" vgrow="ALWAYS" />
                                        </rowConstraints>
                                        <children>
-                                          <Label contentDisplay="CENTER" text="Laboratori di cui sei manager" textFill="#3c6e71">
+                                          <Label contentDisplay="CENTER" text="Laboratori di cui sei manager" textFill="#3c6e71" GridPane.columnIndex="2">
                                              <font>
                                                 <Font name="System Bold" size="16.0" />
                                              </font>
                                           </Label>
-                                          <Label contentDisplay="CENTER" text="Progetti a cui lavora" textFill="#3c6e71" GridPane.columnIndex="2">
+                                          <Label contentDisplay="CENTER" text="Progetti a cui lavora" textFill="#3c6e71">
                                              <font>
                                                 <Font name="System Bold" size="16.0" />
                                              </font>
                                           </Label>
-                                          <TableView fx:id="empManagerLabsTable" maxWidth="400.0" onMouseClicked="#onLabClick" prefHeight="200.0" GridPane.rowIndex="1">
+                                          <TableView fx:id="empManagerLabsTable" maxWidth="1.7976931348623157E308" onMouseClicked="#onLabClick" prefHeight="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                              <columns>
-                                                <TableColumn fx:id="labCodeColumn" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="150.0" text="Lab Code" />
-                                                <TableColumn fx:id="labNameColumn" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="250.0" text="Laboratorio" />
+                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="100.0" resizable="false" text="Lab Code" />
+                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="300.0" text="Laboratorio" />
                                              </columns>
                                           </TableView>
-                                          <TableView fx:id="labWorkingProjectsTable" maxWidth="400.0" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onLabWorkingProjectTableRowClick" prefHeight="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                          <TableView fx:id="labWorkingProjectsTable" maxWidth="1.7976931348623157E308" onMouseClicked="#onLabWorkingProjectTableRowClick" prefHeight="200.0" GridPane.rowIndex="1">
                                              <columns>
-                                                <TableColumn fx:id="cupColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" resizable="false" text="CUP" />
-                                                <TableColumn fx:id="labWorkingProjectNameColumn" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="250.0" resizable="false" text="Nome" />
+                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" resizable="false" text="CUP" />
+                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="250.0" text="Nome" />
                                              </columns>
                                           </TableView>
                                        </children>
@@ -271,9 +271,9 @@
                                           </Label>
                                           <TableView fx:id="projectsTable" maxWidth="-Infinity" minWidth="-Infinity" onMouseClicked="#showSelectedProject" prefHeight="463.0" VBox.vgrow="ALWAYS">
                                              <columns>
-                                                <TableColumn fx:id="projectCUPColumn" prefWidth="127.0" text="CUP" />
-                                                <TableColumn fx:id="projectNameColumn" prefWidth="117.0" text="Nome" />
-                                                <TableColumn fx:id="projectEndDateColumn" prefWidth="125.0" text="Conclusione" />
+                                                <TableColumn prefWidth="127.0" text="CUP" />
+                                                <TableColumn prefWidth="117.0" text="Nome" />
+                                                <TableColumn prefWidth="125.0" text="Conclusione" />
                                              </columns>
                                           </TableView>
                                        </children>
@@ -290,9 +290,9 @@
                                           </Label>
                                           <TableView fx:id="equipmentRequestTable" maxWidth="-Infinity" minWidth="-Infinity" onMouseClicked="#getSelectedEquipment" prefHeight="200.0" VBox.vgrow="SOMETIMES">
                                              <columns>
-                                                <TableColumn fx:id="equipmentNameColumn" prefWidth="107.0" text="Nome" />
-                                                <TableColumn fx:id="equipmentTypeColumn" prefWidth="124.0" text="Tipologia" />
-                                                <TableColumn fx:id="equipmentQuantityColumn" prefWidth="112.0" text="Quantità" />
+                                                <TableColumn prefWidth="107.0" text="Nome" />
+                                                <TableColumn prefWidth="124.0" text="Tipologia" />
+                                                <TableColumn prefWidth="112.0" text="Quantità" />
                                              </columns>
                                           </TableView>
                                           <Label contentDisplay="CENTER" text="Impiegati assunti">
@@ -305,9 +305,9 @@
                                           </Label>
                                           <TableView fx:id="hiredProjectSalariedTable" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="250.0" VBox.vgrow="SOMETIMES">
                                              <columns>
-                                                <TableColumn fx:id="hiredProjSalFirstNameColumn" prefWidth="106.0" text="Nome" />
-                                                <TableColumn fx:id="hiredProjSalLastNameColumn" prefWidth="119.0" text="Cognome" />
-                                                <TableColumn fx:id="hiredProjSalRoleColumn" prefWidth="118.0" text="Ruolo" />
+                                                <TableColumn prefWidth="106.0" text="Nome" />
+                                                <TableColumn prefWidth="119.0" text="Cognome" />
+                                                <TableColumn prefWidth="118.0" text="Ruolo" />
                                              </columns>
                                           </TableView>
                                           <Button fx:id="hireProjectSalaried" mnemonicParsing="false" onAction="#goToHiringTab" prefHeight="34.0" prefWidth="200.0" style="-fx-background-color: #3c6e71;" text="Assumi Impiegato" textFill="WHITE">
