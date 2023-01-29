@@ -74,6 +74,9 @@
                 <cursor>
                     <Cursor fx:constant="HAND" />
                 </cursor>
+            <font>
+               <Font size="14.0" />
+            </font>
             </Label>
         </StackPane>
     </GridPane>
@@ -250,6 +253,9 @@
                                 <font>
                                     <Font size="14.0" />
                                 </font>
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
                             </Button>
                         </GridPane>
                         <Label contentDisplay="CENTER" text="Richieste attrezzature" GridPane.columnIndex="3">
@@ -260,24 +266,6 @@
                     </GridPane>
                 </AnchorPane>
             </Tab>
-         <Tab fx:id="hiringTab" text="assunzione">
-           <content>
-             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                  <children>
-                     <Label text="assunzione" />
-                  </children>
-               </AnchorPane>
-           </content>
-         </Tab>
-         <Tab fx:id="purchaseTab" text="acquisto">
-           <content>
-             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                  <children>
-                     <Label text="acquisto" />
-                  </children>
-               </AnchorPane>
-           </content>
-         </Tab>
         </TabPane>
     </GridPane>
 </GridPane>

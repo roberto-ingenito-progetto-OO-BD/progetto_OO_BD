@@ -39,6 +39,7 @@ public class Project {
         this.endDate = endDate;
         this.deadline = deadline;
     }
+    public Project(){}
 
     /// GETTERS
     public LocalDate getEndDate() {
@@ -146,6 +147,9 @@ public class Project {
 
     public void setContracts(@Nullable ArrayList<Contract> contracts) {
         this.contracts = contracts;
+    }
+    public void addContract(Contract contract) {
+        this.contracts.add(contract);
     }
 
     /// METHODS

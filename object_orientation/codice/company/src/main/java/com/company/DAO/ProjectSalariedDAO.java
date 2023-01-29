@@ -12,4 +12,6 @@ public interface ProjectSalariedDAO {
     ProjectSalaried getProjectSalariedData(String email);
 
     ArrayList<Contract> getContracts(ProjectSalaried projectSalaried);
+
+    ArrayList<ProjectSalaried> getAllProjectSalaried();
 }

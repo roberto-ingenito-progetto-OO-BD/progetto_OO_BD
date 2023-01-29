@@ -13,4 +13,6 @@ public interface ProjectDAO {
     ArrayList<Contract> getProjectContracts(String cup);
 
     ArrayList<EquipmentRequest> getEquipmentRequests(String cup);
+
+    void hireProjectSalaried(String cup, ProjectSalaried projectSalaried, Contract contract, EmpType empType);
 }

@@ -1,9 +1,10 @@
 package com.company.Model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ProjectSalaried {
-    private ArrayList<Contract> contracts;
+    private ArrayList<Contract> contracts = new ArrayList<>();
 
     private String cf;
     private String firstName;
@@ -11,13 +12,16 @@ public class ProjectSalaried {
     private String email;
     private String role;
 
+    private LocalDate birthDate;
+
     /// CONSTRUCTOR
-    public ProjectSalaried(String cf, String firstName, String lastName, String email, String role) {
+    public ProjectSalaried(String cf, String firstName, String lastName, String email, String role, LocalDate birthDate) {
         this.cf = cf;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.role = role;
+        this.birthDate = birthDate;
     }
 
 
@@ -38,6 +42,7 @@ public class ProjectSalaried {
         // restituisce il ruolo con la prima lettera in maiuscolo
         return role.substring(0, 1).toUpperCase() + role.substring(1);
     }
+    public LocalDate getBirthDate() {return birthDate;}
 
     public String getCf() {
         return cf;
@@ -50,6 +55,9 @@ public class ProjectSalaried {
     /// SETTER
     public void setContracts(ArrayList<Contract> contracts) {
         this.contracts = contracts;
+    }
+    public void addContract(Contract contract) {
+        this.contracts.add(contract);
     }
 
     public void setCf(String cf) {

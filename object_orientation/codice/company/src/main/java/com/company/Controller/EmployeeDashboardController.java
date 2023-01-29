@@ -1,9 +1,11 @@
 package com.company.Controller;
 
+import com.company.GUI.HiringScreen;
 import com.company.GUI.ProjectCard;
 import com.company.Model.*;
 import com.company.PostgresDAO.ManagerDAOImplements;
 import com.company.PostgresDAO.ProjectDAOImplementation;
+import com.company.PostgresDAO.ProjectSalariedDAOImplementation;
 import com.company.PostgresDAO.SeniorDAOImplementation;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -17,14 +19,15 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.Nullable;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class EmployeeDashboardController {
     private final Employee employee;
 
     private final ArrayList<Project> employeeProjects = new ArrayList<>();
-
 
     /// FXML OBJECTS
     private @FXML TabPane tabPane;
@@ -182,6 +185,11 @@ public class EmployeeDashboardController {
                     project.setContracts(
                             projectDAO.getProjectContracts(project.getCup())
                     );
+                    // per ogni contratto settare il riferimento al progetto stesso
+                    project.getContracts().forEach(contract -> {
+                        contract.setProject(project);
+                    });
+
                 });
 
                 // caricare la tabella gui con i project
@@ -220,7 +228,32 @@ public class EmployeeDashboardController {
     }
 
     private @FXML void goToHiringTab() {
-        changeTab(hiringTab);
+       Project selectedProject = projectsTable.getSelectionModel().getSelectedItem();
+
+       // se il progetto selezionato ha già una end date la schermata non va aperta
+       if(selectedProject == null || selectedProject.getEndDate() != null){
+           System.out.println("schermata non disponibile");
+           return;
+       }
+
+        HiringScreen hiringScreen = new HiringScreen();
+        Scene scene = hiringScreen.getScene(selectedProject, employee);
+        Stage currentStage = (Stage) labWorkingProjectsTable.getScene().getWindow();
+        Stage newStage = new Stage();
+
+        newStage.setTitle("Hiring Screen");
+        newStage.setScene(scene);
+        newStage.setResizable(false);
+
+        newStage.show();
+
+        currentStage.hide();
+
+        newStage.setOnCloseRequest(event -> {
+            currentStage.show();
+            // TODO verificare che vada refreshata qualche tabella
+            // hiredProjectSalariedTable.refresh();
+        });
     }
 
     private @FXML void goToPurchaseTab() {
@@ -307,6 +340,7 @@ public class EmployeeDashboardController {
             // carica tutti i project salaried del progetto selezionato nella tabella degli impiegati
             // riempire lista e caricare la tabella
             selectedProject.getContracts().forEach(contract -> {
+                // TODO differenziare i contratti già conclusi da quelli in corso
                 hiredProjectSalariedTable.getItems().add(contract.getProjectSalaried());
             });
         }
@@ -334,4 +368,5 @@ public class EmployeeDashboardController {
 
         tabPane.getSelectionModel().select(tab);
     }
+
 }

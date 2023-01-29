@@ -119,6 +119,34 @@ public class ProjectDAOImplementation implements ProjectDAO {
     }
 
     @Override
+    public void hireProjectSalaried(String cup, ProjectSalaried projectSalaried, Contract contract, EmpType empType) {
+        DatabaseConnection db;
+        PreparedStatement sts;
+        String query = "call hire_project_salaried(" +
+                "'" + projectSalaried.getCf() + "'" +
+                "'" + projectSalaried.getFirstName() + "'" +
+                "'" + projectSalaried.getLastName() + "'" +
+                "'" + projectSalaried.getEmail() + "'" +
+                "'" + "password" + "'" +
+                "'" + projectSalaried.getRole().toString() + "'" +
+                "'" + projectSalaried.getBirthDate() + "'" +
+                "'" + contract.getPay() + "'" +
+                "'" + contract.getHireDate() + "'" +
+                "'" + contract.getExpiration() + "'" +
+                "'" + contract.getProject().getCup() + "'" +
+                ")";
+
+        try {
+            db = DatabaseConnection.baseEmpInstance(empType);
+            sts = db.connection.prepareStatement(query);
+            sts.execute();
+            db.connection.close();
+        } catch (SQLException err) {
+            throw new RuntimeException(err);
+        }
+    }
+
+    @Override
     public ArrayList<Contract> getProjectContracts(String cup) {
         DatabaseConnection db;
         ResultSet resultSet;
@@ -143,9 +171,11 @@ public class ProjectDAOImplementation implements ProjectDAO {
                         resultSet.getString("first_name"),
                         resultSet.getString("last_name"),
                         resultSet.getString("email"),
-                        resultSet.getString("role")
+                        resultSet.getString("role"),
+                        resultSet.getDate("birth_date").toLocalDate()
                 );
                     contract.setProjectSalaried(projectSalaried);
+                    projectSalaried.addContract(contract);
                     contracts.add(contract);
             }
                 return contracts;
@@ -195,4 +225,5 @@ public class ProjectDAOImplementation implements ProjectDAO {
         }
 
     }
+
 }
