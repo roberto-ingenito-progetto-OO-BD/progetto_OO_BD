@@ -4,6 +4,7 @@ import com.company.Connection.DatabaseConnection;
 import com.company.DAO.ProjectDAO;
 import com.company.Model.*;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -122,28 +123,53 @@ public class ProjectDAOImplementation implements ProjectDAO {
     public void hireProjectSalaried(String cup, ProjectSalaried projectSalaried, Contract contract, EmpType empType) {
         DatabaseConnection db;
         PreparedStatement sts;
-        String query = "call hire_project_salaried(" +
-                "'" + projectSalaried.getCf() + "'" +
-                "'" + projectSalaried.getFirstName() + "'" +
-                "'" + projectSalaried.getLastName() + "'" +
-                "'" + projectSalaried.getEmail() + "'" +
-                "'" + "password" + "'" +
-                "'" + projectSalaried.getRole().toString() + "'" +
-                "'" + projectSalaried.getBirthDate() + "'" +
-                "'" + contract.getPay() + "'" +
-                "'" + contract.getHireDate() + "'" +
-                "'" + contract.getExpiration() + "'" +
-                "'" + contract.getProject().getCup() + "'" +
-                ")";
+        String query = "call hire_project_salaried(?,?,?,?,?,?,?,?,?,?,?)";
+
 
         try {
             db = DatabaseConnection.baseEmpInstance(empType);
-            sts = db.connection.prepareStatement(query);
+            sts = db.connection.prepareCall(query);
+            sts.setString(1, projectSalaried.getCf());
+            sts.setString(2, projectSalaried.getFirstName());
+            sts.setString(3, projectSalaried.getLastName());
+            sts.setString(4, projectSalaried.getEmail());
+            sts.setString(5, "password");
+            sts.setString(6, projectSalaried.getRole());
+            sts.setDate(7, Date.valueOf(projectSalaried.getBirthDate()));
+            sts.setBigDecimal(8, BigDecimal.valueOf(contract.getPay()));
+            sts.setDate(9, Date.valueOf(contract.getHireDate()));
+            sts.setDate(10, Date.valueOf(contract.getExpiration()));
+            sts.setString(11, cup);
+            sts.getParameterMetaData();
             sts.execute();
             db.connection.close();
         } catch (SQLException err) {
             throw new RuntimeException(err);
         }
+    }
+
+    @Override
+    public BigDecimal remainingProjectSalariedFunds(String cup) {
+        DatabaseConnection db;
+        ResultSet rs;
+        BigDecimal returnValue;
+        String query = "SELECT * FROM remaining_project_funds WHERE cup = '" + cup  + "'";
+
+        try {
+            db = DatabaseConnection.baseEmpInstance(EmpType.senior);
+            rs = db.connection.createStatement().executeQuery(query);
+            db.connection.close();
+            returnValue  = rs.getBigDecimal("funds_to_hire");
+            System.out.println(returnValue);
+            return returnValue;
+        } catch (SQLException err) {
+            throw new RuntimeException(err);
+        }
+    }
+
+    @Override
+    public float remainingEquipmentFunds(String cup) {
+        return 0;
     }
 
     @Override

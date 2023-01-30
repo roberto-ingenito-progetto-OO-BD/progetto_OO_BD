@@ -340,7 +340,6 @@ public class EmployeeDashboardController {
             // carica tutti i project salaried del progetto selezionato nella tabella degli impiegati
             // riempire lista e caricare la tabella
             selectedProject.getContracts().forEach(contract -> {
-                // TODO differenziare i contratti già conclusi da quelli in corso
                 hiredProjectSalariedTable.getItems().add(contract.getProjectSalaried());
             });
         }

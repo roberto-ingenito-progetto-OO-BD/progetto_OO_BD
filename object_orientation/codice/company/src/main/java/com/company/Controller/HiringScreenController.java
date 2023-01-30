@@ -25,8 +25,9 @@ public class HiringScreenController {
     private @FXML TextField emailTextField;
     private @FXML TextField lastNameTextField;
     private @FXML TextField firstNameTextField;
-    private @FXML TableColumn hiringRoleColumn;
+    private @FXML TableColumn<ProjectSalaried, String> hiringRoleColumn;
     private @FXML TextField cfTextField;
+    private @FXML Label remainingFunds;
 
     private @FXML TableColumn<ProjectSalaried, String> hiringLastNameColumn;
     private @FXML TableColumn<ProjectSalaried, String> hiringFirstNameColumn;
@@ -43,10 +44,14 @@ public class HiringScreenController {
 
     private @FXML void initialize() {
         ProjectSalariedDAOImplementation projectSalariedDAO = new ProjectSalariedDAOImplementation();
-
+        ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
         selectedProjectName.setText(selectedProjectName.getText() + " " + currentProject.getName());
+        float remainingFundsValue = projectDAO.remainingEquipmentFunds(currentProject.getCup());
+        System.out.println(remainingFundsValue);
+        remainingFunds.setText(String.valueOf(remainingFundsValue));
         hiringFirstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         hiringLastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        hiringRoleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
 
         allProjectSalarieds = projectSalariedDAO.getAllProjectSalaried();
         // filtrare i project salaried togliendo dalla tabella quelli che hanno già un contratto in corso nel progetto selezionato
@@ -57,6 +62,20 @@ public class HiringScreenController {
         });
 
         hiringTable.getItems().addAll(allProjectSalarieds);
+
+        // se l'impiegato è già assunto, colorare la riga di rosso
+        hiringTable.setRowFactory(projectSalariedTableView -> new TableRow<ProjectSalaried>() {
+            @Override
+            protected void updateItem(ProjectSalaried projectSalaried, boolean isHired) {
+                super.updateItem(projectSalaried, isHired);
+                currentProject.getContracts().forEach(contract -> {
+                    if(contract.getProjectSalaried() == projectSalaried){
+                        if(contract.getExpiration().isAfter(LocalDate.now())){
+                            setStyle("-fx-background-color:#A63C06");
+                        }
+                    }
+                });}
+        });
 
     }
 
@@ -79,16 +98,20 @@ public class HiringScreenController {
             );
         }
 
-        newContract = new Contract(LocalDate.now(), expirationTextField.getValue(), Float.parseFloat(payTextField.getText()));
-        newContract.setProjectSalaried(projectSalaried);
-        newContract.setProject(currentProject);
-        currentProject.addContract(newContract);
-        projectSalaried.addContract(newContract);
+        try {
+            newContract = new Contract(LocalDate.now(), expirationTextField.getValue(), Float.parseFloat(payTextField.getText()));
+            newContract.setProjectSalaried(projectSalaried);
+            newContract.setProject(currentProject);
+            currentProject.addContract(newContract);
+            projectSalaried.addContract(newContract);
 
-        projectDAO.hireProjectSalaried(currentProject.getCup(),projectSalaried, newContract, currentEmployee.getType());
-        // se l'assunzione nel db è andato a buon fine aggiungere il contratto al progetto attuale
-        System.out.println("impiegato assunto");
-        // chiudere finestra
+            projectDAO.hireProjectSalaried(currentProject.getCup(),projectSalaried, newContract, currentEmployee.getType());
+            // se l'assunzione nel db è andato a buon fine aggiungere il contratto al progetto attuale
+            System.out.println("impiegato assunto");
+        } catch (Exception err) {
+            throw err;
+        }
+        // TODO chiudere finestra - controllare che la finestra precedente non si chiuda
         Stage currentStage = (Stage) hireButton.getScene().getWindow();
         currentStage.close();
     }
@@ -102,5 +125,4 @@ public class HiringScreenController {
         firstNameTextField.clear();
         cfTextField.clear();
     }
-
 }

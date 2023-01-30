@@ -412,6 +412,11 @@
                         </Label>
                      </children>
                   </FlowPane>
+                  <Label fx:id="remainingFunds" contentDisplay="CENTER" text="Fondi : " GridPane.columnIndex="3">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
                </children>
             </GridPane>
          </children>

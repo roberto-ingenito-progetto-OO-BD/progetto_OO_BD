@@ -2,6 +2,7 @@ package com.company.DAO;
 
 import com.company.Model.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public interface ProjectDAO {
@@ -15,4 +16,7 @@ public interface ProjectDAO {
     ArrayList<EquipmentRequest> getEquipmentRequests(String cup);
 
     void hireProjectSalaried(String cup, ProjectSalaried projectSalaried, Contract contract, EmpType empType);
+
+    BigDecimal remainingProjectSalariedFunds(String cup);
+    float remainingEquipmentFunds(String cup);
 }
