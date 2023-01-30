@@ -188,7 +188,13 @@ public class EmployeeDashboardController {
                 newStage.setResizable(false);
 
                 newStage.initModality(Modality.APPLICATION_MODAL);
-                newStage.show();
+                newStage.showAndWait();
+
+                if (employee.getLaboratory() != null) {
+                    labWorkingProjectsTable.getItems().clear();
+                    labWorkingProjectsTable.getItems().addAll(employee.getLaboratory().getProjects());
+                    labWorkingProjectsTable.refresh();
+                }
             }
 
             // carica tutti gli equipment request del progetto selezionato nella tabella di equipment
@@ -203,7 +209,6 @@ public class EmployeeDashboardController {
         }
 
     }
-
 
     private @FXML void showHiringScreen() {
         Project selectedProject = projectsTable.getSelectionModel().getSelectedItem();
@@ -249,7 +254,7 @@ public class EmployeeDashboardController {
         tabPane.getSelectionModel().select(tab);
     }
 
-    private void showSelectedLaboratory(Laboratory laboratory)  {
+    private void showSelectedLaboratory(Laboratory laboratory) {
         SelectedLaboratoryCard selectedLaboratoryCard = new SelectedLaboratoryCard();
 
         Scene scene = selectedLaboratoryCard.getScene(laboratory, ((Senior) employee).getProjects());
@@ -376,6 +381,7 @@ public class EmployeeDashboardController {
 
                     // per ogni contratto settare il riferimento al progetto stesso
                     project.getContracts().forEach(contract -> contract.setProject(project));
+
                 });
 
                 // carica la tabella con i project
