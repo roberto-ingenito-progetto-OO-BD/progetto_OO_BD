@@ -33,6 +33,9 @@ public class Senior extends Employee {
     }
 
 
+    /**
+     * @return Restituisce i laboratori in cui lui è manager
+     */
     /// GETTERS
     public ArrayList<Laboratory> getLaboratories() {
         return laboratories;

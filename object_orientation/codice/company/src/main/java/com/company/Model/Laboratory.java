@@ -13,38 +13,6 @@ public class Laboratory {
     private Senior scientificManager;
     private ArrayList<Employee> employees;
 
-    public void setLabCode(int labCode) {
-        this.labCode = labCode;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-
-    public ArrayList<EquipmentRequest> getEquipmentRequests() {
-        return equipmentRequests;
-    }
-
-    public void setEquipmentRequests(ArrayList<EquipmentRequest> equipmentRequests) {
-        this.equipmentRequests = equipmentRequests;
-    }
-
-    public void setEquipmentRequest(EquipmentRequest equipmentRequest) {
-        this.equipmentRequests.add(equipmentRequest);
-    }
-
-    public ArrayList<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(ArrayList<Employee> employees) {
-        this.employees = employees;
-    }
-
     /// CONSTRUCTOR
     public Laboratory(
             int labCode,
@@ -81,13 +49,17 @@ public class Laboratory {
         return scientificManager;
     }
 
+    public ArrayList<Employee> getEmployees() {
+        return employees;
+    }
+
+    public ArrayList<EquipmentRequest> getEquipmentRequests() {
+        return equipmentRequests;
+    }
+
     /// SETTERS
     public void setProjects(ArrayList<Project> projects) {
         this.projects = projects;
-    }
-
-    public void dropProject(Project project) {
-        projects.remove(project);
     }
 
     public void setEquipment(ArrayList<Equipment> equipment) {
@@ -98,4 +70,32 @@ public class Laboratory {
         this.scientificManager = scientificManager;
     }
 
+    public void setLabCode(int labCode) {
+        this.labCode = labCode;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public void setEquipmentRequests(ArrayList<EquipmentRequest> equipmentRequests) {
+        this.equipmentRequests = equipmentRequests;
+    }
+
+    public void setEquipmentRequest(EquipmentRequest equipmentRequest) {
+        this.equipmentRequests.add(equipmentRequest);
+    }
+
+    public void setEmployees(ArrayList<Employee> employees) {
+        this.employees = employees;
+    }
+
+    /// METHODS
+    public void dropProject(Project project) {
+        projects.remove(project);
+    }
 }

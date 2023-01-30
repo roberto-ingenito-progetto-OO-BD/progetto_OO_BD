@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.Controller.SelectedLaboratoryCardController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="70.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #3c6e71;">
+        <Label fx:id="laboratoryNameLabel" text="laboratorio" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="21.0" />
+            </font>
+        </Label>
+    </StackPane>
+   <VBox prefWidth="760.0" spacing="20.0" GridPane.rowIndex="1">
+      <GridPane.margin>
+         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+      </GridPane.margin>
+      <children>
+         <GridPane>
+            <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="370.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="370.0" />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+               <VBox spacing="5.0">
+                  <children>
+                     <Label contentDisplay="CENTER" text="Impiegati">
+                        <font>
+                           <Font name="System Bold" size="16.0" />
+                        </font>
+                     </Label>
+                     <TableView fx:id="employeesTable" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="250.0" prefWidth="200.0">
+                        <columns>
+                           <TableColumn prefWidth="170.0" text="Codice Fiscale" />
+                           <TableColumn prefWidth="200.0" text="Nome e Cognome" />
+                        </columns>
+                     </TableView>
+                  </children>
+               </VBox>
+               <VBox spacing="5.0" GridPane.columnIndex="2">
+                  <children>
+                     <Label contentDisplay="CENTER" text="Progetti a cui lavora">
+                        <font>
+                           <Font name="System Bold" size="16.0" />
+                        </font>
+                     </Label>
+                     <TableView fx:id="workingProjectsTable" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#onWorkingProjectClick" prefHeight="250.0" prefWidth="200.0">
+                       <columns>
+                         <TableColumn prefWidth="170.0" text="CUP" />
+                         <TableColumn prefWidth="200.0" text="Nome" />
+                       </columns>
+                     </TableView>
+                  </children>
+               </VBox>
+            </children>
+         </GridPane>
+         <VBox spacing="5.0">
+            <children>
+               <Label contentDisplay="CENTER" text="Progetti">
+                  <font>
+                     <Font name="System Bold" size="16.0" />
+                  </font>
+               </Label>
+               <TableView fx:id="projectsTable" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#onProjectClick" prefHeight="250.0" prefWidth="760.0">
+                  <columns>
+                     <TableColumn prefWidth="170.0" text="CUP" />
+                     <TableColumn prefWidth="290.0" text="Nome" />
+                     <TableColumn prefWidth="150.0" text="Data Inizio" />
+                     <TableColumn prefWidth="150.0" text="Deadline" />
+                  </columns>
+               </TableView>
+            </children>
+         </VBox>
+      </children>
+   </VBox>
+</GridPane>

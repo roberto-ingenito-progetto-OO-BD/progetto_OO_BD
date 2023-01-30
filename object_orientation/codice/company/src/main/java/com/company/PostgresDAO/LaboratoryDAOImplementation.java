@@ -6,6 +6,7 @@ import com.company.Model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class LaboratoryDAOImplementation implements LaboratoryDAO {
@@ -29,6 +30,7 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
         try {
             db = DatabaseConnection.baseEmpInstance(empType);
             resultSet = db.connection.createStatement().executeQuery(query);
+            db.connection.close();
 
             while (resultSet.next()) {
                 Project project = new Project(
@@ -65,6 +67,7 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
             db = DatabaseConnection.baseEmpInstance(empType);
             resultSet = db.connection.createStatement().executeQuery(query);
             resultSet.next();
+            db.connection.close();
 
             // chiama il costruttore di employee passando i dati ottenuti dal db
             return new Senior(
@@ -83,7 +86,47 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
 
     @Override
     public ArrayList<Employee> getEmployees(Laboratory laboratory, EmpType empType) {
-        return null;
+        DatabaseConnection db;
+        ArrayList<Employee> employees = new ArrayList<>();
+        ResultSet resultSet;
+
+        String query = "SELECT * \n" +
+                "FROM base_emp AS BE  JOIN  works_at AS W  ON BE.cf = W.cf_base_emp \n" +
+                "WHERE W.end_date IS NULL  AND  W.lab_code = " + laboratory.getLabCode();
+
+        try {
+            db = DatabaseConnection.baseEmpInstance(empType);
+            resultSet = db.connection.createStatement().executeQuery(query);
+            db.connection.close();
+
+            while (resultSet.next()) {
+                Employee employee;
+
+                EmpType employeeType = switch (resultSet.getString("type")) {
+                    case "junior" -> EmpType.junior;
+                    case "middle" -> EmpType.middle;
+                    case "senior" -> EmpType.senior;
+                    case "manager" -> EmpType.manager;
+                    default -> null;
+                };
+
+                employee = new Employee(
+                        resultSet.getString("cf"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("email"),
+                        resultSet.getString("role"),
+                        resultSet.getFloat("salary"),
+                        employeeType
+                );
+
+                employees.add(employee);
+            }
+
+            return employees;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -99,6 +142,7 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
         try {
             db = DatabaseConnection.baseEmpInstance(empType);
             resultSet = db.connection.createStatement().executeQuery(query);
+            db.connection.close();
 
             while (resultSet.next()) {
                 Equipment equipment = new Equipment(
@@ -111,6 +155,39 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
             }
 
             return equipments;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int leaveProject(int labCode, String projectCUP, EmpType empType) {
+        DatabaseConnection db;
+        String query = "UPDATE take_part " +
+                "SET end_date = '" + LocalDate.now() + "' " +
+                "WHERE cup = '" + projectCUP + "' AND  lab_code = " + labCode + " AND end_date IS NULL";
+
+        try {
+            db = DatabaseConnection.baseEmpInstance(empType);
+            int updatedRowNumber =  db.connection.createStatement().executeUpdate(query);
+            db.connection.close();
+
+            return updatedRowNumber;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void joinProject(int labCode, String projectCUP, EmpType empType) {
+        DatabaseConnection db;
+        String query = "INSERT INTO take_part (start_date, end_date, cup, lab_code) " +
+                "VALUES ( '" + LocalDate.now() + "', null, '" + projectCUP + "', " + labCode + " )";
+
+        try {
+            db = DatabaseConnection.baseEmpInstance(empType);
+            db.connection.createStatement().execute(query);
+            db.connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

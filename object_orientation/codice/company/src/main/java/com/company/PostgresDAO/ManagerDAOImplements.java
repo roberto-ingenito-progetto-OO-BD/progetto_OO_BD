@@ -23,6 +23,7 @@ public class ManagerDAOImplements implements ManagerDAO {
         try {
             db = DatabaseConnection.baseEmpInstance(empType);
             resultSet = db.connection.createStatement().executeQuery(query);
+            db.connection.close();
 
             while(resultSet.next()){
                 project = new Project(
