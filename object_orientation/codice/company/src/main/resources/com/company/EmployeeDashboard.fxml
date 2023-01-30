@@ -81,6 +81,9 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                   </Label>
                </children>
             </StackPane>
@@ -317,6 +320,9 @@
                                              <VBox.margin>
                                                 <Insets top="20.0" />
                                              </VBox.margin>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
                                           </Button>
                                        </children>
                                        <GridPane.margin>
@@ -325,24 +331,6 @@
                                     </VBox>
                                  </children>
                               </GridPane>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-                  <Tab fx:id="hiringTab" text="assunzione">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Label text="assunzione" />
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-                  <Tab fx:id="purchaseTab" text="acquisto">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Label text="acquisto" />
                            </children>
                         </AnchorPane>
                      </content>

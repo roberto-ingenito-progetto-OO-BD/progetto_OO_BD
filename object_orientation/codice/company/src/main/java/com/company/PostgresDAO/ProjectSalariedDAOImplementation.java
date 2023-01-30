@@ -45,7 +45,8 @@ public class ProjectSalariedDAOImplementation implements ProjectSalariedDAO {
                     rs.getString("first_name"),
                     rs.getString("last_name"),
                     rs.getString("email"),
-                    rs.getString("role")
+                    rs.getString("role"),
+                    rs.getDate("birth_date").toLocalDate()
             );
 
             return loggedProjectSalaried;
@@ -102,6 +103,38 @@ public class ProjectSalariedDAOImplementation implements ProjectSalariedDAO {
             }
 
             return contracts;
+        } catch (SQLException err) {
+            throw new RuntimeException(err);
+        }
+    }
+
+    @Override
+    public ArrayList<ProjectSalaried> getAllProjectSalaried() {
+        DatabaseConnection db;
+        ResultSet rs;
+        ProjectSalaried projectSalaried;
+        ArrayList<ProjectSalaried> projectSalarieds = new ArrayList<>();
+        String query = "SELECT * FROM project_salaried";
+
+        try {
+            db = DatabaseConnection.projSalariedInstance();
+            rs = db.connection.createStatement().executeQuery(query);
+
+            while (rs.next()){
+                projectSalaried = new ProjectSalaried(
+                        rs.getString("cf"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("email"),
+                        rs.getString("role"),
+                        rs.getDate("birth_date").toLocalDate()
+                );
+                    projectSalaried.setContracts(
+                            getContracts(projectSalaried)
+                    );
+                    projectSalarieds.add(projectSalaried);
+            }
+                return projectSalarieds;
         } catch (SQLException err) {
             throw new RuntimeException(err);
         }

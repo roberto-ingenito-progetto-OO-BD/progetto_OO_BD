@@ -13,6 +13,11 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.Nullable;
+import com.company.GUI.HiringScreen;
+import com.company.PostgresDAO.ProjectSalariedDAOImplementation;
+import java.sql.Date;
+import java.util.Objects;
+
 
 import java.util.ArrayList;
 
@@ -95,7 +100,32 @@ public class EmployeeDashboardController {
     }
 
     private @FXML void goToHiringTab() {
-        changeTab(hiringTab);
+        Project selectedProject = projectsTable.getSelectionModel().getSelectedItem();
+
+        // se il progetto selezionato ha già una end date la schermata non va aperta
+        if (selectedProject == null || selectedProject.getEndDate() != null) {
+            System.out.println("schermata non disponibile");
+            return;
+        }
+
+        HiringScreen hiringScreen = new HiringScreen();
+        Scene scene = hiringScreen.getScene(selectedProject, employee);
+        Stage currentStage = (Stage) labWorkingProjectsTable.getScene().getWindow();
+        Stage newStage = new Stage();
+
+        newStage.setTitle("Hiring Screen");
+        newStage.setScene(scene);
+        newStage.setResizable(false);
+
+        newStage.show();
+
+        currentStage.hide();
+
+        newStage.setOnCloseRequest(event -> {
+            currentStage.show();
+            // TODO verificare che vada refreshata qualche tabella
+            // hiredProjectSalariedTable.refresh();
+        });
     }
 
     private @FXML void goToPurchaseTab() {
@@ -361,6 +391,11 @@ public class EmployeeDashboardController {
                     project.setContracts(
                             projectDAO.getProjectContracts(project.getCup())
                     );
+                    
+                    // per ogni contratto settare il riferimento al progetto stesso
+                    project.getContracts().forEach(contract -> {
+                        contract.setProject(project);
+                    });
                 });
 
                 // carica la tabella con i project

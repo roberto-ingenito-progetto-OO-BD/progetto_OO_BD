@@ -32,8 +32,9 @@ public class ManagerDAOImplements implements ManagerDAO {
                         resultSet.getString("description"),
                         resultSet.getDate("start_date").toLocalDate(),
                         resultSet.getDate("end_date") == null ? null : resultSet.getDate("start_date").toLocalDate(),
-                        resultSet.getDate("deadline") == null ? null : resultSet.getDate("start_date").toLocalDate()
+                        resultSet.getDate("deadline") == null ? null : resultSet.getDate("deadline").toLocalDate()
                 );
+                project.setFunds(resultSet.getFloat("funds"));
                 projects.add(project);
             }
             return projects;
