@@ -56,6 +56,7 @@ public class SeniorDAOImplementation implements SeniorDAO {
         try {
             db = DatabaseConnection.baseEmpInstance(empType);
             resultSet = db.connection.createStatement().executeQuery(query);
+            db.connection.close();
 
             while (resultSet.next()) {
                 laboratory = new Laboratory(

@@ -30,6 +30,7 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
         try {
             db = DatabaseConnection.baseEmpInstance(empType);
             resultSet = db.connection.createStatement().executeQuery(query);
+            db.connection.close();
 
             while (resultSet.next()) {
                 Project project = new Project(
@@ -66,6 +67,7 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
             db = DatabaseConnection.baseEmpInstance(empType);
             resultSet = db.connection.createStatement().executeQuery(query);
             resultSet.next();
+            db.connection.close();
 
             // chiama il costruttore di employee passando i dati ottenuti dal db
             return new Senior(
@@ -95,6 +97,7 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
         try {
             db = DatabaseConnection.baseEmpInstance(empType);
             resultSet = db.connection.createStatement().executeQuery(query);
+            db.connection.close();
 
             while (resultSet.next()) {
                 Employee employee;
@@ -139,6 +142,7 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
         try {
             db = DatabaseConnection.baseEmpInstance(empType);
             resultSet = db.connection.createStatement().executeQuery(query);
+            db.connection.close();
 
             while (resultSet.next()) {
                 Equipment equipment = new Equipment(
@@ -165,7 +169,10 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
 
         try {
             db = DatabaseConnection.baseEmpInstance(empType);
-            return db.connection.createStatement().executeUpdate(query);
+            int updatedRowNumber =  db.connection.createStatement().executeUpdate(query);
+            db.connection.close();
+
+            return updatedRowNumber;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -180,6 +187,7 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
         try {
             db = DatabaseConnection.baseEmpInstance(empType);
             db.connection.createStatement().execute(query);
+            db.connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
