@@ -110,10 +110,10 @@ public class ProjectDAOImplementation implements ProjectDAO {
         String query = "UPDATE project SET end_date = '" + currentDate + "'" + " WHERE cup = '" + cup + "'";
 
         try {
-                db = DatabaseConnection.baseEmpInstance(empType);
-                sts = db.connection.prepareStatement(query);
-                sts.executeUpdate();
-                db.connection.close();
+            db = DatabaseConnection.baseEmpInstance(empType);
+            sts = db.connection.prepareStatement(query);
+            sts.executeUpdate();
+            db.connection.close();
         } catch (SQLException err) {
             throw new RuntimeException(err);
         }
@@ -124,7 +124,6 @@ public class ProjectDAOImplementation implements ProjectDAO {
         DatabaseConnection db;
         PreparedStatement sts;
         String query = "call hire_project_salaried(?,?,?,?,?,?,?,?,?,?,?)";
-
 
         try {
             db = DatabaseConnection.baseEmpInstance(empType);
@@ -138,8 +137,14 @@ public class ProjectDAOImplementation implements ProjectDAO {
             sts.setDate(7, Date.valueOf(projectSalaried.getBirthDate()));
             sts.setBigDecimal(8, BigDecimal.valueOf(contract.getPay()));
             sts.setDate(9, Date.valueOf(contract.getHireDate()));
-            sts.setDate(10, Date.valueOf(contract.getExpiration()));
+
+            if (contract.getExpiration() != null)
+                sts.setDate(10, Date.valueOf(contract.getExpiration()));
+            else
+                sts.setDate(10, null);
+
             sts.setString(11, cup);
+
             sts.getParameterMetaData();
             sts.execute();
             db.connection.close();
@@ -152,16 +157,16 @@ public class ProjectDAOImplementation implements ProjectDAO {
     public BigDecimal remainingProjectSalariedFunds(String cup) {
         DatabaseConnection db;
         ResultSet rs;
-        BigDecimal returnValue;
-        String query = "SELECT * FROM remaining_project_funds WHERE cup = '" + cup  + "'";
+        String query = "SELECT * FROM remaining_project_funds WHERE cup = '" + cup + "'";
 
         try {
             db = DatabaseConnection.baseEmpInstance(EmpType.senior);
             rs = db.connection.createStatement().executeQuery(query);
+            rs.next();
+
             db.connection.close();
-            returnValue  = rs.getBigDecimal("funds_to_hire");
-            System.out.println(returnValue);
-            return returnValue;
+            return rs.getBigDecimal("funds_to_hire");
+
         } catch (SQLException err) {
             throw new RuntimeException(err);
         }
@@ -186,7 +191,7 @@ public class ProjectDAOImplementation implements ProjectDAO {
             resultSet = db.connection.createStatement().executeQuery(query);
             db.connection.close();
 
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 contract = new Contract(
                         resultSet.getDate("hire_date").toLocalDate(),
                         resultSet.getDate("expiration").toLocalDate(),
@@ -200,11 +205,11 @@ public class ProjectDAOImplementation implements ProjectDAO {
                         resultSet.getString("role"),
                         resultSet.getDate("birth_date").toLocalDate()
                 );
-                    contract.setProjectSalaried(projectSalaried);
-                    projectSalaried.addContract(contract);
-                    contracts.add(contract);
+                contract.setProjectSalaried(projectSalaried);
+                projectSalaried.addContract(contract);
+                contracts.add(contract);
             }
-                return contracts;
+            return contracts;
         } catch (SQLException err) {
             throw new RuntimeException(err);
         }
@@ -219,15 +224,15 @@ public class ProjectDAOImplementation implements ProjectDAO {
         EquipmentRequest equipmentRequest;
         Laboratory laboratory;
         String query = "SELECT * " +
-                        "FROM equipment_request as er , project as p , laboratory as l " +
-                        "WHERE er.lab_code = l.lab_code AND p.cup = er.cup AND p.cup =  '" + cup + "'";
+                "FROM equipment_request as er , project as p , laboratory as l " +
+                "WHERE er.lab_code = l.lab_code AND p.cup = er.cup AND p.cup =  '" + cup + "'";
 
         try {
             db = DatabaseConnection.ProjAdminInstance();
             rs = db.connection.createStatement().executeQuery(query);
             db.connection.close();
 
-            while(rs.next()){
+            while (rs.next()) {
                 // per ogni richiesta salvo anche le informazioni del laboratorio che ne ha fatto richiesta
                 equipmentRequest = new EquipmentRequest(
                         rs.getString("code"),
@@ -238,18 +243,61 @@ public class ProjectDAOImplementation implements ProjectDAO {
                 );
 
                 laboratory = new Laboratory(
-                                rs.getInt("lab_code"),
-                                rs.getString("lab_name"),
-                                rs.getString("topic")
+                        rs.getInt("lab_code"),
+                        rs.getString("lab_name"),
+                        rs.getString("topic")
                 );
-                    equipmentRequest.setLaboratory(laboratory);
-                    equipmentRequests.add(equipmentRequest);
+                equipmentRequest.setLaboratory(laboratory);
+                equipmentRequests.add(equipmentRequest);
             }
-                return equipmentRequests;
+            return equipmentRequests;
         } catch (SQLException err) {
             throw new RuntimeException(err);
         }
 
+    }
+
+    @Override
+    public ArrayList<Project> getAvailableProjects() {
+        DatabaseConnection db;
+        ArrayList<Project> projects = new ArrayList<>();
+        ResultSet resultSet;
+
+        String query = """
+                SELECT P.cup, P.description, P.name, P.start_date, P.deadline
+                FROM project AS P
+                WHERE P.end_date IS NULL AND P.cup IN (
+                           SELECT T.cup
+                           FROM take_part AS T
+                           WHERE T.end_date IS null
+                           GROUP BY T.cup
+                           HAVING COUNT(*) < 3
+                       )
+                GROUP BY P.cup
+                """;
+
+        try {
+            db = DatabaseConnection.baseEmpInstance(EmpType.senior);
+            resultSet = db.connection.createStatement().executeQuery(query);
+            db.connection.close();
+
+            while (resultSet.next()) {
+                Project project = new Project(
+                        resultSet.getString("cup"),
+                        resultSet.getString("name"),
+                        resultSet.getString("description"),
+                        resultSet.getDate("start_date").toLocalDate(),
+                        null,
+                        resultSet.getDate("deadline") == null ? null : resultSet.getDate("start_date").toLocalDate()
+                );
+
+                projects.add(project);
+            }
+
+            return projects;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

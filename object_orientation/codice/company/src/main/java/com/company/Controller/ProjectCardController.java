@@ -123,9 +123,9 @@ public class ProjectCardController {
         // eliminiamo il riferimento al progetto, ai laboratori che vi stavano partecipato ma non il viceversa
         // quindi di un progetto concluso possiamo vedere gli ultimi 3 laboratori che ci hanno lavorato
         if (!project.getLaboratories().isEmpty()) {
-            project.getLaboratories().forEach(laboratory -> {
-                laboratory.getProjects().remove(project);
-            });
+            project.getLaboratories().forEach(laboratory ->
+                    laboratory.getProjects().remove(project)
+            );
         }
 
         // chiudere la schermata
@@ -133,7 +133,6 @@ public class ProjectCardController {
 
         currentStage.close();
 
-        if (sourceTable != null) sourceTable.refresh();
-
+        sourceTable.refresh();
     }
 }

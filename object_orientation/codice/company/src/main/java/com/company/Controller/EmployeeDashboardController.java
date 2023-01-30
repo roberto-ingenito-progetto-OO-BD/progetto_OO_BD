@@ -14,9 +14,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.Nullable;
 import com.company.GUI.HiringScreen;
-import com.company.PostgresDAO.ProjectSalariedDAOImplementation;
-import java.sql.Date;
-import java.util.Objects;
 
 
 import java.util.ArrayList;
@@ -29,8 +26,6 @@ public class EmployeeDashboardController {
 
     private @FXML Tab laboratoryTab;
     private @FXML Tab projectsTab;
-    private @FXML Tab hiringTab;
-    private @FXML Tab purchaseTab;
 
     private @FXML ListView<String> laboratoryEquipmentListView;
 
@@ -97,39 +92,6 @@ public class EmployeeDashboardController {
 
     private @FXML void goToLaboratoryTab() {
         changeTab(laboratoryTab);
-    }
-
-    private @FXML void goToHiringTab() {
-        Project selectedProject = projectsTable.getSelectionModel().getSelectedItem();
-
-        // se il progetto selezionato ha già una end date la schermata non va aperta
-        if (selectedProject == null || selectedProject.getEndDate() != null) {
-            System.out.println("schermata non disponibile");
-            return;
-        }
-
-        HiringScreen hiringScreen = new HiringScreen();
-        Scene scene = hiringScreen.getScene(selectedProject, employee);
-        Stage currentStage = (Stage) labWorkingProjectsTable.getScene().getWindow();
-        Stage newStage = new Stage();
-
-        newStage.setTitle("Hiring Screen");
-        newStage.setScene(scene);
-        newStage.setResizable(false);
-
-        newStage.show();
-
-        currentStage.hide();
-
-        newStage.setOnCloseRequest(event -> {
-            currentStage.show();
-            // TODO verificare che vada refreshata qualche tabella
-            // hiredProjectSalariedTable.refresh();
-        });
-    }
-
-    private @FXML void goToPurchaseTab() {
-        changeTab(purchaseTab);
     }
 
     private @FXML void onLogOutClick() {
@@ -242,6 +204,32 @@ public class EmployeeDashboardController {
 
     }
 
+
+    private @FXML void showHiringScreen() {
+        Project selectedProject = projectsTable.getSelectionModel().getSelectedItem();
+
+        // se il progetto selezionato ha già una end date la schermata non va aperta
+        if (selectedProject == null || selectedProject.getEndDate() != null) {
+            System.out.println("schermata non disponibile");
+            return;
+        }
+
+        HiringScreen hiringScreen = new HiringScreen();
+        Scene scene = hiringScreen.getScene(selectedProject, employee);
+        Stage currentStage = (Stage) labWorkingProjectsTable.getScene().getWindow();
+        Stage newStage = new Stage();
+
+        newStage.setTitle("Hiring Screen");
+        newStage.setScene(scene);
+        newStage.setResizable(false);
+
+        currentStage.hide();
+
+        newStage.showAndWait();
+
+        currentStage.show();
+    }
+
     private @FXML void getSelectedRequest(MouseEvent mouseEvent) {
 
     }
@@ -251,12 +239,6 @@ public class EmployeeDashboardController {
 
     /// METHODS
     private void changeTab(Tab tab) {
-        Tab currentTab = tabPane.getSelectionModel().getSelectedItem();
-
-        // impedisce di cambiare tab se si trova in una delle seguenti tab
-        if (currentTab == hiringTab) return;
-        if (currentTab == purchaseTab) return;
-
         projectsButtonLabel.setOpacity(0.4);
         laboratoryButtonLabel.setOpacity(0.4);
 
@@ -267,7 +249,7 @@ public class EmployeeDashboardController {
         tabPane.getSelectionModel().select(tab);
     }
 
-    private void showSelectedLaboratory(Laboratory laboratory) {
+    private void showSelectedLaboratory(Laboratory laboratory)  {
         SelectedLaboratoryCard selectedLaboratoryCard = new SelectedLaboratoryCard();
 
         Scene scene = selectedLaboratoryCard.getScene(laboratory, ((Senior) employee).getProjects());
@@ -391,11 +373,9 @@ public class EmployeeDashboardController {
                     project.setContracts(
                             projectDAO.getProjectContracts(project.getCup())
                     );
-                    
+
                     // per ogni contratto settare il riferimento al progetto stesso
-                    project.getContracts().forEach(contract -> {
-                        contract.setProject(project);
-                    });
+                    project.getContracts().forEach(contract -> contract.setProject(project));
                 });
 
                 // carica la tabella con i project

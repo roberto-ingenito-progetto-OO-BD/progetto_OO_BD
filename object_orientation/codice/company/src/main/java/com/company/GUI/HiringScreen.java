@@ -1,6 +1,5 @@
 package com.company.GUI;
 
-import com.company.Controller.EmployeeDashboardController;
 import com.company.Controller.HiringScreenController;
 import com.company.Main;
 import com.company.Model.Employee;

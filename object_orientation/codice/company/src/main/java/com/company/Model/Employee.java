@@ -7,14 +7,14 @@ import java.time.LocalDate;
 
 
 public class Employee {
-    private String cf;
-    private String firstName;
-    private String lastName;
-    private String email;
+    private final String cf;
+    private final String firstName;
+    private final String lastName;
+    private final String email;
     private LocalDate birthDate;
-    private String role;
-    private float salary;
-    private EmpType type;
+    private final String role;
+    private final float salary;
+    private final EmpType type;
 
     @Nullable
     private Laboratory laboratory = null;

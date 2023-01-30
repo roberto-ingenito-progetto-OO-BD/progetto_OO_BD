@@ -313,7 +313,7 @@
                                                 <TableColumn prefWidth="118.0" text="Ruolo" />
                                              </columns>
                                           </TableView>
-                                          <Button fx:id="hireProjectSalaried" mnemonicParsing="false" onAction="#goToHiringTab" prefHeight="34.0" prefWidth="200.0" style="-fx-background-color: #3c6e71;" text="Assumi Impiegato" textFill="WHITE">
+                                          <Button fx:id="hireProjectSalaried" mnemonicParsing="false" onAction="#showHiringScreen" prefHeight="34.0" prefWidth="200.0" style="-fx-background-color: #3c6e71;" text="Assumi Impiegato" textFill="WHITE">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>

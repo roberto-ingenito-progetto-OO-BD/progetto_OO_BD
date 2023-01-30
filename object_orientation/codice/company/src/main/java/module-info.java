@@ -6,6 +6,7 @@ module com.company {
     requires java.sql;
     requires javafx.graphics;
     requires org.jetbrains.annotations;
+    requires org.postgresql.jdbc;
 
     // permette a javafx.fxml di accedere al package Controller
     opens com.company.Controller to javafx.fxml;

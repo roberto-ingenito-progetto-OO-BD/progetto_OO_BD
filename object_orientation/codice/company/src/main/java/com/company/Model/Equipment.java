@@ -3,9 +3,9 @@ package com.company.Model;
 import org.jetbrains.annotations.Nullable;
 
 public class Equipment {
-    private String name;
-    private String type;
-    private @Nullable String techSpecs;
+    private final String name;
+    private final String type;
+    private final @Nullable String techSpecs;
 
 
     public Equipment(

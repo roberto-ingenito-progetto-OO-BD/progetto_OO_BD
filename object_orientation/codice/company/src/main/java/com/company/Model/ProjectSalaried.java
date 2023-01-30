@@ -12,7 +12,7 @@ public class ProjectSalaried {
     private String email;
     private String role;
 
-    private LocalDate birthDate;
+    private final LocalDate birthDate;
 
     /// CONSTRUCTOR
     public ProjectSalaried(String cf, String firstName, String lastName, String email, String role, LocalDate birthDate) {
@@ -42,6 +42,7 @@ public class ProjectSalaried {
         // restituisce il ruolo con la prima lettera in maiuscolo
         return role.substring(0, 1).toUpperCase() + role.substring(1).toLowerCase();
     }
+
     public LocalDate getBirthDate() {return birthDate;}
 
     public String getCf() {
@@ -55,9 +56,6 @@ public class ProjectSalaried {
     /// SETTER
     public void setContracts(ArrayList<Contract> contracts) {
         this.contracts = contracts;
-    }
-    public void addContract(Contract contract) {
-        this.contracts.add(contract);
     }
 
     public void setCf(String cf) {
@@ -83,5 +81,9 @@ public class ProjectSalaried {
     /// METHODS
     public String getFullName() {
         return getFirstName() + " " + getLastName();
+    }
+
+    public void addContract(Contract contract) {
+        this.contracts.add(contract);
     }
 }

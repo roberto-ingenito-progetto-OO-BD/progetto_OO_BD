@@ -237,50 +237,16 @@ public class SelectedLaboratoryCardController {
      * @return Restituisce tutti i progetti NON TERMINATI presenti nel database, escludendo i progetti ai quali già lavora
      */
     private ArrayList<Project> getProjects() {
-        DatabaseConnection db;
-        ArrayList<Project> projects = new ArrayList<>();
-        ResultSet resultSet;
+        ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
+        ArrayList<Project> projects = projectDAO.getAvailableProjects();
 
-        String query = """
-                SELECT P.cup, P.description, P.name, P.start_date, P.deadline
-                FROM project AS P
-                WHERE P.end_date IS NULL AND P.cup IN (
-                           SELECT T.cup
-                           FROM take_part AS T
-                           WHERE T.end_date IS null
-                           GROUP BY T.cup
-                           HAVING COUNT(*) < 3
-                       )
-                GROUP BY P.cup
-                """;
-
-        try {
-            db = DatabaseConnection.baseEmpInstance(EmpType.senior);
-            resultSet = db.connection.createStatement().executeQuery(query);
-
-            while (resultSet.next()) {
-                Project project = new Project(
-                        resultSet.getString("cup"),
-                        resultSet.getString("name"),
-                        resultSet.getString("description"),
-                        resultSet.getDate("start_date").toLocalDate(),
-                        null,
-                        resultSet.getDate("deadline") == null ? null : resultSet.getDate("start_date").toLocalDate()
-                );
-
-                projects.add(project);
-            }
-
-            // rimuove dall'array "projects", i progetti a cui il laboratorio già partecipa
-            for (Project labProject : laboratory.getProjects()) {
-                projects.removeIf(
-                        dbProject -> dbProject.getCup().equals(labProject.getCup())
-                );
-            }
-
-            return projects;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        // rimuove dall'array "projects", i progetti a cui il laboratorio già partecipa
+        for (Project labProject : laboratory.getProjects()) {
+            projects.removeIf(
+                    dbProject -> dbProject.getCup().equals(labProject.getCup())
+            );
         }
+
+        return projects;
     }
 }

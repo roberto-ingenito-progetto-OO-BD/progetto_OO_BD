@@ -149,15 +149,16 @@ public class Project {
     public void setContracts(@Nullable ArrayList<Contract> contracts) {
         this.contracts = contracts;
     }
-    public void addContract(Contract contract) {
-        this.contracts.add(contract);
-    }
 
     /// METHODS
     public void addLaboratory(Laboratory laboratory){
         if(laboratories.size() <= maxLabs - 1){
             laboratories.add(laboratory);
         }
+    }
+
+    public void addContract(Contract contract) {
+        this.contracts.add(contract);
     }
 
 }

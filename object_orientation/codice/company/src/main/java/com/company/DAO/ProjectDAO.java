@@ -7,10 +7,13 @@ import java.util.ArrayList;
 
 public interface ProjectDAO {
     ArrayList<Laboratory> getWorkingLaboratories(String cup);
+
     Senior getProjectReferent(String cup);
+
     Manager getProjectManager(String cup);
 
     void endProject(String cup, EmpType empType);
+
     ArrayList<Contract> getProjectContracts(String cup);
 
     ArrayList<EquipmentRequest> getEquipmentRequests(String cup);
@@ -18,5 +21,12 @@ public interface ProjectDAO {
     void hireProjectSalaried(String cup, ProjectSalaried projectSalaried, Contract contract, EmpType empType);
 
     BigDecimal remainingProjectSalariedFunds(String cup);
+
+    // TODO: implementare
     float remainingEquipmentFunds(String cup);
+
+    /**
+     * @return Restituisce tutti i progetti partecipabili
+     */
+    ArrayList<Project> getAvailableProjects();
 }
