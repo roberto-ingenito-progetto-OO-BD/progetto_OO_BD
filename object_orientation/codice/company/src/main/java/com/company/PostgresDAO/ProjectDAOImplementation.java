@@ -3,6 +3,7 @@ package com.company.PostgresDAO;
 import com.company.Connection.DatabaseConnection;
 import com.company.DAO.ProjectDAO;
 import com.company.Model.*;
+import javafx.scene.chart.PieChart;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -173,8 +174,21 @@ public class ProjectDAOImplementation implements ProjectDAO {
     }
 
     @Override
-    public float remainingEquipmentFunds(String cup) {
-        return 0;
+    public BigDecimal remainingEquipmentFunds(String cup) {
+        DatabaseConnection db;
+        ResultSet rs;
+        String query = "SELECT * FROM remaining_project_funds WHERE cup = '" + cup + "'";
+
+        try {
+            db = DatabaseConnection.baseEmpInstance(EmpType.senior);
+            rs = db.connection.createStatement().executeQuery(query);
+            rs.next();
+
+            db.connection.close();
+            return rs.getBigDecimal("funds_to_buy");
+        } catch (SQLException err) {
+            throw new RuntimeException(err);
+        }
     }
 
     @Override
@@ -266,12 +280,12 @@ public class ProjectDAOImplementation implements ProjectDAO {
         String query = """
                 SELECT P.cup, P.description, P.name, P.start_date, P.deadline
                 FROM project AS P
-                WHERE P.end_date IS NULL AND P.cup IN (
+                WHERE P.end_date IS NULL AND P.cup NOT IN (
                            SELECT T.cup
                            FROM take_part AS T
                            WHERE T.end_date IS null
                            GROUP BY T.cup
-                           HAVING COUNT(*) < 3
+                           HAVING COUNT(*) = 3
                        )
                 GROUP BY P.cup
                 """;
@@ -297,6 +311,38 @@ public class ProjectDAOImplementation implements ProjectDAO {
             return projects;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public ArrayList<Equipment> getBuyedEquipments(Project project) {
+        DatabaseConnection db;
+        ResultSet rs;
+        String labCode;
+        Equipment equipment;
+        ArrayList<Equipment> equipments = new ArrayList<>();
+        String query = "SELECT * FROM project , purchase , equipment , laboratory " +
+                        "WHERE project.cup = purchase.cup AND purchase.equipment_code = equipment.code " +
+                        "AND equipment.lab_code = laboratory.lab_code AND project.cup = '" + project.getCup() + "'";
+
+        try {
+                db = DatabaseConnection.ProjAdminInstance();
+                rs = db.connection.createStatement().executeQuery(query);
+
+                while(rs.next()) {
+                    equipment = new Equipment(
+                            rs.getString("name"),
+                            rs.getString("type"),
+                            rs.getString("tech_specs"),
+                            rs.getFloat("price"),
+                            rs.getDate("purchase_date").toLocalDate()
+                    );
+                    project.addEquipment(equipment);
+
+                }
+                    return equipments;
+        } catch (SQLException err) {
+                throw new RuntimeException(err);
         }
     }
 

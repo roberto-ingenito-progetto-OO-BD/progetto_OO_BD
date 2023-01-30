@@ -19,7 +19,7 @@ public class Project {
     private Senior scientificReferent;
 
     private ArrayList<EquipmentRequest> equipmentRequests;
-    private ArrayList<Equipment> equipments;
+    private ArrayList<Equipment> equipments = new ArrayList<>();
     private ArrayList<Contract> contracts;
 
     private final int maxLabs = 3;
@@ -144,6 +144,10 @@ public class Project {
 
     public void setEquipments(ArrayList<Equipment> equipments) {
         this.equipments = equipments;
+    }
+
+    public void addEquipment(Equipment equipment){
+        this.equipments.add(equipment);
     }
 
     public void setContracts(@Nullable ArrayList<Contract> contracts) {

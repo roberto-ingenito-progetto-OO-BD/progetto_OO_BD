@@ -22,11 +22,13 @@ public interface ProjectDAO {
 
     BigDecimal remainingProjectSalariedFunds(String cup);
 
-    // TODO: implementare
-    float remainingEquipmentFunds(String cup);
+
+    BigDecimal remainingEquipmentFunds(String cup);
 
     /**
      * @return Restituisce tutti i progetti partecipabili
      */
     ArrayList<Project> getAvailableProjects();
+
+    ArrayList<Equipment> getBuyedEquipments(Project project);
 }

@@ -7,6 +7,8 @@ public class EquipmentRequest {
     private String specs;
     private String type;
     private int quantity;
+    private Laboratory laboratory;
+
 
     public EquipmentRequest(String code, String name, String specs, String type, int quantity) {
         this.code = code;
@@ -20,48 +22,20 @@ public class EquipmentRequest {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getSpecs() {
         return specs;
     }
 
-    public void setSpecs(String specs) {
-        this.specs = specs;
-    }
-
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public int getQuantity() {
         return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public Project getProject() {
-        return project;
-    }
-
-    public void setProject(Project project) {
-        this.project = project;
     }
 
     public Laboratory getLaboratory() {
@@ -71,8 +45,5 @@ public class EquipmentRequest {
     public void setLaboratory(Laboratory laboratory) {
         this.laboratory = laboratory;
     }
-
-    private Project project;
-    private Laboratory laboratory;
 
 }
