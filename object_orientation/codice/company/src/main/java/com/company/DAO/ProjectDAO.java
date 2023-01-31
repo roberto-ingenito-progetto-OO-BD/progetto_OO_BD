@@ -30,7 +30,7 @@ public interface ProjectDAO {
      */
     ArrayList<Project> getAvailableProjects();
 
-    ArrayList<Equipment> getBuyedEquipments(Project project, Laboratory laboratory);
+    void getBuyedEquipments(Project project, Laboratory laboratory);
 
     void buyEquipment(Project project, EquipmentRequest equipmentRequest, Float price);
 }

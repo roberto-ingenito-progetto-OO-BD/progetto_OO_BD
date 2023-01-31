@@ -19,7 +19,6 @@ public class ProjectCardController {
     private final @NotNull TableView sourceTable;
 
     /// FXML OBJECTS
-    private @FXML Button takePartButton;
     private @FXML Button endProjectButton;
 
     private @FXML Label lab1Label;

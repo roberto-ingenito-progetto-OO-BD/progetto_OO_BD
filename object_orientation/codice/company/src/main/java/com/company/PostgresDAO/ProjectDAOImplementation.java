@@ -30,7 +30,6 @@ public class ProjectDAOImplementation implements ProjectDAO {
             rs = db.connection.createStatement().executeQuery(query);
             db.connection.close();
 
-            int i = 0;
             while (rs.next()) {
                 laboratory = new Laboratory(
                         rs.getInt("lab_code"),
@@ -38,7 +37,6 @@ public class ProjectDAOImplementation implements ProjectDAO {
                         rs.getString("topic")
                 );
                 laboratories.add(laboratory);
-                i++;
             }
             return laboratories;
         } catch (SQLException err) {
@@ -335,11 +333,10 @@ public class ProjectDAOImplementation implements ProjectDAO {
     }
 
     @Override
-    public ArrayList<Equipment> getBuyedEquipments(Project project, Laboratory laboratory) {
+    public void getBuyedEquipments(Project project, Laboratory laboratory) {
         DatabaseConnection db;
         ResultSet rs;
         Equipment equipment;
-        ArrayList<Equipment> equipments = new ArrayList<>();
         String query = "SELECT E.name , E.type, E.tech_specs, PU.price, PU.purchase_date " +
                 "FROM project AS PR, purchase AS PU, equipment AS E, laboratory AS L " +
                 "WHERE PR.cup = PU.cup " +
@@ -363,7 +360,6 @@ public class ProjectDAOImplementation implements ProjectDAO {
                 project.addEquipment(equipment);
                 laboratory.addEquipment(equipment);
             }
-            return equipments;
         } catch (SQLException err) {
             throw new RuntimeException(err);
         }

@@ -185,6 +185,19 @@ public class EmployeeDashboardController {
             if (!equipmentRequestTable.getItems().isEmpty()) equipmentRequestTable.getItems().clear();
             if (!hiredProjectSalariedTable.getItems().isEmpty()) hiredProjectSalariedTable.getItems().clear();
 
+            // se il progetto È concluso, il pulsante per assumere un impiegato viene disabilitato
+            // viene abilitato se NON È concluso
+
+            // carica tutti gli equipment request del progetto selezionato nella tabella di equipment
+            // riempie la tabella delle richieste
+            equipmentRequestTable.getItems().addAll(selectedProject.getEquipmentRequests());
+
+            // carica tutti i project salaried del progetto selezionato nella tabella degli impiegati
+            // riempire lista e caricare la tabella
+            selectedProject.getContracts().forEach(
+                    contract -> hiredProjectSalariedTable.getItems().add(contract.getProjectSalaried())
+            );
+
             // Con click destro, apre la card con le informazioni del progetto selezionato
             if (mouseEvent.getButton() == MouseButton.SECONDARY) {
                 projectCard = new ProjectCard();
@@ -198,24 +211,11 @@ public class EmployeeDashboardController {
                 // apre lo stage come un modal, cosi che siano bloccato gli eventi dello
                 // stage precedente che si trova al di sotto
                 newStage.initModality(Modality.APPLICATION_MODAL);
-                newStage.show();
+                newStage.showAndWait();
             }
-
-            // se il progetto È concluso, il pulsante per assumere un impiegato viene disabilitato
-            // viene abilitato se NON È concluso
+            equipmentRequestTable.setDisable(selectedProject.getEndDate() != null);
             hireProjectSalaried.setDisable(selectedProject.getEndDate() != null);
-
-            // carica tutti gli equipment request del progetto selezionato nella tabella di equipment
-            // riempie la tabella delle richieste
-            equipmentRequestTable.getItems().addAll(selectedProject.getEquipmentRequests());
-
-            // carica tutti i project salaried del progetto selezionato nella tabella degli impiegati
-            // riempire lista e caricare la tabella
-            selectedProject.getContracts().forEach(
-                    contract -> hiredProjectSalariedTable.getItems().add(contract.getProjectSalaried())
-            );
         }
-
     }
 
     /**
