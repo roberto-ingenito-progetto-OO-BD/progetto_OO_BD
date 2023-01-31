@@ -43,20 +43,30 @@ public class EmployeeDashboardController {
 
     private @FXML StackPane noWorkingProjectLabel;
 
-    // laboratory working projects table
-    // tabella dei progetti in cui lavora il laboratorio dove lavora l'impiegato loggato
+    /**
+     * laboratory working projects table
+     * tabella dei progetti in cui lavora il laboratorio dove lavora l'impiegato loggato
+     */
     private @FXML TableView<Project> labWorkingProjectsTable;
 
-    // tabella dei laboratori in cui l'impiegato loggato ne è manager
+    /**
+     * tabella dei laboratori in cui l'impiegato loggato ne è manager
+     */
     private @FXML TableView<Laboratory> empManagerLabsTable;
 
-    // tabella delle richieste di attrezzzatura
+    /**
+     * tabella delle richieste di attrezzatura
+     */
     private @FXML TableView<EquipmentRequest> equipmentRequestTable;
 
-    // tabella degli impiegati assunti
+    /**
+     * tabella degli impiegati assunti
+     */
     private @FXML TableView<ProjectSalaried> hiredProjectSalariedTable;
 
-    // tabella dei progetti di cui un impiegato (manager) è manager
+    /**
+     * tabella dei progetti di cui un impiegato (manager) è manager
+     */
     private @FXML TableView<Project> projectsTable;
 
     /// CONSTRUCTOR
@@ -65,6 +75,12 @@ public class EmployeeDashboardController {
     }
 
     /// FXML METHODS
+
+
+    /**
+     * Funzione che si avvia all'avvio subito dopo il controller <br/>
+     * Carica le schermate in base al tipo dell'impiegato loggato
+     */
     private @FXML void initialize() {
         // imposta nome, cognome e tipo dell'impiegato nella barra in alto
         userNameLabel.setText(employee.getFirstName() + " " + employee.getLastName());

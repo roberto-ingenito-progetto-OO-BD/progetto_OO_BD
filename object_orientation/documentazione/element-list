@@ -1,0 +1,8 @@
+module:com.company
+com.company
+com.company.Connection
+com.company.Controller
+com.company.DAO
+com.company.GUI
+com.company.Model
+com.company.PostgresDAO
