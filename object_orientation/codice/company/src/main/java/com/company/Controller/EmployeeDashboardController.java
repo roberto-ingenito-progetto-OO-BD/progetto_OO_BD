@@ -131,7 +131,13 @@ public class EmployeeDashboardController {
             // imposta la nuova finistra come "modal",
             // quindi blocca tutti gli eventi delle altre finestre finché questa non viene chiusa
             newStage.initModality(Modality.APPLICATION_MODAL);
-            newStage.show();
+              newStage.showAndWait();
+
+                if (employee.getLaboratory() != null) {
+                    labWorkingProjectsTable.getItems().clear();
+                    labWorkingProjectsTable.getItems().addAll(employee.getLaboratory().getProjects());
+                    labWorkingProjectsTable.refresh();
+                }
         }
     }
 
