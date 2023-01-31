@@ -10,7 +10,7 @@ public class DatabaseConnection {
     private static DatabaseConnection instance;
     public Connection connection = null;
 
-    public DatabaseConnection(String nome, String psw) throws SQLException {
+    private DatabaseConnection(String nome, String psw) throws SQLException {
         try {
             String driver = "org.postgresql.Driver";
             String url = "jdbc:postgresql://localhost:5432/company";
@@ -22,17 +22,23 @@ public class DatabaseConnection {
         }
     }
 
-    public static DatabaseConnection getInstance(String nome, String psw) throws SQLException {
+    /**
+     * Effettua la connessione al database con le credenziali passate in input
+     * @param userName Username dell'utente con il quale si intende effettuare la connessione al database
+     * @param psw Password dell'utente con il quale si intende effettuare la connessione al database
+     */
+    public static DatabaseConnection getInstance(String userName, String psw) throws SQLException {
         if (instance == null) {
-            instance = new DatabaseConnection(nome, psw);
+            instance = new DatabaseConnection(userName, psw);
         } else if (instance.connection.isClosed()) {
-            instance = new DatabaseConnection(nome, psw);
+            instance = new DatabaseConnection(userName, psw);
         }
         return instance;
     }
 
     /**
      * Crea un istanza in base all'empType dell'utente loggato
+     * @param empType Tipo dell'impiegato loggato con il quale si intende effettuare la connessione al database
      */
     public static DatabaseConnection baseEmpInstance(EmpType empType) throws SQLException {
         return switch (empType) {
@@ -43,9 +49,16 @@ public class DatabaseConnection {
         };
     }
 
+    /**
+     * Effettua la connessione al database con le credenziali dell'utente project salaried
+     */
     public static DatabaseConnection projSalariedInstance() throws SQLException {
         return getInstance("project_salaried_user", "proj_sal");
     }
+
+    /**
+     * Effettua la connessione al database con le credenziali dell'admin dello schema del database
+     */
     public static DatabaseConnection ProjAdminInstance() throws SQLException {
         return getInstance("project_admin", "proj_admin");
     }
