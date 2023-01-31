@@ -3,7 +3,6 @@ package com.company.PostgresDAO;
 import com.company.Connection.DatabaseConnection;
 import com.company.DAO.ProjectDAO;
 import com.company.Model.*;
-import javafx.scene.chart.PieChart;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -318,34 +317,34 @@ public class ProjectDAOImplementation implements ProjectDAO {
     public ArrayList<Equipment> getBuyedEquipments(Project project, Laboratory laboratory) {
         DatabaseConnection db;
         ResultSet rs;
-        String labCode;
         Equipment equipment;
         ArrayList<Equipment> equipments = new ArrayList<>();
-        String query = "SELECT equipment.name , equipment.type, equipment.tech_specs, purchase.price, purchase.purchase_date FROM project , purchase , equipment , laboratory " +
-                        "WHERE project.cup = purchase.cup " +
-                        "AND purchase.equipment_code = equipment.code " +
-                        "AND equipment.lab_code = laboratory.lab_code " +
-                        "AND project.cup = '" + project.getCup() + "' AND laboratory.lab_code = '" + laboratory.getLabCode() + "'";
+        String query = "SELECT E.name , E.type, E.tech_specs, PU.price, PU.purchase_date " +
+                "FROM project AS PR, purchase AS PU, equipment AS E, laboratory AS L " +
+                "WHERE PR.cup = PU.cup " +
+                "AND PU.equipment_code = E.code " +
+                "AND E.lab_code = L.lab_code " +
+                "AND PR.cup = '" + project.getCup() + "' AND L.lab_code = '" + laboratory.getLabCode() + "'";
 
         try {
-                db = DatabaseConnection.ProjAdminInstance();
-                rs = db.connection.createStatement().executeQuery(query);
-                db.connection.close();
-                
-                while(rs.next()) {
-                    equipment = new Equipment(
-                            rs.getString("name"),
-                            rs.getString("type"),
-                            rs.getString("tech_specs"),
-                            rs.getFloat("price"),
-                            rs.getDate("purchase_date").toLocalDate()
-                    );
-                    project.addEquipment(equipment);
-                    laboratory.addEquipment(equipment);
-                }
-                    return equipments;
+            db = DatabaseConnection.ProjAdminInstance();
+            rs = db.connection.createStatement().executeQuery(query);
+            db.connection.close();
+
+            while (rs.next()) {
+                equipment = new Equipment(
+                        rs.getString("name"),
+                        rs.getString("type"),
+                        rs.getString("tech_specs"),
+                        rs.getFloat("price"),
+                        rs.getDate("purchase_date").toLocalDate()
+                );
+                project.addEquipment(equipment);
+                laboratory.addEquipment(equipment);
+            }
+            return equipments;
         } catch (SQLException err) {
-                throw new RuntimeException(err);
+            throw new RuntimeException(err);
         }
     }
 

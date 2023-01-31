@@ -126,7 +126,7 @@
                                     <Insets />
                                  </VBox.margin>
                               </Label>
-                              <TextField fx:id="priceTextField" maxWidth="1.7976931348623157E308" onKeyPressed="#updateTotalPrice" />
+                              <TextField fx:id="priceTextField" maxWidth="1.7976931348623157E308" onKeyTyped="#updateTotalPrice" />
                            </children>
                            <HBox.margin>
                               <Insets />
@@ -152,7 +152,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="abortOperationButton" mnemonicParsing="false" onAction="#abortOperation" prefHeight="35.0" prefWidth="171.0" style="-fx-background-color: #A63C06;" text="Cancella" textFill="WHITE">
+                        <Button fx:id="abortOperationButton" mnemonicParsing="false" onAction="#abortOperation" prefHeight="35.0" prefWidth="171.0" style="-fx-background-color: #A63C06;" text="Annulla" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>

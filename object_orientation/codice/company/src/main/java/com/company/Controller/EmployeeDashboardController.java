@@ -211,7 +211,6 @@ public class EmployeeDashboardController {
 
     }
 
-
     private @FXML void showHiringScreen() {
         Project selectedProject = projectsTable.getSelectionModel().getSelectedItem();
 
@@ -257,9 +256,7 @@ public class EmployeeDashboardController {
             // aggiornare la tabella delle richieste una volta che la pagina di buy equipment viene chiusa
             equipmentRequestTable.refresh();
             currentStage.show();
-
-
-        } else return;
+        }
     }
 
     /// METHODS

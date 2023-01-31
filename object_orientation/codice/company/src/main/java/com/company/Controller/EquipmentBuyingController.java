@@ -9,13 +9,20 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class EquipmentBuyingController {
+    private final Project currentProject;
+    private final EquipmentRequest currentEquipmentRequest;
+
+    private BigDecimal remainingFundsValue;
+
+    /// FXML OBJECTS
     private @FXML Label labNameLabel;
     private @FXML Label selectedProjectName;
     private @FXML Label remainingFunds;
@@ -23,20 +30,22 @@ public class EquipmentBuyingController {
     private @FXML Label techSpecsLabel;
     private @FXML Label quantityLabel;
     private @FXML Label totalPriceLabel;
+
     private @FXML TextField priceTextField;
+
     private @FXML Button buyEquipmentButton;
     private @FXML Button abortOperationButton;
+
     private @FXML TableView<Equipment> EquipmentLog;
-    private Project currentProject;
-    private EquipmentRequest currentEquipmentRequest;
 
-    private BigDecimal remainingFundsValue;
 
+    /// CONSTRUCTOR
     public EquipmentBuyingController(Project project, EquipmentRequest equipmentRequest) {
         this.currentProject = project;
         this.currentEquipmentRequest = equipmentRequest;
     }
 
+    /// FXML METHODS
     private @FXML void initialize() {
         // recuperare i fondi disponibili per l'acquisto dal db
         ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
@@ -44,7 +53,7 @@ public class EquipmentBuyingController {
 
         ArrayList<Equipment> equipments = new ArrayList<>();
         currentProject.getLaboratories().forEach(laboratory -> {
-            if(laboratory.getLabCode() == currentEquipmentRequest.getLaboratory().getLabCode()){
+            if (laboratory.getLabCode() == currentEquipmentRequest.getLaboratory().getLabCode()) {
                 equipments.addAll(laboratory.getEquipments());
             }
         });
@@ -67,34 +76,36 @@ public class EquipmentBuyingController {
 
     }
 
-    private @FXML void abortOperation(ActionEvent actionEvent) {
+    private @FXML void abortOperation() {
+        Stage currentStage = (Stage) abortOperationButton.getScene().getWindow();
+        currentStage.close();
     }
 
     private @FXML void buyEquipment(ActionEvent actionEvent) {
         // controllare che sia inserito un prezzo valido
-        if(!totalPriceLabel.getText().isEmpty()){
-           Float price = Float.parseFloat(totalPriceLabel.getText());
-           if(price < remainingFundsValue.floatValue()){
+        if (!totalPriceLabel.getText().isEmpty()) {
+            float price = Float.parseFloat(totalPriceLabel.getText());
+            if (price < remainingFundsValue.floatValue()) {
 
 
-
-           } else {
-               System.out.println("non abbastanza fondi");
-               return;
-           }
+            } else {
+                System.out.println("non abbastanza fondi");
+                return;
+            }
         }
     }
 
-    private @FXML void updateTotalPrice(){
-        if(!priceTextField.getText().isEmpty()){
-            Float totalPrice = Float.parseFloat(priceTextField.getText());
-            System.out.println(totalPrice);
+    /**
+     * Aggiorna il testo che mostra il prezzo totale
+     */
+    private @FXML void updateTotalPrice() {
+        if (!priceTextField.getText().isEmpty()) {
+            float totalPrice = Float.parseFloat(priceTextField.getText());
             totalPrice = totalPrice * currentEquipmentRequest.getQuantity();
-            totalPriceLabel.setText(totalPrice.toString());
+            totalPrice = Float.parseFloat(new DecimalFormat(".##").format(totalPrice));
+            totalPriceLabel.setText(String.valueOf(totalPrice));
         } else {
-            if(!totalPriceLabel.getText().isEmpty()){
-                totalPriceLabel.setText("");
-            }
+            totalPriceLabel.setText("");
         }
     }
 }

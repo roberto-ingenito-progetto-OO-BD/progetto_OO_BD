@@ -135,9 +135,9 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
         ArrayList<Equipment> equipments = new ArrayList<>();
         ResultSet resultSet;
 
-        String query = "SELECT name, type, tech_specs, price\n" +
-                "FROM equipment, purchase\n" +
-                "WHERE equipment.code = purchase.equipment_code AND lab_code = " + laboratory.getLabCode();
+        String query = "SELECT E.name, E.type, E.tech_specs, P.price\n" +
+                "FROM equipment AS E, purchase AS P\n" +
+                "WHERE E.code = P.equipment_code AND E.lab_code = " + laboratory.getLabCode();
 
         try {
             db = DatabaseConnection.baseEmpInstance(empType);
