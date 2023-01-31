@@ -13,8 +13,6 @@ import javafx.stage.Stage;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -128,7 +126,6 @@ public class EquipmentBuyingController {
 
             } else {
                 errorLabel.setText("Non abbastanza fondi");
-                return;
             }
         } else {
             errorLabel.setText("Nessun prezzo stabilito");

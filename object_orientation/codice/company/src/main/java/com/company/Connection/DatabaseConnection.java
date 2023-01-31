@@ -9,12 +9,13 @@ import java.sql.SQLException;
 public class DatabaseConnection {
     private static DatabaseConnection instance;
     public Connection connection = null;
-    private final String url = "jdbc:postgresql://localhost:5432/company";
-    private final String driver = "org.postgresql.Driver";
 
     public DatabaseConnection(String nome, String psw) throws SQLException {
         try {
+            String driver = "org.postgresql.Driver";
+            String url = "jdbc:postgresql://localhost:5432/company";
             Class.forName(driver);
+
             connection = DriverManager.getConnection(url, nome, psw);
         } catch (ClassNotFoundException err) {
             System.out.println("database connection failed.." + err.getMessage());

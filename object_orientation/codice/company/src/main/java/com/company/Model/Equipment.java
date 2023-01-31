@@ -4,6 +4,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 
+@SuppressWarnings("ClassCanBeRecord")
 public class Equipment {
     private final String name;
     private final String type;
@@ -12,15 +13,11 @@ public class Equipment {
     private final float price;
     private final LocalDate purchaseDate;
 
-    public LocalDate getPurchaseDate() {
-        return purchaseDate;
-    }
-
     public Equipment(
             String name,
             String type,
             @Nullable String techSpecs,
-            Float price,
+            float price,
             LocalDate purchaseDate
     ) {
         this.name = name;
@@ -43,7 +40,14 @@ public class Equipment {
     public @Nullable String getTechSpecs() {
         return techSpecs;
     }
+
+    @SuppressWarnings("unused")
     public float getPrice() {
         return price;
+    }
+
+    @SuppressWarnings("unused")
+    public LocalDate getPurchaseDate() {
+        return purchaseDate;
     }
 }

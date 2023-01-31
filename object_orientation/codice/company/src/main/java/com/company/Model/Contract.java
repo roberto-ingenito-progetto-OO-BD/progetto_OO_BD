@@ -4,9 +4,9 @@ import org.jetbrains.annotations.Nullable;
 import java.time.LocalDate;
 
 public class Contract {
-    private LocalDate hireDate;
-    private LocalDate expiration;
-    private float pay;
+    private final LocalDate hireDate;
+    private final LocalDate expiration;
+    private final float pay;
     private ProjectSalaried projectSalaried;
     private Project project;
 
@@ -46,20 +46,6 @@ public class Contract {
     public void setProjectSalaried (ProjectSalaried projectSalaried) {
         this.projectSalaried =  projectSalaried;
     }
-
-    public void setHireDate(LocalDate hireDate) {
-        this.hireDate = hireDate;
-    }
-
-    public void setExpiration(LocalDate expiration) {
-        this.expiration = expiration;
-    }
-
-    public void setPay(float pay) {
-        this.pay = pay;
-    }
-
-
 
 
 }

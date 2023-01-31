@@ -6,7 +6,6 @@ import com.company.Model.Project;
 import com.company.Model.ProjectSalaried;
 import com.company.PostgresDAO.ProjectDAOImplementation;
 import com.company.PostgresDAO.ProjectSalariedDAOImplementation;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -79,18 +78,27 @@ public class HiringScreenController {
         // se l'impiegato è già assunto, colorare la riga di rosso
         hiringTable.setRowFactory(projectSalariedTableView -> new TableRow<>() {
             @Override
-            protected void updateItem(ProjectSalaried projectSalaried, boolean isHired) {
-                super.updateItem(projectSalaried, isHired);
-                currentProject.getContracts().forEach(contract -> {
-                    if (contract.getProjectSalaried() == projectSalaried) {
-                        if (contract.getExpiration() != null && contract.getExpiration().isAfter(LocalDate.now())) {
-                            setStyle("-fx-background-color:#A63C06");
-                        }
-                    }
-                });
+            protected void updateItem(ProjectSalaried projectSalaried, boolean isRowEmpty) {
+                super.updateItem(projectSalaried, isRowEmpty);
+
+                if (!isRowEmpty) {
+                    // Trova tra i contratti del progetto, se c'è quello dell'impiegato all'i-esima riga
+                    // se c'è e non è scaduto, colora la riga
+                    currentProject
+                            .getContracts()
+                            .stream()
+                            .filter(contract -> contract.getProjectSalaried().getCf().equals(projectSalaried.getCf()))
+                            .findFirst()
+                            .ifPresent(contract -> {
+                                if (contract.getExpiration() != null && contract.getExpiration().isAfter(LocalDate.now())) {
+                                    setStyle("-fx-background-color:#a8a8a8");
+                                    setDisable(true);
+                                }
+                            });
+                }
             }
         });
-
+        hiringTable.refresh();
     }
 
     /**
@@ -141,6 +149,8 @@ public class HiringScreenController {
      * Cancella tutti i valori nei field
      */
     private @FXML void deleteTextFields() {
+        hiringTable.getSelectionModel().clearSelection();
+
         birthDateTextField.setValue(null);
         payTextField.clear();
         expirationTextField.setValue(null);

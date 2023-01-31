@@ -6,11 +6,11 @@ import java.util.ArrayList;
 public class ProjectSalaried {
     private ArrayList<Contract> contracts = new ArrayList<>();
 
-    private String cf;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String role;
+    private final String cf;
+    private final String firstName;
+    private final String lastName;
+    private final String email;
+    private final String role;
 
     private final LocalDate birthDate;
 
@@ -56,26 +56,6 @@ public class ProjectSalaried {
     /// SETTER
     public void setContracts(ArrayList<Contract> contracts) {
         this.contracts = contracts;
-    }
-
-    public void setCf(String cf) {
-        this.cf = cf;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     /// METHODS

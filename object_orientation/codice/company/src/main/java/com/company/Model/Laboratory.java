@@ -3,9 +3,9 @@ package com.company.Model;
 import java.util.ArrayList;
 
 public class Laboratory {
-    private int labCode;
-    private String name;
-    private String topic;
+    private final int labCode;
+    private final String name;
+    private final String topic;
 
     private ArrayList<Project> projects = new ArrayList<>();
     private ArrayList<EquipmentRequest> equipmentRequests;
@@ -53,16 +53,9 @@ public class Laboratory {
         return employees;
     }
 
-    public ArrayList<EquipmentRequest> getEquipmentRequests() {
-        return equipmentRequests;
-    }
-
     /// SETTERS
     public void setProjects(ArrayList<Project> projects) {
         this.projects = projects;
-    }
-    public void addProject(Project newProject) {
-        this.projects.add(newProject);
     }
 
     public void setEquipment(ArrayList<Equipment> equipment) {
@@ -76,32 +69,8 @@ public class Laboratory {
         this.scientificManager = scientificManager;
     }
 
-    public void setLabCode(int labCode) {
-        this.labCode = labCode;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-
-    public void setEquipmentRequests(ArrayList<EquipmentRequest> equipmentRequests) {
-        this.equipmentRequests = equipmentRequests;
-    }
-
-    public void setEquipmentRequest(EquipmentRequest equipmentRequest) {
-        this.equipmentRequests.add(equipmentRequest);
-    }
-
     public void setEmployees(ArrayList<Employee> employees) {
         this.employees = employees;
     }
 
-    /// METHODS
-    public void dropProject(Project project) {
-        projects.remove(project);
-    }
 }

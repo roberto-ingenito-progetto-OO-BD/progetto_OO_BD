@@ -3,10 +3,10 @@ package com.company.Model;
 public class EquipmentRequest {
 
     private String code;
-    private String name;
-    private String specs;
-    private String type;
-    private int quantity;
+    private final String name;
+    private final String specs;
+    private final String type;
+    private final int quantity;
     private Laboratory laboratory;
     private Project project;
 

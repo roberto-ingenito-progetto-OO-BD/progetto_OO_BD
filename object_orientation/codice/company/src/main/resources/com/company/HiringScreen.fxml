@@ -25,266 +25,235 @@
         <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="70.0" vgrow="SOMETIMES" />
         <RowConstraints fillHeight="false" />
     </rowConstraints>
-    <children>
-        <StackPane style="-fx-background-color: #3c6e71;">
-            <children>
-                <Label fx:id="selectedProjectName" contentDisplay="CENTER" text="nome progetto" textFill="WHITE">
-                    <font>
-                        <Font name="System Bold" size="18.0" />
-                    </font>
-                </Label>
-            <Label fx:id="remainingFunds" contentDisplay="CENTER" text="Fondi" textFill="WHITE" StackPane.alignment="CENTER_RIGHT">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <StackPane.margin>
-                  <Insets right="40.0" />
-               </StackPane.margin>
-            </Label>
-            </children>
-        </StackPane>
-        <GridPane prefWidth="1000.0" GridPane.rowIndex="1">
-            <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="400.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="40.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="360.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" />
+    <StackPane style="-fx-background-color: #3c6e71;">
+        <Label fx:id="selectedProjectName" contentDisplay="CENTER" text="nome progetto" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="remainingFunds" contentDisplay="CENTER" text="Fondi" textFill="WHITE" StackPane.alignment="CENTER_RIGHT">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+            <StackPane.margin>
+                <Insets right="40.0" />
+            </StackPane.margin>
+        </Label>
+    </StackPane>
+    <GridPane prefWidth="1000.0" GridPane.rowIndex="1">
+        <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="400.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="40.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="360.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" />
+        </columnConstraints>
+        <rowConstraints>
             <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-            <children>
-                <VBox alignment="TOP_CENTER" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <children>
-                        <Label contentDisplay="CENTER" text="Assunzione" textFill="#3c6e71">
-                            <font>
-                                <Font name="System Bold" size="21.0" />
-                            </font>
-                        </Label>
-                        <Label contentDisplay="CENTER" prefWidth="280.0" text="per impiegati già assunti in precedenza inserire soltanto fine e paga" textAlignment="CENTER" textFill="#a8a8a8" wrapText="true">
-                            <font>
-                                <Font name="System Bold" size="12.0" />
-                            </font>
-                     <VBox.margin>
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" />
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+        <VBox alignment="TOP_CENTER" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label contentDisplay="CENTER" text="Assunzione" textFill="#3c6e71">
+                <font>
+                    <Font name="System Bold" size="21.0" />
+                </font>
+            </Label>
+            <Label contentDisplay="CENTER" prefWidth="280.0" text="per impiegati già assunti in precedenza inserire soltanto fine e paga" textAlignment="CENTER" textFill="#a8a8a8" wrapText="true">
+                <font>
+                    <Font name="System Bold" size="12.0" />
+                </font>
+                <VBox.margin>
+                    <Insets />
+                </VBox.margin>
+            </Label>
+            <HBox alignment="TOP_CENTER" spacing="30.0">
+                <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308">
+                    <HBox.margin>
                         <Insets />
-                     </VBox.margin>
-                        </Label>
-                        <HBox alignment="TOP_CENTER" spacing="30.0">
-                            <children>
-                                  <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308">
-                                      <children>
-                                          <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Codice Fiscale">
-                                              <font>
-                                                  <Font name="System Bold" size="16.0" />
-                                              </font>
-                                              <padding>
-                                                  <Insets bottom="10.0" />
-                                              </padding>
-                                              <VBox.margin>
-                                                  <Insets />
-                                              </VBox.margin>
-                                          </Label>
-                                          <TextField fx:id="cfTextField" maxWidth="1.7976931348623157E308" />
-                                      </children>
-                                      <HBox.margin>
-                                          <Insets />
-                                      </HBox.margin>
-                                  </VBox>
-                                  <VBox maxWidth="1.7976931348623157E308">
-                                      <children>
-                              <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Email">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets bottom="10.0" />
-                                 </padding>
-                              </Label>
-                                          <TextField fx:id="emailTextField" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                                              <VBox.margin>
-                                                  <Insets />
-                                              </VBox.margin>
-                                          </TextField>
-                                      </children>
-                                      <HBox.margin>
-                                          <Insets />
-                                      </HBox.margin>
-                                  </VBox>
-                            </children>
-                        </HBox>
-                  <HBox alignment="TOP_CENTER" spacing="30.0">
-                     <children>
-                        <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308">
-                           <children>
-                              <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Nome">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets bottom="10.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </Label>
-                              <TextField fx:id="firstNameTextField" maxWidth="1.7976931348623157E308" />
-                           </children>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox maxWidth="1.7976931348623157E308">
-                           <children>
-                              <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Cognome">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets bottom="10.0" />
-                                 </padding>
-                              </Label>
-                              <TextField fx:id="lastNameTextField" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </TextField>
-                           </children>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox alignment="TOP_CENTER" spacing="30.0">
-                     <children>
-                        <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308">
-                           <children>
-                              <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Data di Nascita">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets bottom="10.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </Label>
-                              <DatePicker fx:id="birthDateTextField" prefWidth="171.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox maxWidth="1.7976931348623157E308">
-                           <children>
-                              <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Ruolo">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets bottom="10.0" />
-                                 </padding>
-                              </Label>
-                              <TextField fx:id="roleTextField" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </TextField>
-                           </children>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox alignment="TOP_CENTER" spacing="30.0">
-                     <children>
-                        <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308">
-                           <children>
-                              <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Paga">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets bottom="10.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </Label>
-                              <TextField fx:id="payTextField" maxWidth="1.7976931348623157E308" />
-                           </children>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox maxWidth="1.7976931348623157E308">
-                           <children>
-                              <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Fine Contratto">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets bottom="10.0" />
-                                 </padding>
-                              </Label>
-                                          <DatePicker fx:id="expirationTextField" prefWidth="171.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </VBox>
-                     </children>
-                  </HBox>
-                        <FlowPane alignment="CENTER" columnHalignment="CENTER" maxWidth="1.7976931348623157E308" prefWidth="400.0">
-                            <children>
-                                <Button fx:id="hireButton" mnemonicParsing="false" onAction="#hireProjectSalaried" prefHeight="35.0" prefWidth="171.0" style="-fx-background-color: #3c6e71;" text="Assumi" textFill="WHITE">
-                                    <font>
-                                        <Font name="System Bold" size="16.0" />
-                                    </font>
-                                    <FlowPane.margin>
-                                        <Insets right="30.0" />
-                                    </FlowPane.margin>
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                </Button>
-                                <Button fx:id="deleteTextFieldButton" mnemonicParsing="false" onAction="#deleteTextFields" prefHeight="35.0" prefWidth="171.0" style="-fx-background-color: #A63C06;" text="Cancella" textFill="WHITE">
-                                    <font>
-                                        <Font name="System Bold" size="16.0" />
-                                    </font>
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                </Button>
-                            </children>
-                            <VBox.margin>
-                                <Insets top="30.0" />
-                            </VBox.margin>
-                        </FlowPane>
-                    </children>
+                    </HBox.margin>
+                    <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Codice Fiscale">
+                        <font>
+                            <Font name="System Bold" size="16.0" />
+                        </font>
+                        <padding>
+                            <Insets bottom="10.0" />
+                        </padding>
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin>
+                    </Label>
+                    <TextField fx:id="cfTextField" maxWidth="1.7976931348623157E308" />
                 </VBox>
-                <VBox alignment="TOP_CENTER" maxHeight="-Infinity" prefHeight="460.0" prefWidth="360.0" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="TOP">
-                    <children>
-                        <Label contentDisplay="CENTER" text="Impiegati già assunti">
-                            <font>
-                                <Font name="System Bold" size="18.0" />
-                            </font>
-                        </Label>
-                        <TableView fx:id="hiringTable" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="360.0" VBox.vgrow="ALWAYS">
-                            <columns>
-                                <TableColumn fx:id="hiringFirstNameColumn" prefWidth="115.0" text="Nome" />
-                                <TableColumn fx:id="hiringLastNameColumn" prefWidth="115.0" text="Cognome" />
-                                <TableColumn fx:id="hiringRoleColumn" prefWidth="120.0" text="Ruolo" />
-                            </columns>
-                        </TableView>
-                    </children>
+                <VBox maxWidth="1.7976931348623157E308">
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                    <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Email">
+                        <font>
+                            <Font name="System Bold" size="16.0" />
+                        </font>
+                        <padding>
+                            <Insets bottom="10.0" />
+                        </padding>
+                    </Label>
+                    <TextField fx:id="emailTextField" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin>
+                    </TextField>
                 </VBox>
-            </children>
-        </GridPane>
-    </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" spacing="30.0">
+                <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308">
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                    <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Nome">
+                        <font>
+                            <Font name="System Bold" size="16.0" />
+                        </font>
+                        <padding>
+                            <Insets bottom="10.0" />
+                        </padding>
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin>
+                    </Label>
+                    <TextField fx:id="firstNameTextField" maxWidth="1.7976931348623157E308" />
+                </VBox>
+                <VBox maxWidth="1.7976931348623157E308">
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                    <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Cognome">
+                        <font>
+                            <Font name="System Bold" size="16.0" />
+                        </font>
+                        <padding>
+                            <Insets bottom="10.0" />
+                        </padding>
+                    </Label>
+                    <TextField fx:id="lastNameTextField" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin>
+                    </TextField>
+                </VBox>
+            </HBox>
+            <HBox alignment="TOP_CENTER" spacing="30.0">
+                <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308">
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                    <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Data di Nascita">
+                        <font>
+                            <Font name="System Bold" size="16.0" />
+                        </font>
+                        <padding>
+                            <Insets bottom="10.0" />
+                        </padding>
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin>
+                    </Label>
+                    <DatePicker fx:id="birthDateTextField" prefWidth="171.0" />
+                </VBox>
+                <VBox maxWidth="1.7976931348623157E308">
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                    <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Ruolo">
+                        <font>
+                            <Font name="System Bold" size="16.0" />
+                        </font>
+                        <padding>
+                            <Insets bottom="10.0" />
+                        </padding>
+                    </Label>
+                    <TextField fx:id="roleTextField" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin>
+                    </TextField>
+                </VBox>
+            </HBox>
+            <HBox alignment="TOP_CENTER" spacing="30.0">
+                <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308">
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                    <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Paga">
+                        <font>
+                            <Font name="System Bold" size="16.0" />
+                        </font>
+                        <padding>
+                            <Insets bottom="10.0" />
+                        </padding>
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin>
+                    </Label>
+                    <TextField fx:id="payTextField" maxWidth="1.7976931348623157E308" />
+                </VBox>
+                <VBox maxWidth="1.7976931348623157E308">
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                    <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Fine Contratto">
+                        <font>
+                            <Font name="System Bold" size="16.0" />
+                        </font>
+                        <padding>
+                            <Insets bottom="10.0" />
+                        </padding>
+                    </Label>
+                    <DatePicker fx:id="expirationTextField" prefWidth="171.0" />
+                </VBox>
+            </HBox>
+            <FlowPane alignment="CENTER" columnHalignment="CENTER" maxWidth="1.7976931348623157E308" prefWidth="400.0">
+                <VBox.margin>
+                    <Insets top="30.0" />
+                </VBox.margin>
+                <Button fx:id="hireButton" mnemonicParsing="false" onAction="#hireProjectSalaried" prefHeight="35.0" prefWidth="171.0" style="-fx-background-color: #3c6e71;" text="Assumi" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                    <FlowPane.margin>
+                        <Insets right="30.0" />
+                    </FlowPane.margin>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="deleteTextFieldButton" mnemonicParsing="false" onAction="#deleteTextFields" prefHeight="35.0" prefWidth="171.0" style="-fx-background-color: #A63C06;" text="Cancella" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+            </FlowPane>
+        </VBox>
+        <VBox alignment="TOP_CENTER" maxHeight="-Infinity" prefHeight="460.0" prefWidth="360.0" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Label contentDisplay="CENTER" text="Impiegati già assunti">
+                <font>
+                    <Font name="System Bold" size="18.0" />
+                </font>
+            </Label>
+         <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" prefHeight="50.0" prefWidth="250.0" text="Impiegati che hanno un contratto in corso sono evidenziati in grigio" textAlignment="CENTER" textFill="#a8a8a8" wrapText="true">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+            <TableView fx:id="hiringTable" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="360.0" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="hiringFirstNameColumn" prefWidth="115.0" text="Nome" />
+                    <TableColumn fx:id="hiringLastNameColumn" prefWidth="115.0" text="Cognome" />
+                    <TableColumn fx:id="hiringRoleColumn" prefWidth="120.0" text="Ruolo" />
+                </columns>
+            </TableView>
+        </VBox>
+    </GridPane>
 </GridPane>

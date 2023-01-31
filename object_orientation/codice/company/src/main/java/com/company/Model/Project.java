@@ -9,7 +9,6 @@ public class Project {
     private String cup;
     private String name;
 
-    private float funds;
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -19,7 +18,7 @@ public class Project {
     private Senior scientificReferent;
 
     private ArrayList<EquipmentRequest> equipmentRequests;
-    private ArrayList<Equipment> equipments = new ArrayList<>();
+    private final ArrayList<Equipment> equipments = new ArrayList<>();
     private ArrayList<Contract> contracts;
 
     private final int maxLabs = 3;
@@ -40,7 +39,9 @@ public class Project {
         this.endDate = endDate;
         this.deadline = deadline;
     }
-    public Project(){}
+
+    public Project() {
+    }
 
     /// GETTERS
     public LocalDate getEndDate() {
@@ -53,10 +54,6 @@ public class Project {
 
     public String getName() {
         return name;
-    }
-
-    public float getFunds() {
-        return funds;
     }
 
     public String getDescription() {
@@ -95,37 +92,13 @@ public class Project {
         return contracts;
     }
 
-    /// SETTERS
-    public void setCup(String cup) {
-        this.cup = cup;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setFunds(float funds) {
-        this.funds = funds;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
+    /// SETTER
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    public void setDeadline(LocalDate deadline) {
-        this.deadline = deadline;
-    }
-
     public void setLaboratories(ArrayList<Laboratory> laboratories) {
-        if(laboratories.size() <= maxLabs){
+        if (laboratories.size() <= maxLabs) {
             this.laboratories = laboratories;
         }
     }
@@ -142,21 +115,13 @@ public class Project {
         this.equipmentRequests = equipmentRequests;
     }
 
-    public void setEquipments(ArrayList<Equipment> equipments) {
-        this.equipments = equipments;
-    }
-
-    public void addEquipment(Equipment equipment){
-        this.equipments.add(equipment);
-    }
-
     public void setContracts(@Nullable ArrayList<Contract> contracts) {
         this.contracts = contracts;
     }
 
     /// METHODS
-    public void addLaboratory(Laboratory laboratory){
-        if(laboratories.size() <= maxLabs - 1){
+    public void addLaboratory(Laboratory laboratory) {
+        if (laboratories.size() <= maxLabs - 1) {
             laboratories.add(laboratory);
         }
     }
@@ -165,4 +130,7 @@ public class Project {
         this.contracts.add(contract);
     }
 
+    public void addEquipment(Equipment equipment) {
+        this.equipments.add(equipment);
+    }
 }

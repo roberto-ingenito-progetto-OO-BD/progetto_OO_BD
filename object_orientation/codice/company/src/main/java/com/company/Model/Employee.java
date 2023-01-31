@@ -3,15 +3,12 @@ package com.company.Model;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.time.LocalDate;
-
 
 public class Employee {
     private final String cf;
     private final String firstName;
     private final String lastName;
     private final String email;
-    private LocalDate birthDate;
     private final String role;
     private final float salary;
     private final EmpType type;
@@ -36,10 +33,6 @@ public class Employee {
 
     public String getEmail() {
         return email;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
     }
 
     public String getRole() {

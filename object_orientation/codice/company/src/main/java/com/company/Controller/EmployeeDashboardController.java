@@ -238,6 +238,11 @@ public class EmployeeDashboardController {
         // una volta chiusa, apre nuovamente la finestra attuale
         currentStage.hide();
         newStage.showAndWait();
+
+        // aggiorna la tabella delle richieste una volta che la pagina di buy equipment viene chiusa
+        projectsTable.getSelectionModel().clearSelection();
+        equipmentRequestTable.getItems().clear();
+        hiredProjectSalariedTable.getItems().clear();
         currentStage.show();
     }
 

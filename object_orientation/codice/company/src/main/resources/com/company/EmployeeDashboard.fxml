@@ -18,326 +18,344 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.Controller.EmployeeDashboardController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+          prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.company.Controller.EmployeeDashboardController">
    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
-      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0"/>
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0"/>
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
    </rowConstraints>
-   <children>
-      <GridPane maxHeight="1.7976931348623157E308" prefWidth="150.0">
+   <GridPane maxHeight="1.7976931348623157E308" prefWidth="150.0">
+      <columnConstraints>
+         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0"/>
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" valignment="CENTER"
+                         vgrow="SOMETIMES"/>
+         <RowConstraints maxHeight="1.7976931348623157E308" valignment="CENTER" vgrow="SOMETIMES"/>
+         <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" valignment="CENTER" vgrow="ALWAYS"/>
+      </rowConstraints>
+      <StackPane style="-fx-background-color: #3c6e71;">
+         <Label text="Dashboard" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="20.0"/>
+            </font>
+         </Label>
+      </StackPane>
+      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0"
+            spacing="15.0" style="-fx-background-color: #3c6e71;" GridPane.rowIndex="1">
+         <opaqueInsets>
+            <Insets/>
+         </opaqueInsets>
+         <cursor>
+            <Cursor fx:constant="DEFAULT"/>
+         </cursor>
+         <padding>
+            <Insets bottom="50.0" top="50.0"/>
+         </padding>
+         <Label fx:id="laboratoryButtonLabel" onMouseClicked="#goToLaboratoryTab" text="Laboratorio"
+                textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="16.0"/>
+            </font>
+            <cursor>
+               <Cursor fx:constant="HAND"/>
+            </cursor>
+         </Label>
+         <Label fx:id="projectsButtonLabel" onMouseClicked="#goToProjectTab" opacity="0.4" text="Progetti"
+                textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="16.0"/>
+            </font>
+            <cursor>
+               <Cursor fx:constant="HAND"/>
+            </cursor>
+         </Label>
+      </VBox>
+      <StackPane style="-fx-background-color: #3c6e71;" GridPane.rowIndex="2">
+         <Label onMouseClicked="#onLogOutClick" text="Log Out" textFill="WHITE">
+            <cursor>
+               <Cursor fx:constant="HAND"/>
+            </cursor>
+            <font>
+               <Font size="14.0"/>
+            </font>
+         </Label>
+      </StackPane>
+   </GridPane>
+   <GridPane GridPane.columnIndex="1">
+      <columnConstraints>
+         <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0"/>
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES"/>
+         <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+      </rowConstraints>
+      <GridPane maxHeight="1.7976931348623157E308">
          <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="200.0"
+                               prefWidth="732.0"/>
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.0" minWidth="150.0"
+                               prefWidth="150.0"/>
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="1.7976931348623157E308" valignment="CENTER" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity"/>
          </rowConstraints>
-         <children>
-            <StackPane style="-fx-background-color: #3c6e71;">
-               <children>
-                  <Label text="Dashboard" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
-               </children>
-            </StackPane>
-            <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="15.0" style="-fx-background-color: #3c6e71;" GridPane.rowIndex="1">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
+         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0"
+               style="-fx-background-color: #D9D9D9;">
+            <Label contentDisplay="CENTER" text="Benvenuto" textFill="#3c6e71">
+               <font>
+                  <Font name="System Bold" size="22.0"/>
+               </font>
                <padding>
-                  <Insets bottom="50.0" top="50.0" />
+                  <Insets left="20.0" right="20.0"/>
                </padding>
-               <children>
-                  <Label fx:id="laboratoryButtonLabel" onMouseClicked="#goToLaboratoryTab" text="Laboratorio" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Label>
-                  <Label fx:id="projectsButtonLabel" onMouseClicked="#goToProjectTab" opacity="0.4" text="Progetti" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Label>
-               </children>
-            </VBox>
-            <StackPane style="-fx-background-color: #3c6e71;" GridPane.rowIndex="2">
-               <children>
-                  <Label onMouseClicked="#onLogOutClick" text="Log Out" textFill="WHITE">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-               </children>
-            </StackPane>
-         </children>
+            </Label>
+            <Label fx:id="userNameLabel" contentDisplay="CENTER" text="Nome Cognome">
+               <font>
+                  <Font name="System Bold" size="18.0"/>
+               </font>
+            </Label>
+         </HBox>
+         <StackPane style="-fx-background-color: #D9D9D9;" GridPane.columnIndex="1">
+            <Label fx:id="empTypeLabel" contentDisplay="CENTER" text="type">
+               <font>
+                  <Font name="System Bold" size="18.0"/>
+               </font>
+            </Label>
+         </StackPane>
       </GridPane>
-      <GridPane GridPane.columnIndex="1">
-         <columnConstraints>
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <GridPane maxHeight="1.7976931348623157E308">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="732.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" />
-               </rowConstraints>
-               <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #D9D9D9;">
-                     <children>
-                        <Label contentDisplay="CENTER" text="Benvenuto" textFill="#3c6e71">
-                           <font>
-                              <Font name="System Bold" size="22.0" />
-                           </font>
-                           <padding>
-                              <Insets left="20.0" right="20.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="userNameLabel" contentDisplay="CENTER" text="Nome Cognome">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <StackPane style="-fx-background-color: #D9D9D9;" GridPane.columnIndex="1">
-                     <children>
-                        <Label fx:id="empTypeLabel" contentDisplay="CENTER" text="type">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </StackPane>
-               </children>
-            </GridPane>
-            <TabPane fx:id="tabPane" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" stylesheets="@assets/employeeDashboard.css" tabClosingPolicy="UNAVAILABLE" GridPane.rowIndex="1">
-               <tabs>
-                  <Tab fx:id="laboratoryTab" closable="false" text="laboratorio">
-                     <content>
-                        <AnchorPane maxHeight="1.7976931348623157E308" minHeight="200.0" style="-fx-background-color: #FFFFFF;">
-                           <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-                                 <children>
-                                    <GridPane prefHeight="181.0" prefWidth="810.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" prefWidth="100.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="200.0" minHeight="-Infinity" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <VBox maxWidth="500.0" spacing="10.0" GridPane.rowIndex="1">
-                                             <children>
-                                                <HBox spacing="10.0">
-                                                   <children>
-                                                      <Label alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="Laboratorio:">
-                                                         <font>
-                                                            <Font name="System Bold" size="14.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label fx:id="laboratoryNameLabel" alignment="TOP_LEFT" maxHeight="200.0" text="lab name" wrapText="true" />
-                                                   </children>
-                                                </HBox>
-                                                <HBox spacing="10.0">
-                                                   <children>
-                                                      <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="Topic:">
-                                                         <font>
-                                                            <Font name="System Bold" size="14.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label fx:id="laboratoryTopicLabel" maxHeight="200.0" text="lab topic" wrapText="true" />
-                                                   </children>
-                                                </HBox>
-                                                <HBox spacing="10.0">
-                                                   <children>
-                                                      <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="Manager:">
-                                                         <font>
-                                                            <Font name="System Bold" size="14.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label fx:id="laboratoryManagerLabel" text="lab manager" wrapText="true" />
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                             <GridPane.margin>
-                                                <Insets />
-                                             </GridPane.margin>
-                                          </VBox>
-                                          <ListView fx:id="laboratoryEquipmentListView" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="150.0" prefWidth="300.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <Label contentDisplay="CENTER" text="Attrezzatura" GridPane.columnIndex="2">
-                                             <font>
-                                                <Font name="System Bold" size="16.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </GridPane>
-                                    <GridPane maxHeight="1.7976931348623157E308" prefHeight="181.0" prefWidth="810.0" VBox.vgrow="ALWAYS">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" prefWidth="100.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="-Infinity" vgrow="ALWAYS" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Label contentDisplay="CENTER" text="Laboratori di cui sei manager" textFill="#3c6e71" GridPane.columnIndex="2">
-                                             <font>
-                                                <Font name="System Bold" size="16.0" />
-                                             </font>
-                                          </Label>
-                                          <Label contentDisplay="CENTER" text="Progetti a cui lavora" textFill="#3c6e71">
-                                             <font>
-                                                <Font name="System Bold" size="16.0" />
-                                             </font>
-                                          </Label>
-                                          <TableView fx:id="empManagerLabsTable" maxWidth="1.7976931348623157E308" onMouseClicked="#onLabClick" prefHeight="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                             <columns>
-                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="100.0" resizable="false" text="Lab Code" />
-                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="300.0" text="Laboratorio" />
-                                             </columns>
-                                          </TableView>
-                                          <TableView fx:id="labWorkingProjectsTable" maxWidth="1.7976931348623157E308" onMouseClicked="#onLabWorkingProjectTableRowClick" prefHeight="200.0" GridPane.rowIndex="1">
-                                             <columns>
-                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" resizable="false" text="CUP" />
-                                                <TableColumn maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="250.0" text="Nome" />
-                                             </columns>
-                                          </TableView>
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                              </VBox>
-                              <StackPane fx:id="noWorkingProjectLabel" prefHeight="150.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="230.0" text="Al momento non lavori in nessun laboratorio" textAlignment="CENTER" textFill="#3c6e71" wrapText="true" StackPane.alignment="CENTER">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </StackPane>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-                  <Tab fx:id="projectsTab" closable="false" text="progetto">
-                     <content>
-                        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <GridPane layoutX="-6.0" prefHeight="593.0" prefWidth="850.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <columnConstraints>
-                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="50.0" />
-                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
-                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
-                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
-                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="50.0" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="450.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                    <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="1" GridPane.vgrow="SOMETIMES">
-                                       <children>
-                                          <Label contentDisplay="CENTER" text="Progetti">
-                                             <font>
-                                                <Font name="System Bold" size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <TableView fx:id="projectsTable" maxWidth="-Infinity" minWidth="-Infinity" onMouseClicked="#showSelectedProject" prefHeight="463.0" VBox.vgrow="ALWAYS">
-                                             <columns>
-                                                <TableColumn prefWidth="127.0" text="CUP" />
-                                                <TableColumn prefWidth="117.0" text="Nome" />
-                                                <TableColumn prefWidth="125.0" text="Conclusione" />
-                                             </columns>
-                                          </TableView>
-                                       </children>
-                                       <GridPane.margin>
-                                          <Insets bottom="20.0" top="20.0" />
-                                       </GridPane.margin>
-                                    </VBox>
-                                    <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="3" GridPane.vgrow="SOMETIMES">
-                                       <children>
-                                          <Label contentDisplay="CENTER" text="Richieste attrezzature">
-                                             <font>
-                                                <Font name="System Bold" size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <TableView fx:id="equipmentRequestTable" maxWidth="-Infinity" minWidth="-Infinity" onMouseClicked="#getSelectedEquipment" prefHeight="200.0" VBox.vgrow="SOMETIMES">
-                                             <columns>
-                                                <TableColumn prefWidth="107.0" text="Nome" />
-                                                <TableColumn prefWidth="124.0" text="Tipologia" />
-                                                <TableColumn prefWidth="112.0" text="Quantità" />
-                                             </columns>
-                                          </TableView>
-                                          <Label contentDisplay="CENTER" text="Impiegati assunti">
-                                             <font>
-                                                <Font name="System Bold" size="18.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets top="20.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <TableView fx:id="hiredProjectSalariedTable" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="250.0" VBox.vgrow="SOMETIMES">
-                                             <columns>
-                                                <TableColumn prefWidth="106.0" text="Nome" />
-                                                <TableColumn prefWidth="119.0" text="Cognome" />
-                                                <TableColumn prefWidth="118.0" text="Ruolo" />
-                                             </columns>
-                                          </TableView>
-                                          <Button fx:id="hireProjectSalaried" disable="true" mnemonicParsing="false" onAction="#showHiringScreen" prefHeight="34.0" prefWidth="200.0" style="-fx-background-color: #3c6e71;" text="Assumi Impiegato" textFill="WHITE">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets top="20.0" />
-                                             </VBox.margin>
-                                             <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                             </cursor>
-                                          </Button>
-                                       </children>
-                                       <GridPane.margin>
-                                          <Insets bottom="20.0" top="20.0" />
-                                       </GridPane.margin>
-                                    </VBox>
-                                 </children>
-                              </GridPane>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-               </tabs>
-            </TabPane>
-         </children>
-      </GridPane>
-   </children>
+      <TabPane fx:id="tabPane" focusTraversable="false" maxHeight="1.7976931348623157E308"
+               maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0"
+               style="-fx-background-color: #FFFFFF;" stylesheets="@assets/employeeDashboard.css"
+               tabClosingPolicy="UNAVAILABLE" GridPane.rowIndex="1">
+         <Tab fx:id="laboratoryTab" closable="false" text="laboratorio">
+            <AnchorPane maxHeight="1.7976931348623157E308" minHeight="200.0"
+                        style="-fx-background-color: #FFFFFF;">
+               <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="20.0"
+                     AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
+                     AnchorPane.topAnchor="20.0">
+                  <GridPane prefHeight="181.0" prefWidth="810.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0"
+                                           prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity"
+                                           prefWidth="20.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0"
+                                           prefWidth="100.0"/>
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0"
+                                        valignment="TOP" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="200.0" minHeight="-Infinity" vgrow="SOMETIMES"/>
+                     </rowConstraints>
+                     <VBox maxWidth="500.0" spacing="10.0" GridPane.rowIndex="1">
+                        <GridPane.margin>
+                           <Insets/>
+                        </GridPane.margin>
+                        <HBox spacing="10.0">
+                           <Label alignment="TOP_LEFT" maxHeight="-Infinity"
+                                  maxWidth="-Infinity" minHeight="-Infinity"
+                                  minWidth="-Infinity" text="Laboratorio:">
+                              <font>
+                                 <Font name="System Bold" size="14.0"/>
+                              </font>
+                           </Label>
+                           <Label fx:id="laboratoryNameLabel" alignment="TOP_LEFT"
+                                  maxHeight="200.0" text="lab name" wrapText="true"/>
+                        </HBox>
+                        <HBox spacing="10.0">
+                           <Label maxHeight="-Infinity" maxWidth="-Infinity"
+                                  minHeight="-Infinity" minWidth="-Infinity" text="Topic:">
+                              <font>
+                                 <Font name="System Bold" size="14.0"/>
+                              </font>
+                           </Label>
+                           <Label fx:id="laboratoryTopicLabel" maxHeight="200.0"
+                                  text="lab topic" wrapText="true"/>
+                        </HBox>
+                        <HBox spacing="10.0">
+                           <Label maxHeight="-Infinity" maxWidth="-Infinity"
+                                  minHeight="-Infinity" minWidth="-Infinity" text="Manager:">
+                              <font>
+                                 <Font name="System Bold" size="14.0"/>
+                              </font>
+                           </Label>
+                           <Label fx:id="laboratoryManagerLabel" text="lab manager"
+                                  wrapText="true"/>
+                        </HBox>
+                     </VBox>
+                     <ListView fx:id="laboratoryEquipmentListView" maxHeight="-Infinity"
+                               maxWidth="1.7976931348623157E308" minHeight="-Infinity"
+                               prefHeight="150.0" prefWidth="300.0" GridPane.columnIndex="2"
+                               GridPane.rowIndex="1"/>
+                     <Label contentDisplay="CENTER" text="Attrezzatura" GridPane.columnIndex="2">
+                        <font>
+                           <Font name="System Bold" size="16.0"/>
+                        </font>
+                     </Label>
+                  </GridPane>
+                  <GridPane maxHeight="1.7976931348623157E308" prefHeight="181.0" prefWidth="810.0"
+                            VBox.vgrow="ALWAYS">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0"
+                                           prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity"
+                                           prefWidth="20.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0"
+                                           prefWidth="100.0"/>
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0"
+                                        valignment="TOP" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="-Infinity" vgrow="ALWAYS"/>
+                     </rowConstraints>
+                     <Label contentDisplay="CENTER" text="Laboratori di cui sei manager"
+                            textFill="#3c6e71" GridPane.columnIndex="2">
+                        <font>
+                           <Font name="System Bold" size="16.0"/>
+                        </font>
+                     </Label>
+                     <Label contentDisplay="CENTER" text="Progetti a cui lavora" textFill="#3c6e71">
+                        <font>
+                           <Font name="System Bold" size="16.0"/>
+                        </font>
+                     </Label>
+                     <TableView fx:id="empManagerLabsTable" maxWidth="1.7976931348623157E308"
+                                onMouseClicked="#onLabClick" prefHeight="200.0"
+                                GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <columns>
+                           <TableColumn maxWidth="1.7976931348623157E308" minWidth="50.0"
+                                        prefWidth="100.0" resizable="false" text="Lab Code"/>
+                           <TableColumn maxWidth="1.7976931348623157E308" minWidth="50.0"
+                                        prefWidth="300.0" text="Laboratorio"/>
+                        </columns>
+                     </TableView>
+                     <TableView fx:id="labWorkingProjectsTable" maxWidth="1.7976931348623157E308"
+                                onMouseClicked="#onLabWorkingProjectTableRowClick" prefHeight="200.0"
+                                GridPane.rowIndex="1">
+                        <columns>
+                           <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity"
+                                        prefWidth="150.0" resizable="false" text="CUP"/>
+                           <TableColumn maxWidth="1.7976931348623157E308" minWidth="50.0"
+                                        prefWidth="250.0" text="Nome"/>
+                        </columns>
+                     </TableView>
+                  </GridPane>
+               </VBox>
+               <StackPane fx:id="noWorkingProjectLabel" prefHeight="150.0" prefWidth="200.0"
+                          visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="230.0"
+                         text="Al momento non lavori in nessun laboratorio" textAlignment="CENTER"
+                         textFill="#3c6e71" wrapText="true" StackPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="16.0"/>
+                     </font>
+                  </Label>
+               </StackPane>
+            </AnchorPane>
+         </Tab>
+         <Tab fx:id="projectsTab" closable="false" text="progetto">
+            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0"
+                        minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <GridPane layoutX="-6.0" prefHeight="593.0" prefWidth="850.0"
+                         AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <columnConstraints>
+                     <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                        maxWidth="1.7976931348623157E308" minWidth="-Infinity"
+                                        prefWidth="50.0"/>
+                     <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity"
+                                        minWidth="-Infinity"/>
+                     <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity"
+                                        minWidth="-Infinity" prefWidth="50.0"/>
+                     <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity"
+                                        minWidth="-Infinity"/>
+                     <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                        maxWidth="1.7976931348623157E308" minWidth="-Infinity"
+                                        prefWidth="50.0"/>
+                  </columnConstraints>
+                  <rowConstraints>
+                     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0"
+                                     prefHeight="450.0" vgrow="SOMETIMES"/>
+                  </rowConstraints>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0"
+                        GridPane.columnIndex="1" GridPane.vgrow="SOMETIMES">
+                     <GridPane.margin>
+                        <Insets bottom="20.0" top="20.0"/>
+                     </GridPane.margin>
+                     <Label contentDisplay="CENTER" text="Progetti">
+                        <font>
+                           <Font name="System Bold" size="18.0"/>
+                        </font>
+                     </Label>
+                     <TableView fx:id="projectsTable" maxWidth="-Infinity" minWidth="-Infinity"
+                                onMouseClicked="#showSelectedProject" prefHeight="463.0"
+                                VBox.vgrow="ALWAYS">
+                        <columns>
+                           <TableColumn prefWidth="127.0" text="CUP"/>
+                           <TableColumn prefWidth="117.0" text="Nome"/>
+                           <TableColumn prefWidth="125.0" text="Conclusione"/>
+                        </columns>
+                     </TableView>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0"
+                        GridPane.columnIndex="3" GridPane.vgrow="SOMETIMES">
+                     <GridPane.margin>
+                        <Insets bottom="20.0" top="20.0"/>
+                     </GridPane.margin>
+                     <Label contentDisplay="CENTER" text="Richieste attrezzature">
+                        <font>
+                           <Font name="System Bold" size="18.0"/>
+                        </font>
+                     </Label>
+                     <TableView fx:id="equipmentRequestTable" maxWidth="-Infinity"
+                                minWidth="-Infinity" onMouseClicked="#getSelectedEquipment"
+                                prefHeight="200.0" VBox.vgrow="SOMETIMES">
+                        <columns>
+                           <TableColumn prefWidth="107.0" text="Nome"/>
+                           <TableColumn prefWidth="124.0" text="Tipologia"/>
+                           <TableColumn prefWidth="112.0" text="Quantità"/>
+                        </columns>
+                     </TableView>
+                     <Label contentDisplay="CENTER" text="Impiegati assunti">
+                        <font>
+                           <Font name="System Bold" size="18.0"/>
+                        </font>
+                        <VBox.margin>
+                           <Insets top="20.0"/>
+                        </VBox.margin>
+                     </Label>
+                     <TableView fx:id="hiredProjectSalariedTable" maxWidth="-Infinity"
+                                minWidth="-Infinity" prefHeight="250.0" VBox.vgrow="SOMETIMES">
+                        <columns>
+                           <TableColumn prefWidth="106.0" text="Nome"/>
+                           <TableColumn prefWidth="119.0" text="Cognome"/>
+                           <TableColumn prefWidth="118.0" text="Ruolo"/>
+                        </columns>
+                     </TableView>
+                     <Button fx:id="hireProjectSalaried" disable="true" mnemonicParsing="false"
+                             onAction="#showHiringScreen" prefHeight="34.0" prefWidth="200.0"
+                             style="-fx-background-color: #3c6e71;" text="Assumi Impiegato"
+                             textFill="WHITE">
+                        <font>
+                           <Font size="14.0"/>
+                        </font>
+                        <VBox.margin>
+                           <Insets top="20.0"/>
+                        </VBox.margin>
+                        <cursor>
+                           <Cursor fx:constant="HAND"/>
+                        </cursor>
+                     </Button>
+                  </VBox>
+               </GridPane>
+            </AnchorPane>
+         </Tab>
+      </TabPane>
+   </GridPane>
 </GridPane>

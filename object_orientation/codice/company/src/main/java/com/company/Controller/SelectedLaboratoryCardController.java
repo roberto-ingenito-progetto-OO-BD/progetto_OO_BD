@@ -1,7 +1,6 @@
 package com.company.Controller;
 
 import com.company.GUI.EquipmentRequestCard;
-import com.company.GUI.ProjectCard;
 import com.company.Model.*;
 import com.company.PostgresDAO.LaboratoryDAOImplementation;
 import com.company.PostgresDAO.ProjectDAOImplementation;
@@ -83,14 +82,14 @@ public class SelectedLaboratoryCardController {
                 leaveProjectButton
         );
         alert.setTitle("Attenzione");
+
         Project selectedProject = workingProjectsTable.getSelectionModel().getSelectedItem();
         workingProjectsTable.getSelectionModel().clearSelection();
 
         // se non è stato selezionato nulla, termina la funzione
         if (selectedProject == null) return;
 
-// TODO: Se clicco sul pulsante X per chiuedere la finestra, non funziona
-        // avvia il dialog e aspetta il click di uno dei pulsanti "no" o "si"
+        // avvia il dialog e aspetta il click di uno dei pulsanti
         // oppure aspetta la chiusura
         alert.showAndWait();
         if (alert.getResult() == leaveProjectButton)

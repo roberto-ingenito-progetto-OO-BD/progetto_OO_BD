@@ -26,70 +26,63 @@
             </font>
         </Label>
     </StackPane>
-   <VBox prefWidth="760.0" spacing="20.0" GridPane.rowIndex="1">
-      <GridPane.margin>
-         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-      </GridPane.margin>
-      <children>
-         <GridPane>
+    <VBox prefWidth="760.0" spacing="20.0" GridPane.rowIndex="1">
+        <GridPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        </GridPane.margin>
+        <GridPane>
             <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="370.0" />
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="370.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="370.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="370.0"/>
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
             </rowConstraints>
-            <children>
-               <VBox spacing="5.0">
-                  <children>
-                     <Label contentDisplay="CENTER" text="Impiegati">
-                        <font>
-                           <Font name="System Bold" size="16.0" />
-                        </font>
-                     </Label>
-                     <TableView fx:id="employeesTable" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="250.0" prefWidth="200.0">
-                        <columns>
-                           <TableColumn prefWidth="170.0" text="Codice Fiscale" />
-                           <TableColumn prefWidth="200.0" text="Nome e Cognome" />
-                        </columns>
-                     </TableView>
-                  </children>
-               </VBox>
-               <VBox spacing="5.0" GridPane.columnIndex="2">
-                  <children>
-                     <Label contentDisplay="CENTER" text="Progetti a cui lavora">
-                        <font>
-                           <Font name="System Bold" size="16.0" />
-                        </font>
-                     </Label>
-                     <TableView fx:id="workingProjectsTable" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#onWorkingProjectClick" prefHeight="250.0" prefWidth="200.0">
-                       <columns>
-                         <TableColumn prefWidth="170.0" text="CUP" />
-                         <TableColumn prefWidth="200.0" text="Nome" />
-                       </columns>
-                     </TableView>
-                  </children>
-               </VBox>
-            </children>
-         </GridPane>
-         <VBox spacing="5.0">
-            <children>
-               <Label contentDisplay="CENTER" text="Progetti">
-                  <font>
-                     <Font name="System Bold" size="16.0" />
-                  </font>
-               </Label>
-               <TableView fx:id="projectsTable" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#onProjectClick" prefHeight="250.0" prefWidth="760.0">
-                  <columns>
-                     <TableColumn prefWidth="170.0" text="CUP" />
-                     <TableColumn prefWidth="290.0" text="Nome" />
-                     <TableColumn prefWidth="150.0" text="Data Inizio" />
-                     <TableColumn prefWidth="150.0" text="Deadline" />
-                  </columns>
-               </TableView>
-            </children>
-         </VBox>
-      </children>
-   </VBox>
+            <VBox spacing="5.0">
+                <Label contentDisplay="CENTER" text="Impiegati">
+                    <font>
+                        <Font name="System Bold" size="16.0"/>
+                    </font>
+                </Label>
+                <TableView fx:id="employeesTable" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="250.0"
+                           prefWidth="200.0">
+                    <columns>
+                        <TableColumn prefWidth="170.0" text="Codice Fiscale"/>
+                        <TableColumn prefWidth="200.0" text="Nome e Cognome"/>
+                    </columns>
+                </TableView>
+            </VBox>
+            <VBox spacing="5.0" GridPane.columnIndex="2">
+                <Label contentDisplay="CENTER" text="Progetti a cui lavora">
+                    <font>
+                        <Font name="System Bold" size="16.0"/>
+                    </font>
+                </Label>
+                <TableView fx:id="workingProjectsTable" maxHeight="-Infinity" minHeight="-Infinity"
+                           onMouseClicked="#onWorkingProjectClick" prefHeight="250.0" prefWidth="200.0">
+                    <columns>
+                        <TableColumn prefWidth="170.0" text="CUP"/>
+                        <TableColumn prefWidth="200.0" text="Nome"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </GridPane>
+        <VBox spacing="5.0">
+            <Label contentDisplay="CENTER" text="Progetti">
+                <font>
+                    <Font name="System Bold" size="16.0"/>
+                </font>
+            </Label>
+            <TableView fx:id="projectsTable" maxHeight="-Infinity" minHeight="-Infinity"
+                       onMouseClicked="#onProjectClick" prefHeight="250.0" prefWidth="760.0">
+                <columns>
+                    <TableColumn prefWidth="170.0" text="CUP"/>
+                    <TableColumn prefWidth="290.0" text="Nome"/>
+                    <TableColumn prefWidth="150.0" text="Data Inizio"/>
+                    <TableColumn prefWidth="150.0" text="Deadline"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </VBox>
 </GridPane>

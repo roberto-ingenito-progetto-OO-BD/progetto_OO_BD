@@ -4,7 +4,6 @@ import com.company.Connection.DatabaseConnection;
 import com.company.DAO.LaboratoryDAO;
 import com.company.Model.*;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -43,9 +42,6 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
                         resultSet.getDate("end_date") == null ? null : resultSet.getDate("start_date").toLocalDate(),
                         resultSet.getDate("deadline") == null ? null : resultSet.getDate("start_date").toLocalDate()
                 );
-
-                if (empType == EmpType.senior || empType == EmpType.manager)
-                    project.setFunds(resultSet.getFloat("funds"));
 
                 projects.add(project);
             }
@@ -137,7 +133,7 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
         ArrayList<Equipment> equipments = new ArrayList<>();
         ResultSet resultSet;
 
-        String query = "SELECT E.name, E.type, E.tech_specs, P.price\n" +
+        String query = "SELECT E.name, E.type, E.tech_specs, P.price, P.purchase_date\n" +
                 "FROM equipment AS E, purchase AS P\n" +
                 "WHERE E.code = P.equipment_code AND E.lab_code = " + laboratory.getLabCode();
 
