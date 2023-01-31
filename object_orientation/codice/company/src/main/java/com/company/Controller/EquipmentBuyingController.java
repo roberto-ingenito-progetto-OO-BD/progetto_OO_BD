@@ -8,9 +8,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class EquipmentBuyingController {
     private @FXML Label labNameLabel;
@@ -23,9 +26,11 @@ public class EquipmentBuyingController {
     private @FXML TextField priceTextField;
     private @FXML Button buyEquipmentButton;
     private @FXML Button abortOperationButton;
-    private @FXML TableView EquipmentLog;
+    private @FXML TableView<Equipment> EquipmentLog;
     private Project currentProject;
     private EquipmentRequest currentEquipmentRequest;
+
+    private BigDecimal remainingFundsValue;
 
     public EquipmentBuyingController(Project project, EquipmentRequest equipmentRequest) {
         this.currentProject = project;
@@ -35,13 +40,13 @@ public class EquipmentBuyingController {
     private @FXML void initialize() {
         // recuperare i fondi disponibili per l'acquisto dal db
         ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
-        BigDecimal remainingFundsValue = projectDAO.remainingEquipmentFunds(currentProject.getCup());
+        remainingFundsValue = projectDAO.remainingEquipmentFunds(currentProject.getCup());
 
-        System.out.println(currentProject.getFunds() - currentProject.getFunds()/2);
-        System.out.println(remainingFundsValue);
-
-        currentProject.getEquipments().forEach(equipment -> {
-            equipment.getName();
+        ArrayList<Equipment> equipments = new ArrayList<>();
+        currentProject.getLaboratories().forEach(laboratory -> {
+            if(laboratory.getLabCode() == currentEquipmentRequest.getLaboratory().getLabCode()){
+                equipments.addAll(laboratory.getEquipments());
+            }
         });
 
         // settare le label con le informazioni in ingresso
@@ -52,26 +57,44 @@ public class EquipmentBuyingController {
         labNameLabel.setText(currentEquipmentRequest.getLaboratory().getName());
         remainingFunds.setText("€" + remainingFundsValue.setScale(2, RoundingMode.UNNECESSARY));
 
-
         // caricare le informazioni della richiesta di equipaggiamento
 
         // caricare la tabella con le precedenti attrezzature acquistate dal progetto per questo laboratorio
+        EquipmentLog.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
+        EquipmentLog.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("price"));
+        EquipmentLog.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("purchaseDate"));
+        EquipmentLog.getItems().addAll(equipments);
+
     }
 
     private @FXML void abortOperation(ActionEvent actionEvent) {
     }
 
     private @FXML void buyEquipment(ActionEvent actionEvent) {
+        // controllare che sia inserito un prezzo valido
+        if(!totalPriceLabel.getText().isEmpty()){
+           Float price = Float.parseFloat(totalPriceLabel.getText());
+           if(price < remainingFundsValue.floatValue()){
+
+
+
+           } else {
+               System.out.println("non abbastanza fondi");
+               return;
+           }
+        }
     }
 
     private @FXML void updateTotalPrice(){
-        if(totalPriceLabel.getText().isEmpty()){
-            return;
+        if(!priceTextField.getText().isEmpty()){
+            Float totalPrice = Float.parseFloat(priceTextField.getText());
+            System.out.println(totalPrice);
+            totalPrice = totalPrice * currentEquipmentRequest.getQuantity();
+            totalPriceLabel.setText(totalPrice.toString());
         } else {
-            totalPriceLabel.setText("");
-            BigDecimal unitPrice = new BigDecimal(priceTextField.getText());
-            BigDecimal totalPrice = unitPrice.multiply(BigDecimal.valueOf(currentEquipmentRequest.getQuantity()));
-            totalPriceLabel.setText("Totale: €" + totalPrice);
+            if(!totalPriceLabel.getText().isEmpty()){
+                totalPriceLabel.setText("");
+            }
         }
     }
 }

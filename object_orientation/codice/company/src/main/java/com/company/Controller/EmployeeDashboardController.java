@@ -338,7 +338,7 @@ public class EmployeeDashboardController {
             );
 
             // riempie la ListView "equipmentListView"
-            for (Equipment equipment : employee.getLaboratory().getEquipment()) {
+            for (Equipment equipment : employee.getLaboratory().getEquipments()) {
                 laboratoryEquipmentListView.getItems().add(
                         equipment.getName() + ", " + equipment.getType() + ", " + equipment.getTechSpecs()
                 );
@@ -392,10 +392,9 @@ public class EmployeeDashboardController {
                     project.setContracts(
                             projectDAO.getProjectContracts(project.getCup())
                     );
-                    project.setEquipments(
-                            projectDAO.getBuyedEquipments(project)
-                    );
-
+                    project.getLaboratories().forEach(laboratory -> {
+                        projectDAO.getBuyedEquipments(project, laboratory);
+                    });
                     // per ogni contratto settare il riferimento al progetto stesso
                     project.getContracts().forEach(contract -> contract.setProject(project));
                 });

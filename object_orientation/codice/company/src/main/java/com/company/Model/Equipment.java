@@ -12,7 +12,9 @@ public class Equipment {
     private final float price;
     private final LocalDate purchaseDate;
 
-
+    public LocalDate getPurchaseDate() {
+        return purchaseDate;
+    }
 
     public Equipment(
             String name,

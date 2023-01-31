@@ -96,7 +96,7 @@
                   </VBox>
                   <HBox prefHeight="41.0" prefWidth="400.0">
                      <children>
-                        <Label contentDisplay="CENTER" text="Totale :">
+                        <Label contentDisplay="CENTER" text="Totale : €">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -104,7 +104,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="totalPriceLabel" text="200€">
+                        <Label fx:id="totalPriceLabel">
                            <font>
                               <Font size="16.0" />
                            </font>

@@ -41,7 +41,7 @@ public class Laboratory {
         return projects;
     }
 
-    public ArrayList<Equipment> getEquipment() {
+    public ArrayList<Equipment> getEquipments() {
         return equipments;
     }
 

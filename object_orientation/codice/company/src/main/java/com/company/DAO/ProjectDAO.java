@@ -30,5 +30,5 @@ public interface ProjectDAO {
      */
     ArrayList<Project> getAvailableProjects();
 
-    ArrayList<Equipment> getBuyedEquipments(Project project);
+    ArrayList<Equipment> getBuyedEquipments(Project project, Laboratory laboratory);
 }
