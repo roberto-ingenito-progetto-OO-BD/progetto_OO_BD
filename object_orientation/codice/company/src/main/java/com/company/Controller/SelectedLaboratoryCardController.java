@@ -1,6 +1,6 @@
 package com.company.Controller;
 
-import com.company.GUI.eq;
+import com.company.GUI.EquipmentRequestCard;
 import com.company.GUI.ProjectCard;
 import com.company.Model.*;
 import com.company.PostgresDAO.LaboratoryDAOImplementation;

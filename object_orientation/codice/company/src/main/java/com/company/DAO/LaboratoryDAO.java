@@ -13,6 +13,8 @@ public interface LaboratoryDAO {
 
     ArrayList<Equipment> getEquipment(Laboratory laboratory, EmpType empType);
 
+    void equipmentRequest(EquipmentRequest equipmentRequest);
+
     /**
      * @param labCode    Laboratorio che vuole abbandonare il progetto
      * @param projectCUP Progetto che vuole abbandonare il laboratorio

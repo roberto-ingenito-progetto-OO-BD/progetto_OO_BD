@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.Controller.EquipmentRequestCardController">
+   <columnConstraints>
+      <ColumnConstraints maxWidth="-Infinity" minWidth="-Infinity" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="70.0" vgrow="SOMETIMES" />
+      <RowConstraints fillHeight="false" />
+   </rowConstraints>
+   <children>
+      <StackPane style="-fx-background-color: #3c6e71;">
+         <children>
+            <HBox fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" spacing="20.0">
+               <children>
+                  <Label fx:id="selectedLaboratoryName" contentDisplay="CENTER" text="nome laboratorio" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label contentDisplay="CENTER" text="-" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="selectedProjectName" contentDisplay="CENTER" text="nome progetto" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </StackPane>
+      <VBox alignment="TOP_CENTER" spacing="20.0" GridPane.rowIndex="1">
+         <children>
+            <Label contentDisplay="CENTER" text="Richiedi attrezzatura" textFill="#3c6e71">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="TOP_CENTER" spacing="30.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308">
+                     <children>
+                        <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Nome prodotto">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="10.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="nameField" maxWidth="1.7976931348623157E308" />
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox maxWidth="1.7976931348623157E308">
+                     <children>
+                        <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Tipo">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="10.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="typeField" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </TextField>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308">
+                     <children>
+                        <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Quantità">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="10.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="quantityField" maxWidth="1.7976931348623157E308" />
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+            <VBox maxWidth="1.7976931348623157E308">
+               <children>
+                  <Label contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Specifiche tecniche">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                  </Label>
+                  <TextArea fx:id="techSpecsField" maxWidth="1.7976931348623157E308" />
+               </children>
+            </VBox>
+            <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="error label" textAlignment="CENTER" textFill="RED" visible="false" wrapText="true" />
+            <FlowPane alignment="CENTER" columnHalignment="CENTER" maxWidth="1.7976931348623157E308" prefWidth="400.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onRequestClick" prefHeight="35.0" prefWidth="171.0" style="-fx-background-color: #3c6e71;" text="Richiedi" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <FlowPane.margin>
+                        <Insets right="30.0" />
+                     </FlowPane.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onCancelClick" prefHeight="35.0" prefWidth="171.0" style="-fx-background-color: #A63C06;" text="Annulla" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </FlowPane>
+         </children>
+         <GridPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </GridPane.margin>
+      </VBox>
+   </children>
+</GridPane>

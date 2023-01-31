@@ -1,7 +1,5 @@
 package com.company.Model;
 
-import java.util.UUID;
-
 public class EquipmentRequest {
 
     private String code;
@@ -10,14 +8,19 @@ public class EquipmentRequest {
     private String type;
     private int quantity;
     private Laboratory laboratory;
+    private Project project;
 
-
-    public EquipmentRequest(String code, String name, String specs, String type, int quantity) {
-        this.code = code;
+    /// CONSTRUCTOR
+    public EquipmentRequest(String name, String specs, String type, int quantity) {
         this.name = name;
         this.specs = specs;
         this.type = type;
         this.quantity = quantity;
+    }
+
+    /// GETTER
+    public Project getProject() {
+        return project;
     }
 
     public String getCode() {
@@ -44,8 +47,17 @@ public class EquipmentRequest {
         return laboratory;
     }
 
+    /// SETTER
     public void setLaboratory(Laboratory laboratory) {
         this.laboratory = laboratory;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
 }
