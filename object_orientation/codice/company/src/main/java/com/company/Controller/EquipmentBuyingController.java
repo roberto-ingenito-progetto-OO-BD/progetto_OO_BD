@@ -2,7 +2,6 @@ package com.company.Controller;
 
 import com.company.Model.*;
 import com.company.PostgresDAO.ProjectDAOImplementation;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,6 +15,9 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Controller della finestra che permette di acquistare l'attrezzatura
+ */
 public class EquipmentBuyingController {
     private final Project currentProject;
     private final EquipmentRequest currentEquipmentRequest;
@@ -41,12 +43,25 @@ public class EquipmentBuyingController {
 
 
     /// CONSTRUCTOR
+
+    /**
+     * Instantiates a new Equipment buying controller.
+     *
+     * @param project          the project
+     * @param equipmentRequest the equipment request
+     */
     public EquipmentBuyingController(Project project, EquipmentRequest equipmentRequest) {
         this.currentProject = project;
         this.currentEquipmentRequest = equipmentRequest;
     }
 
     /// FXML METHODS
+
+    /**
+     * Funzione che si avvia subito dopo il costruttore <br/>
+     * Carica i fondi del progetto selezionato, imposta i testi delle label, carica l'attrezzatura già presente nel laboratorio,
+     * imposta le tabelle.
+     */
     private @FXML void initialize() {
         // recuperare i fondi disponibili per l'acquisto dal db
         ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
@@ -77,12 +92,21 @@ public class EquipmentBuyingController {
 
     }
 
+    /**
+     * Funzione che viene eseguita al click del pulsante "Annulla" <br/>
+     * Annulla l'acquisto dell'attrezzatura richiesta e torna alla finestra precedente
+     */
     private @FXML void abortOperation() {
         Stage currentStage = (Stage) abortOperationButton.getScene().getWindow();
         currentStage.close();
     }
 
-    private @FXML void buyEquipment(ActionEvent actionEvent) {
+
+    /**
+     * Funzione che viene eseguita al click del pulsante "Conferma" <br/>
+     * Esegue l'inserimento dell'attrezzatura nel database, successivamente aggiorna il model
+     */
+    private @FXML void buyEquipment() {
         ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
         ArrayList<Equipment> newEquipments = new ArrayList<>();
 

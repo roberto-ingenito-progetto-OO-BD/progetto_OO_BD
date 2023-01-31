@@ -33,13 +33,21 @@ public class ProjectSalariedDashboardController {
     private @FXML Label roleLabel;
 
     /// CONSTRUCTOR
+
+    /**
+     * @param employee Impiegato salariato a progetto loggato
+     */
     public ProjectSalariedDashboardController(ProjectSalaried employee) {
         this.employee = employee;
     }
 
     /// FXML METHODS
-    @FXML
-    public void initialize() {
+
+    /**
+     * Funzione che viene eseguita dopo il costruttore <br/>
+     * Imposta le tabelle e le varie label della schermata
+     */
+    private @FXML void initialize() {
         userNameLabel.setText(employee.getFullName());
         roleLabel.setText(employee.getRole());
 
@@ -65,22 +73,32 @@ public class ProjectSalariedDashboardController {
         });
     }
 
-    @FXML
-    private void onLogOut() {
+    private @FXML void onLogOut() {
         Stage oldStage = (Stage) userNameLabel.getScene().getWindow();
         LoginController.logOut(oldStage);
     }
 
+    /**
+     * Funzione che viene eseguita quando viene cliccata una riga della tabella "currentContractsTable"
+     */
     private @FXML void getCurrentContractSelectedRow() {
         displayRow(currentContractsTable);
     }
 
+    /**
+     * Funzione che viene eseguita quando viene cliccata una riga della tabella "oldContractsTable"
+     */
     private @FXML void getOldContractSelectedRow() {
         displayRow(oldContractsTable);
     }
 
     /// METHODS
-    public void displayRow(@NotNull TableView<Contract> table) {
+
+    /**
+     * Mostra la schermata {@link ProjectCard} in base al progetto selezionato dalla tabella
+     * @param table Tabella dall'elemento cliccato
+     */
+    private void displayRow(@NotNull TableView<Contract> table) {
         ProjectCard projectCard;
 
         Stage newStage;

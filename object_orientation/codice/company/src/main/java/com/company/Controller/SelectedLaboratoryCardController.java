@@ -14,6 +14,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+/**
+ * Controller della schermata che fornisce informazioni riguardo i laboratori di cui l'impiegato loggato è manager
+ */
 public class SelectedLaboratoryCardController {
     final @NotNull Laboratory laboratory;
     final @NotNull ArrayList<Project> referentProjects;
@@ -32,6 +35,11 @@ public class SelectedLaboratoryCardController {
     private @FXML TableView<Project> projectsTable;
 
     /// CONSTRUCTOR
+
+    /**
+     * @param selectedLaboratory Laboratorio selezionato
+     * @param referentProjects   Progetti in cui l'impiegato è referente
+     */
     public SelectedLaboratoryCardController(
             @NotNull Laboratory selectedLaboratory,
             @NotNull ArrayList<Project> referentProjects
@@ -41,6 +49,11 @@ public class SelectedLaboratoryCardController {
     }
 
     /// FXML METHODS
+
+    /**
+     * Funzione che viene eseguita dopo il costruttore <br/>
+     * Imposta le tabelle e le varie label
+     */
     private @FXML void initialize() {
         laboratoryNameLabel.setText(laboratory.getName());
 
@@ -69,7 +82,8 @@ public class SelectedLaboratoryCardController {
 
     /**
      * Funzione che viene eseguita quando viene cliccata una riga
-     * della tabella "workingProjectsTable"
+     * della tabella "workingProjectsTable" <br/>
+     * Apre un Alert Dialog che consente di scegliere se lasciare il progetto o richiedere attrezzatura al progetto selezionato<br/>
      */
     private @FXML void onWorkingProjectClick() {
         ButtonType leaveProjectButton = new ButtonType("Lascia progetto");
@@ -102,7 +116,8 @@ public class SelectedLaboratoryCardController {
 
     /**
      * Funzione che viene eseguita quando viene cliccata una riga
-     * della tabella "projectsTable"
+     * della tabella "projectsTable", tabella in cui sono mostrati i progetti a cui è possibile partecipare<br/>
+     * Apre un Alert Dialog che permette di scegliere se confermare oppure no la partecipazione al progetto
      */
     private @FXML void onProjectClick() {
         ButtonType yesButton = new ButtonType("Si", ButtonBar.ButtonData.YES);
@@ -136,6 +151,11 @@ public class SelectedLaboratoryCardController {
 
 
     /// METHODS
+
+    /**
+     * Esegue la query sul database e aggiorna il model
+     * @param selectedProject Progetto al quale il laboratorio vuole partecipare
+     */
     private void joinProject(Project selectedProject) {
         // Carico le ulteriori informazioni del progetto selezionato
         ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
@@ -190,6 +210,7 @@ public class SelectedLaboratoryCardController {
     }
 
     /**
+     * Esegue la query sul database e aggiorna il model
      * @param selectedProject Progetto che il laboratorio intende lasciare
      */
     private void leaveProject(Project selectedProject) {
@@ -248,6 +269,10 @@ public class SelectedLaboratoryCardController {
         return projects;
     }
 
+    /**
+     * Apre una schermata dove sono presenti dei campi che è possibile compilare per effettuare la richiesta di attrezzatura
+     * @param selectedProject Progetto selezionato al quale si vuole chiedere attrezzatura
+     */
     private void showEquipmentRequestCard(Project selectedProject) {
         EquipmentRequestCard equipmentRequestCard = new EquipmentRequestCard(laboratory, selectedProject);
         Scene newScene = equipmentRequestCard.getScene();

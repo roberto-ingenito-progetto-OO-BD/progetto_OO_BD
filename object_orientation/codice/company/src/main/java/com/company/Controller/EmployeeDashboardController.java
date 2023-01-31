@@ -78,7 +78,7 @@ public class EmployeeDashboardController {
 
 
     /**
-     * Funzione che si avvia all'avvio subito dopo il controller <br/>
+     * Funzione che si avvia subito dopo il costruttore <br/>
      * Carica le schermate in base al tipo dell'impiegato loggato
      */
     private @FXML void initialize() {

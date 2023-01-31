@@ -47,6 +47,11 @@ public class ProjectCardController {
     }
 
     /// FXML METHODS
+
+    /**
+     * Funzione che viene eseguita dopo il costruttore <br/>
+     * Imposta le varie label della schermata e imposta gli elementi visibili solo ad un determinato tipo di impiegato
+     */
     private @FXML void initialize() {
         // imposta tutte le label
         cupLabel.setText(project.getCup());
@@ -96,6 +101,8 @@ public class ProjectCardController {
     }
 
     /**
+     * Funzione che viene eseguita quando viene cliccato il pulsante "Concludi" <br/>
+     * Termina il progetto selezionato sul database e aggiorna il model <br/>
      * Il pulsante è visibile solo ad un impiegato Manager
      */
     private @FXML void endProject() {

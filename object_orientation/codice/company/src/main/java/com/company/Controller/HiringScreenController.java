@@ -16,6 +16,9 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Controller della scherma che permette di assumere un impiegato salariato a progetto
+ */
 public class HiringScreenController {
     private final Project currentProject;
     private final Employee currentEmployee;
@@ -44,12 +47,23 @@ public class HiringScreenController {
     private @FXML TableColumn<ProjectSalaried, String> hiringFirstNameColumn;
 
     /// CONSTRUCTOR
+
+    /**
+     * @param project Progetto che vuole assumere
+     * @param employee Impiegato loggato nell'applicazione
+     */
     public HiringScreenController(Project project, Employee employee) {
         this.currentProject = project;
         this.currentEmployee = employee;
     }
 
     /// FXML METHODS
+
+    /**
+     * Funzione che viene eseguita subito dopo il costruttore <br/>
+     * Prende dal database i fondi rimanenti per assumere un impiegato e lo mostra nella label "remainingFunds" <br/>
+     * Imposta le colonne delle tabelle presenti nella schermata e le riempie prendendo i dati appositi dal database
+     */
     private @FXML void initialize() {
         ProjectSalariedDAOImplementation projectSalariedDAO = new ProjectSalariedDAOImplementation();
         ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
@@ -102,6 +116,9 @@ public class HiringScreenController {
 
     /**
      * Funzione che viene eseguita quando viene cliiccato il pulsante "Assumi"
+     * Se è stato selezionato un project salaried dalla tabella, si utilizzano i suoi valori per l'assunzione, bisognerà
+     * inserire solo la paga e la scadenza del contratto<br/>
+     * Inserisce l'impiegato assunto nel database, successivamente aggiorna il model
      */
     private @FXML void hireProjectSalaried() {
         ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
@@ -142,7 +159,7 @@ public class HiringScreenController {
     }
 
     /**
-     * Funzione che viene eseguita quando viene cliccato il bottone "Cancella"
+     * Funzione che viene eseguita quando viene cliccato il bottone "Cancella" <br/>
      * Cancella tutti i valori nei field
      */
     private @FXML void deleteTextFields() {

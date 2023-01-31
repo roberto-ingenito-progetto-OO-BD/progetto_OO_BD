@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 
+/**
+ * Controller della schermata di Login
+ */
 public class LoginController {
     /// FXML Objects
     private @FXML TextField passwordField;
@@ -26,6 +29,12 @@ public class LoginController {
     private @FXML Label incorrectCredentialsLabel;
 
     /// FXML METHODS
+
+    /**
+     * Funzione che viene eseguita quando viene cliccato il pulsante "Login". <br/>
+     * In base al bottone selezionato tra "Laboratorio" e "Progetto", chiama la funzione apposita per loggare
+     * nell'uno o nell'altro
+     */
     private @FXML void signIn() {
         if (projectButton.isSelected()) {
             projectLogin();
@@ -34,6 +43,10 @@ public class LoginController {
         }
     }
 
+    /**
+     * Funzione che viene attivata quando viene cliccato il pulsante "Progetto" <br/>
+     * Cambia il colore del pulsante "Laboratorio" cosi da risultare deselezionato
+     */
     private @FXML void toggleProjectButton() {
         // se sto portando il bottone a false, allora lo riporto a true
         if (!projectButton.isSelected()) {
@@ -47,6 +60,10 @@ public class LoginController {
         laboratoryButton.setStyle("-fx-background-color: #C2C2C2");
     }
 
+    /**
+     * Funzione che viene attivata quando viene cliccato il pulsante "Laboratorio" <br/>
+     * Cambia il colore del pulsante "Progetto" cosi da risultare deselezionato
+     */
     private @FXML void toggleLaboratoryButton() {
         // se sto portando il bottone a false, allora lo riporto a true
         if (!laboratoryButton.isSelected()) {
@@ -61,6 +78,12 @@ public class LoginController {
     }
 
     /// METHODS
+
+    /**
+     * Funzione che viene eseguita quando è selezionato il pulsante "Progetti" come metodo di login <br/>
+     * Effettua il controllo delle credenziali presenti nel database <br/>
+     * Carica le informazioni dell'impiegato loggato e mostra la finestra della dashboard per gli impiegati salariati a progetto
+     */
     private void projectLogin() {
         ProjectSalariedDAOImplementation projectSalariedDAO;
         ProjectSalaried loggedProjectSalaried;
@@ -112,6 +135,15 @@ public class LoginController {
         }
     }
 
+    /**
+     * Funzione che viene eseguita quando è selezionato il pulsante "Laboratorio" come metodo di login <br/>
+     * Effettua il controllo delle credenziali presenti nel database <br/>
+     * Carica tutte le informazioni dell'impiegato loggato e in base al tipo, carica ulteriori informazioni <br/>
+     * Se è Senior, carica i progetti in cui è referente e carica i laboratori in cui è manager <br/>
+     * Se è Manager, carica i progetti in cui è supervisore <br/>
+     *
+     * Infine mostra la finestra della dashboard per gli impiegati stipendiati
+     */
     private void laboratoryLogin() {
         EmployeeDAOImplementation employeeDAO;
         LaboratoryDAOImplementation laboratoryDAO;
@@ -229,8 +261,8 @@ public class LoginController {
 
 
     /**
-     * @param projects <p> Per ogni progetto, imposta il referente, il manager e i laboratori che vi partecipano. </p>
-     *                 <p> Serviranno nella schermata di visualizzazione progetto </p>
+     * @param projects Per ogni progetto, imposta il referente, il manager e i laboratori che vi partecipano. <br/>
+     *                 Serviranno nella schermata di visualizzazione progetto
      */
     private void fillProjectsData(ArrayList<Project> projects) {
         ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
@@ -248,6 +280,13 @@ public class LoginController {
     }
 
     /// STATIC METHODS
+
+    /**
+     * Al click del pulsante "LogOut" in basso a sinistra della dashboard, viene chiuso lo stage corrente e aperto
+     * un nuovo stage nella schermata login
+     *
+     * @param oldStage Stage che verrà chiuso
+     */
     public static void logOut(Stage oldStage) {
         Stage newStage;
         Login loginGUI = new Login();
