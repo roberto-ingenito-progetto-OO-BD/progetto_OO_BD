@@ -6,6 +6,7 @@ import com.company.Model.Project;
 import com.company.Model.ProjectSalaried;
 import com.company.PostgresDAO.ProjectDAOImplementation;
 import com.company.PostgresDAO.ProjectSalariedDAOImplementation;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;

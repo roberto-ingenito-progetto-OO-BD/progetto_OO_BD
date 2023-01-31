@@ -131,13 +131,13 @@ public class EmployeeDashboardController {
             // imposta la nuova finistra come "modal",
             // quindi blocca tutti gli eventi delle altre finestre finché questa non viene chiusa
             newStage.initModality(Modality.APPLICATION_MODAL);
-              newStage.showAndWait();
+            newStage.showAndWait();
 
-                if (employee.getLaboratory() != null) {
-                    labWorkingProjectsTable.getItems().clear();
-                    labWorkingProjectsTable.getItems().addAll(employee.getLaboratory().getProjects());
-                    labWorkingProjectsTable.refresh();
-                }
+            if (employee.getLaboratory() != null) {
+                labWorkingProjectsTable.getItems().clear();
+                labWorkingProjectsTable.getItems().addAll(employee.getLaboratory().getProjects());
+                labWorkingProjectsTable.refresh();
+            }
         }
     }
 
@@ -198,6 +198,10 @@ public class EmployeeDashboardController {
                 newStage.show();
             }
 
+            // se il progetto È concluso, il pulsante per assumere un impiegato viene disabilitato
+            // viene abilitato se NON È concluso
+            hireProjectSalaried.setDisable(selectedProject.getEndDate() != null);
+
             // carica tutti gli equipment request del progetto selezionato nella tabella di equipment
             // riempie la tabella delle richieste
             equipmentRequestTable.getItems().addAll(selectedProject.getEquipmentRequests());
@@ -240,7 +244,7 @@ public class EmployeeDashboardController {
         Project selectedProject = projectsTable.getSelectionModel().getSelectedItem();
         EquipmentRequest selectedEquipmentRequest = equipmentRequestTable.getSelectionModel().getSelectedItem();
 
-        if(selectedProject != null && selectedEquipmentRequest != null){
+        if (selectedProject != null && selectedEquipmentRequest != null) {
             EquipmentBuyingScreen equipmentBuyingScreen = new EquipmentBuyingScreen();
             Scene scene = equipmentBuyingScreen.getScene(selectedProject, selectedEquipmentRequest);
             Stage currentStage = (Stage) projectsTable.getScene().getWindow();
@@ -273,9 +277,8 @@ public class EmployeeDashboardController {
         tabPane.getSelectionModel().select(tab);
     }
 
-    private void showSelectedLaboratory(Laboratory laboratory)  {
+    private void showSelectedLaboratory(Laboratory laboratory) {
         SelectedLaboratoryCard selectedLaboratoryCard = new SelectedLaboratoryCard();
-
         Scene scene = selectedLaboratoryCard.getScene(laboratory, ((Senior) employee).getProjects());
 
         Stage currentStage = (Stage) tabPane.getScene().getWindow();

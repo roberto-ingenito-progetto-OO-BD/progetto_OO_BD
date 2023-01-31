@@ -268,12 +268,13 @@ public class ProjectDAOImplementation implements ProjectDAO {
             while (rs.next()) {
                 // per ogni richiesta salvo anche le informazioni del laboratorio che ne ha fatto richiesta
                 equipmentRequest = new EquipmentRequest(
-                        rs.getString("code"),
                         rs.getString("name"),
                         rs.getString("specs"),
                         rs.getString("type"),
                         rs.getInt("quantity")
                 );
+
+                equipmentRequest.setCode(rs.getString("code"));
 
                 laboratory = new Laboratory(
                         rs.getInt("lab_code"),

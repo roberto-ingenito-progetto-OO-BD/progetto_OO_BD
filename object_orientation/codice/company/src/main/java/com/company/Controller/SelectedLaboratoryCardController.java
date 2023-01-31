@@ -1,14 +1,16 @@
 package com.company.Controller;
 
-import com.company.Model.EmpType;
-import com.company.Model.Employee;
-import com.company.Model.Laboratory;
-import com.company.Model.Project;
+import com.company.GUI.eq;
+import com.company.GUI.ProjectCard;
+import com.company.Model.*;
 import com.company.PostgresDAO.LaboratoryDAOImplementation;
 import com.company.PostgresDAO.ProjectDAOImplementation;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -71,31 +73,31 @@ public class SelectedLaboratoryCardController {
      * della tabella "workingProjectsTable"
      */
     private @FXML void onWorkingProjectClick() {
-        ButtonType yesButton = new ButtonType("Si", ButtonBar.ButtonData.YES);
+        ButtonType leaveProjectButton = new ButtonType("Lascia progetto");
+        ButtonType equipmentRequestButton = new ButtonType("Richiedi attrezzatura");
+
         Alert alert = new Alert(
                 Alert.AlertType.NONE,
                 "",
-                ButtonType.NO,
-                yesButton
+                equipmentRequestButton,
+                leaveProjectButton
         );
         alert.setTitle("Attenzione");
-
         Project selectedProject = workingProjectsTable.getSelectionModel().getSelectedItem();
         workingProjectsTable.getSelectionModel().clearSelection();
 
         // se non è stato selezionato nulla, termina la funzione
         if (selectedProject == null) return;
 
-        alert.setContentText("Vuoi lasciare il progetto \""
-                + selectedProject.getName()
-                + "\"?"
-        );
-
+// TODO: Se clicco sul pulsante X per chiuedere la finestra, non funziona
         // avvia il dialog e aspetta il click di uno dei pulsanti "no" o "si"
         // oppure aspetta la chiusura
         alert.showAndWait();
-
-        if (alert.getResult() == yesButton) leaveProject(selectedProject);
+        if (alert.getResult() == leaveProjectButton)
+            leaveProject(selectedProject);
+        else if (alert.getResult() == equipmentRequestButton) {
+            showEquipmentRequestCard(selectedProject);
+        }
     }
 
 
@@ -245,5 +247,26 @@ public class SelectedLaboratoryCardController {
         }
 
         return projects;
+    }
+
+    private void showEquipmentRequestCard(Project selectedProject) {
+        EquipmentRequestCard equipmentRequestCard = new EquipmentRequestCard(laboratory, selectedProject);
+        Scene newScene = equipmentRequestCard.getScene();
+
+        Stage newStage = new Stage();
+        newStage.setScene(newScene);
+        newStage.setResizable(false);
+        newStage.initModality(Modality.APPLICATION_MODAL);
+        newStage.showAndWait();
+
+        EquipmentRequest equipmentRequest = (EquipmentRequest) newStage.getUserData();
+        if (equipmentRequest != null)
+            referentProjects.stream()
+                    .filter(project ->
+                            project.getCup().equals(equipmentRequest.getProject().getCup())
+                    )
+                    .findFirst()
+                    .ifPresent(project -> project.getEquipmentRequests().add(equipmentRequest));
+
     }
 }

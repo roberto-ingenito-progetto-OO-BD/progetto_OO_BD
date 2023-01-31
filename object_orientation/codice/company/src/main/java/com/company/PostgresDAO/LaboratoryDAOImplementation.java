@@ -4,8 +4,10 @@ import com.company.Connection.DatabaseConnection;
 import com.company.DAO.LaboratoryDAO;
 import com.company.Model.*;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -171,7 +173,7 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
 
         try {
             db = DatabaseConnection.baseEmpInstance(empType);
-            int updatedRowNumber =  db.connection.createStatement().executeUpdate(query);
+            int updatedRowNumber = db.connection.createStatement().executeUpdate(query);
             db.connection.close();
 
             return updatedRowNumber;
@@ -194,4 +196,27 @@ public class LaboratoryDAOImplementation implements LaboratoryDAO {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void equipmentRequest(EquipmentRequest equipmentRequest) {
+        DatabaseConnection db;
+        String query = "INSERT INTO equipment_request (code, name, specs, type, quantity, CUP, lab_code) " +
+                "VALUES (DEFAULT, '" + equipmentRequest.getName() + "', '" + equipmentRequest.getSpecs() + "', '"
+                + equipmentRequest.getType() + "', " + equipmentRequest.getQuantity() + ", '"
+                + equipmentRequest.getProject().getCup() + "', " + equipmentRequest.getLaboratory().getLabCode() + ")";
+
+        try {
+            db = DatabaseConnection.baseEmpInstance(EmpType.senior);
+            Statement statement = db.connection.createStatement();
+            statement.execute(query, Statement.RETURN_GENERATED_KEYS);
+
+            if (statement.getGeneratedKeys().next())
+                equipmentRequest.setCode(statement.getGeneratedKeys().getString("code"));
+
+            db.connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
