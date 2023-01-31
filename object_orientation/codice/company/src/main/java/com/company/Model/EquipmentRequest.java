@@ -1,5 +1,7 @@
 package com.company.Model;
 
+import java.util.UUID;
+
 public class EquipmentRequest {
 
     private String code;

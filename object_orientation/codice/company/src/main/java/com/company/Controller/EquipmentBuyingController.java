@@ -13,17 +13,20 @@ import javafx.stage.Stage;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class EquipmentBuyingController {
     private final Project currentProject;
     private final EquipmentRequest currentEquipmentRequest;
-
     private BigDecimal remainingFundsValue;
+    private float totalPrice;
 
     /// FXML OBJECTS
     private @FXML Label labNameLabel;
+    private @FXML Label errorLabel;
     private @FXML Label selectedProjectName;
     private @FXML Label remainingFunds;
     private @FXML Label equipmentNameLabel;
@@ -82,16 +85,53 @@ public class EquipmentBuyingController {
     }
 
     private @FXML void buyEquipment(ActionEvent actionEvent) {
+        ProjectDAOImplementation projectDAO = new ProjectDAOImplementation();
+        ArrayList<Equipment> newEquipments = new ArrayList<>();
+
         // controllare che sia inserito un prezzo valido
         if (!totalPriceLabel.getText().isEmpty()) {
-            float price = Float.parseFloat(totalPriceLabel.getText());
-            if (price < remainingFundsValue.floatValue()) {
+            float unitPrice = Float.parseFloat(priceTextField.getText());
+            errorLabel.setText("");
+            if (totalPrice < remainingFundsValue.floatValue()) {
+                errorLabel.setText("");
+                try {
+                        projectDAO.buyEquipment(currentProject, currentEquipmentRequest, unitPrice);
+                        // aggiornare il model
 
+                        for (int i = 0; i < currentEquipmentRequest.getQuantity(); i++){
+                            newEquipments.add(
+                                    new Equipment(
+                                            currentEquipmentRequest.getName(),
+                                            currentEquipmentRequest.getType(),
+                                            currentEquipmentRequest.getSpecs(),
+                                            unitPrice,
+                                            LocalDate.now()
+                                    )
+                            );
+                        }
+
+                        currentProject.getEquipments().addAll(newEquipments);
+                        currentProject.getLaboratories().forEach(laboratory -> {
+                            if(laboratory.getLabCode() == currentEquipmentRequest.getLaboratory().getLabCode()){
+                                laboratory.getEquipments().addAll(newEquipments);
+                            }
+                        });
+                             // aggiornare la tabella e la label
+                            EquipmentLog.getItems().addAll(newEquipments);
+                            remainingFundsValue = projectDAO.remainingEquipmentFunds(currentProject.getCup());
+                            remainingFunds.setText("€" + remainingFundsValue.setScale(2, RoundingMode.UNNECESSARY));
+                            buyEquipmentButton.setDisable(true);
+                            currentProject.getEquipmentRequests().remove(currentEquipmentRequest);
+                } catch (Exception err) {
+                    throw new RuntimeException(err);
+                }
 
             } else {
-                System.out.println("non abbastanza fondi");
+                errorLabel.setText("Non abbastanza fondi");
                 return;
             }
+        } else {
+            errorLabel.setText("Nessun prezzo stabilito");
         }
     }
 
@@ -100,9 +140,9 @@ public class EquipmentBuyingController {
      */
     private @FXML void updateTotalPrice() {
         if (!priceTextField.getText().isEmpty()) {
-            float totalPrice = Float.parseFloat(priceTextField.getText());
+            totalPrice = Float.parseFloat(priceTextField.getText());
             totalPrice = totalPrice * currentEquipmentRequest.getQuantity();
-            totalPrice = Float.parseFloat(new DecimalFormat(".##").format(totalPrice));
+            // totalPrice = Float.parseFloat(new DecimalFormat(",##").format(totalPrice));
             totalPriceLabel.setText(String.valueOf(totalPrice));
         } else {
             totalPriceLabel.setText("");

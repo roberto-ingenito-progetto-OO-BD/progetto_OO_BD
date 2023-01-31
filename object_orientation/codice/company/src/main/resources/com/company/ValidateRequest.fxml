@@ -111,7 +111,16 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="36.0" prefWidth="400.0" spacing="30.0">
+                  <HBox alignment="CENTER" prefHeight="18.0" prefWidth="400.0">
+                     <children>
+                        <Label fx:id="errorLabel" textFill="RED">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="48.0" prefWidth="400.0" spacing="30.0">
                      <children>
                         <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="62.0" prefWidth="149.0">
                            <children>
@@ -139,7 +148,7 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <FlowPane alignment="CENTER" columnHalignment="CENTER" maxWidth="1.7976931348623157E308" prefWidth="400.0">
+                  <FlowPane alignment="CENTER" columnHalignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="16.0" prefWidth="400.0">
                      <children>
                         <Button fx:id="buyEquipmentButton" mnemonicParsing="false" onAction="#buyEquipment" prefHeight="35.0" prefWidth="171.0" style="-fx-background-color: #3c6e71;" text="Conferma" textFill="WHITE">
                            <font>
