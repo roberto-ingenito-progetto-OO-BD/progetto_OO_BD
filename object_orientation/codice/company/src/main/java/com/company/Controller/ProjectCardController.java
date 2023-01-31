@@ -74,12 +74,7 @@ public class ProjectCardController {
         // soltanto chi è scientific Manager (Senior) può vedere il butto
         if (employee != null) {
             switch (employee.getType()) {
-                case junior, middle:
-                    break;
-                case senior:
-                    // TODO: cambiare nome della tabella
-                    if (sourceTable.getId().equals("NOME TABELLA DEI PROGETTI IN CUI IL SENIOR È MANAGER"))
-                        takePartButton.setVisible(true);
+                case junior, middle, senior:
                     break;
                 case manager:
                     // il pulsante per terminare un progetto può essere visibile solo se
@@ -100,13 +95,6 @@ public class ProjectCardController {
 
 
     }
-
-    // TODO: implementare funzione
-    //  serve il laboratorio
-    private @FXML void projectTakePart() {
-
-    }
-
 
     /**
      * Il pulsante è visibile solo ad un impiegato Manager

@@ -272,10 +272,23 @@ public class EmployeeDashboardController {
             currentStage.hide();
             newStage.showAndWait();
 
+            // aggiorno nel model la list view "laboratoryEquipmentListView"
+            // dato che il senior che acquista l'attrezzatura per il laboratorio X, ci potrebbe lavorare, dovrà quindi
+            // visualizzare la nuova attrezzatura nella tab "Laboratorio"
+            if (employee.getLaboratory() != null && employee.getLaboratory().getLabCode() == selectedEquipmentRequest.getLaboratory().getLabCode()) {
+                laboratoryEquipmentListView.getItems().clear();
+                for (Equipment equipment : selectedProject.getEquipments()) {
+                    laboratoryEquipmentListView.getItems().add(
+                            equipment.getName() + ", " + equipment.getType() + ", " + equipment.getTechSpecs()
+                    );
+                }
+                laboratoryEquipmentListView.refresh();
+            }
+
             // aggiorna la tabella delle richieste una volta che la pagina di buy equipment viene chiusa
-            projectsTable.getSelectionModel().clearSelection();
             equipmentRequestTable.getItems().clear();
             hiredProjectSalariedTable.getItems().clear();
+            projectsTable.getSelectionModel().clearSelection();
             currentStage.show();
         }
     }

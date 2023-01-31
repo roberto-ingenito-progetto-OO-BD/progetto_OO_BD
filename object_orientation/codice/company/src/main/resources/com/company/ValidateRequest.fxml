@@ -183,7 +183,7 @@
                     <Font name="System Bold" size="16.0"/>
                 </font>
             </Label>
-            <TableView fx:id="EquipmentLog" maxHeight="1.7976931348623157E308" maxWidth="-Infinity"
+            <TableView fx:id="equipmentLog" maxHeight="1.7976931348623157E308" maxWidth="-Infinity"
                        minWidth="-Infinity" prefWidth="360.0" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn prefWidth="115.0" text="Nome"/>

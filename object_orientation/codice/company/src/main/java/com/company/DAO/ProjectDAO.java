@@ -1,7 +1,6 @@
 package com.company.DAO;
 
 import com.company.Model.*;
-import com.company.PostgresDAO.ProjectDAOImplementation;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

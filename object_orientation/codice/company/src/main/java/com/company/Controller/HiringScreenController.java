@@ -74,7 +74,6 @@ public class HiringScreenController {
 
         hiringTable.getItems().addAll(allProjectSalaried);
 
-        // TODO: non funziona bene
         // se l'impiegato è già assunto, colorare la riga di rosso
         hiringTable.setRowFactory(projectSalariedTableView -> new TableRow<>() {
             @Override
@@ -138,9 +137,7 @@ public class HiringScreenController {
             throw new RuntimeException(err);
         }
 
-        // TODO chiudere finestra - controllare che la finestra precedente non si chiuda
         Stage currentStage = (Stage) hireButton.getScene().getWindow();
-
         currentStage.close();
     }
 

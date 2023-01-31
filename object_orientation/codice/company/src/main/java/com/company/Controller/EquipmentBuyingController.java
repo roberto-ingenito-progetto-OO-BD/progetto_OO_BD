@@ -37,7 +37,7 @@ public class EquipmentBuyingController {
     private @FXML Button buyEquipmentButton;
     private @FXML Button abortOperationButton;
 
-    private @FXML TableView<Equipment> EquipmentLog;
+    private @FXML TableView<Equipment> equipmentLog;
 
 
     /// CONSTRUCTOR
@@ -70,10 +70,10 @@ public class EquipmentBuyingController {
         // caricare le informazioni della richiesta di equipaggiamento
 
         // caricare la tabella con le precedenti attrezzature acquistate dal progetto per questo laboratorio
-        EquipmentLog.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
-        EquipmentLog.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("price"));
-        EquipmentLog.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("purchaseDate"));
-        EquipmentLog.getItems().addAll(equipments);
+        equipmentLog.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
+        equipmentLog.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("price"));
+        equipmentLog.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("purchaseDate"));
+        equipmentLog.getItems().addAll(equipments);
 
     }
 
@@ -93,33 +93,34 @@ public class EquipmentBuyingController {
             if (totalPrice < remainingFundsValue.floatValue()) {
                 errorLabel.setText("");
                 try {
-                        projectDAO.buyEquipment(currentProject, currentEquipmentRequest, unitPrice);
-                        // aggiornare il model
+                    projectDAO.buyEquipment(currentProject, currentEquipmentRequest, unitPrice);
 
-                        for (int i = 0; i < currentEquipmentRequest.getQuantity(); i++){
-                            newEquipments.add(
-                                    new Equipment(
-                                            currentEquipmentRequest.getName(),
-                                            currentEquipmentRequest.getType(),
-                                            currentEquipmentRequest.getSpecs(),
-                                            unitPrice,
-                                            LocalDate.now()
-                                    )
-                            );
+                    // aggiornare il model
+                    for (int i = 0; i < currentEquipmentRequest.getQuantity(); i++) {
+                        newEquipments.add(
+                                new Equipment(
+                                        currentEquipmentRequest.getName(),
+                                        currentEquipmentRequest.getType(),
+                                        currentEquipmentRequest.getSpecs(),
+                                        unitPrice,
+                                        LocalDate.now()
+                                )
+                        );
+                    }
+
+                    currentProject.getEquipments().addAll(newEquipments);
+                    currentProject.getLaboratories().forEach(laboratory -> {
+                        if (laboratory.getLabCode() == currentEquipmentRequest.getLaboratory().getLabCode()) {
+                            laboratory.getEquipments().addAll(newEquipments);
                         }
+                    });
 
-                        currentProject.getEquipments().addAll(newEquipments);
-                        currentProject.getLaboratories().forEach(laboratory -> {
-                            if(laboratory.getLabCode() == currentEquipmentRequest.getLaboratory().getLabCode()){
-                                laboratory.getEquipments().addAll(newEquipments);
-                            }
-                        });
-                             // aggiornare la tabella e la label
-                            EquipmentLog.getItems().addAll(newEquipments);
-                            remainingFundsValue = projectDAO.remainingEquipmentFunds(currentProject.getCup());
-                            remainingFunds.setText("€" + remainingFundsValue.setScale(2, RoundingMode.UNNECESSARY));
-                            buyEquipmentButton.setDisable(true);
-                            currentProject.getEquipmentRequests().remove(currentEquipmentRequest);
+                    // aggiornare la tabella e la label
+                    equipmentLog.getItems().addAll(newEquipments);
+                    remainingFundsValue = projectDAO.remainingEquipmentFunds(currentProject.getCup());
+                    remainingFunds.setText("€" + remainingFundsValue.setScale(2, RoundingMode.UNNECESSARY));
+                    buyEquipmentButton.setDisable(true);
+                    currentProject.getEquipmentRequests().remove(currentEquipmentRequest);
                 } catch (Exception err) {
                     throw new RuntimeException(err);
                 }
