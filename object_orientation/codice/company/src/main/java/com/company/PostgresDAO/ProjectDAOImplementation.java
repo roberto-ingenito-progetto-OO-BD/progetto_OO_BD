@@ -330,7 +330,8 @@ public class ProjectDAOImplementation implements ProjectDAO {
         try {
                 db = DatabaseConnection.ProjAdminInstance();
                 rs = db.connection.createStatement().executeQuery(query);
-
+                db.connection.close();
+                
                 while(rs.next()) {
                     equipment = new Equipment(
                             rs.getString("name"),
