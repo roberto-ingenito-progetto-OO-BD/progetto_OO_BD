@@ -17,7 +17,6 @@ public interface EmployeeDAO {
      * @return true se il login è avvenuto correttamente
      * <p> false altrimenti
      */
-
     Employee getEmployeeData(EmpType empType, String email);
 
     @Nullable

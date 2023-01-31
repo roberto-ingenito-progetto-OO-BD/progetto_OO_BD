@@ -104,7 +104,8 @@ public class EmployeeDashboardController {
 
     /**
      * Funzione che viene eseguita quando viene cliccata una riga
-     * della tabella "labWorkingProjectTable"
+     * della tabella "labWorkingProjectTable" <br/>
+     * Apre una card dove mostra le informazioni del laboratorio selezionato
      */
     private @FXML void onLabWorkingProjectTableRowClick() {
         ProjectCard projectCard;
@@ -131,19 +132,14 @@ public class EmployeeDashboardController {
             // imposta la nuova finistra come "modal",
             // quindi blocca tutti gli eventi delle altre finestre finché questa non viene chiusa
             newStage.initModality(Modality.APPLICATION_MODAL);
-            newStage.showAndWait();
-
-            if (employee.getLaboratory() != null) {
-                labWorkingProjectsTable.getItems().clear();
-                labWorkingProjectsTable.getItems().addAll(employee.getLaboratory().getProjects());
-                labWorkingProjectsTable.refresh();
-            }
+            newStage.show();
         }
     }
 
     /**
      * Funzione che viene eseguita quando viene cliccata una riga
-     * della tabella "empManagerLabsTable"
+     * della tabella "empManagerLabsTable" <br/>
+     * Apre una nuova finestra dove mostra delle informazioni riguardo al laboratorio selezionato
      */
     private @FXML void onLabClick() {
         // prende il laboratorio della riga selezionata
@@ -168,24 +164,29 @@ public class EmployeeDashboardController {
     }
 
     // TAB PROGETTI
+
+    /**
+     * Funzione che è eseguita quando viene cliccata una riga della tabella "projectsTable", tabella in cui
+     * sono mostrati i progetti in cui l'impiegato loggato è referente o manager. <br/>
+     * Con click SINISTRO, vengono aggiornate le tabelle "equipmentRequestTable" e "hiredProjectSalariedTable", in modo
+     * tale da mostrare le richieste aperte e gli impiegati assunti del progetto selezionato. <br/>
+     * Con click DESTRO, oltre a fare le cose che sono fatte con click sinistro, viene mostrata anche la
+     * card per mostrare le informazioni del progetto selezionato.
+     */
     private @FXML void showSelectedProject(MouseEvent mouseEvent) {
         ProjectCard projectCard;
         Stage newStage;
         Scene newScene;
 
-        // se le tabelle sono riempite , svuotarle
-        if (!equipmentRequestTable.getItems().isEmpty()) {
-            equipmentRequestTable.getItems().clear();
-        }
-        if (!hiredProjectSalariedTable.getItems().isEmpty()) {
-            hiredProjectSalariedTable.getItems().clear();
-        }
-
         Project selectedProject = projectsTable.getSelectionModel().getSelectedItem();
 
         if (selectedProject != null) {
+            // se le tabelle sono riempite , svuotarle
+            if (!equipmentRequestTable.getItems().isEmpty()) equipmentRequestTable.getItems().clear();
+            if (!hiredProjectSalariedTable.getItems().isEmpty()) hiredProjectSalariedTable.getItems().clear();
+
+            // Con click destro, apre la card con le informazioni del progetto selezionato
             if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-                // apre schermata del progetto
                 projectCard = new ProjectCard();
                 newScene = projectCard.getScene(selectedProject, employee, projectsTable);
 
@@ -194,6 +195,8 @@ public class EmployeeDashboardController {
                 newStage.setScene(newScene);
                 newStage.setResizable(false);
 
+                // apre lo stage come un modal, cosi che siano bloccato gli eventi dello
+                // stage precedente che si trova al di sotto
                 newStage.initModality(Modality.APPLICATION_MODAL);
                 newStage.show();
             }
@@ -215,16 +218,13 @@ public class EmployeeDashboardController {
 
     }
 
+    /**
+     * Mostra la finestra per assumere un nuovo impiegato
+     */
     private @FXML void showHiringScreen() {
         Project selectedProject = projectsTable.getSelectionModel().getSelectedItem();
-
-        // se il progetto selezionato ha già una end date la schermata non va aperta
-        if (selectedProject == null || selectedProject.getEndDate() != null) {
-            System.out.println("schermata non disponibile");
-            return;
-        }
-
         HiringScreen hiringScreen = new HiringScreen();
+
         Scene scene = hiringScreen.getScene(selectedProject, employee);
         Stage currentStage = (Stage) labWorkingProjectsTable.getScene().getWindow();
         Stage newStage = new Stage();
@@ -233,31 +233,41 @@ public class EmployeeDashboardController {
         newStage.setScene(scene);
         newStage.setResizable(false);
 
+        // nasconde la finestra attuale
+        // apre la nuova finestra e aspetta che questa venga chiusa
+        // una volta chiusa, apre nuovamente la finestra attuale
         currentStage.hide();
-
         newStage.showAndWait();
-
         currentStage.show();
     }
 
-    private @FXML void getSelectedEquipment(MouseEvent mouseEvent) {
+    /**
+     * Funzione che viene eseguita quando viene cliccata una riga nella tabella "equipmentRequestTable",
+     * tabella che mostra le richieste di attrezzatura del progetto selezionato nella tabella "projectsTable" <br/>
+     * Apre la finestra per l'acquisto dell'attrezzatura selezionata
+     */
+    private @FXML void getSelectedEquipment() {
         Project selectedProject = projectsTable.getSelectionModel().getSelectedItem();
         EquipmentRequest selectedEquipmentRequest = equipmentRequestTable.getSelectionModel().getSelectedItem();
 
         if (selectedProject != null && selectedEquipmentRequest != null) {
             EquipmentBuyingScreen equipmentBuyingScreen = new EquipmentBuyingScreen();
-            Scene scene = equipmentBuyingScreen.getScene(selectedProject, selectedEquipmentRequest);
+
             Stage currentStage = (Stage) projectsTable.getScene().getWindow();
             Stage newStage = new Stage();
+            Scene newScene = equipmentBuyingScreen.getScene(selectedProject, selectedEquipmentRequest);
 
             newStage.setTitle("Equipment Buying Screen");
-            newStage.setScene(scene);
+            newStage.setScene(newScene);
             newStage.setResizable(false);
 
+            // nasconde la finestra attuale
+            // apre la nuova finestra e aspetta che questa venga chiusa
+            // una volta chiusa, esegue il restante codice
             currentStage.hide();
             newStage.showAndWait();
 
-            // aggiornare la tabella delle richieste una volta che la pagina di buy equipment viene chiusa
+            // aggiorna la tabella delle richieste una volta che la pagina di buy equipment viene chiusa
             projectsTable.getSelectionModel().clearSelection();
             equipmentRequestTable.getItems().clear();
             hiredProjectSalariedTable.getItems().clear();
@@ -266,6 +276,13 @@ public class EmployeeDashboardController {
     }
 
     /// METHODS
+
+    /**
+     * Aggiorna le opacità dei testi dei pulsanti per cambiare tab, cosi da far capire quale Tab è selezionata <br/>
+     * Successivamente cambia la Tab con quella passata in input
+     *
+     * @param tab Riferimento alla Tab cliccata
+     */
     private void changeTab(Tab tab) {
         projectsButtonLabel.setOpacity(0.4);
         laboratoryButtonLabel.setOpacity(0.4);
@@ -277,6 +294,9 @@ public class EmployeeDashboardController {
         tabPane.getSelectionModel().select(tab);
     }
 
+    /**
+     * Apre una nuova finestra dove mostra delle informazioni riguardo al laboratorio passato in input
+     */
     private void showSelectedLaboratory(Laboratory laboratory) {
         SelectedLaboratoryCard selectedLaboratoryCard = new SelectedLaboratoryCard();
         Scene scene = selectedLaboratoryCard.getScene(laboratory, ((Senior) employee).getProjects());
@@ -400,9 +420,9 @@ public class EmployeeDashboardController {
                     project.setContracts(
                             projectDAO.getProjectContracts(project.getCup())
                     );
-                    project.getLaboratories().forEach(laboratory -> {
-                        projectDAO.getBuyedEquipments(project, laboratory);
-                    });
+                    project.getLaboratories().forEach(laboratory ->
+                            projectDAO.getBuyedEquipments(project, laboratory)
+                    );
                     // per ogni contratto settare il riferimento al progetto stesso
                     project.getContracts().forEach(contract -> contract.setProject(project));
                 });
