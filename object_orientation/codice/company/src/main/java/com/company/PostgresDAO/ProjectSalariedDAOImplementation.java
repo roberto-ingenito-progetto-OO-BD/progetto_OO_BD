@@ -28,7 +28,7 @@ public class ProjectSalariedDAOImplementation implements ProjectSalariedDAO {
 
     @Override
     public ProjectSalaried getProjectSalariedData(String email) {
-        String query = "SELECT cf , first_name, last_name, email, role FROM project_salaried WHERE email = '" + email + "'";
+        String query = "SELECT * FROM project_salaried WHERE email = '" + email + "'";
         ProjectSalaried loggedProjectSalaried;
         DatabaseConnection db;
         ResultSet rs;

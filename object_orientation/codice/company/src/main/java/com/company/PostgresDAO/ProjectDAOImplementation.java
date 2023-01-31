@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class ProjectDAOImplementation implements ProjectDAO {
     @Override
@@ -145,6 +146,25 @@ public class ProjectDAOImplementation implements ProjectDAO {
 
             sts.setString(11, cup);
 
+            sts.getParameterMetaData();
+            sts.execute();
+            db.connection.close();
+        } catch (SQLException err) {
+            throw new RuntimeException(err);
+        }
+    }
+
+    @Override
+    public void buyEquipment(Project project, EquipmentRequest equipmentRequest, Float price) {
+        DatabaseConnection db;
+        PreparedStatement sts;
+        String query = "call buy_equipment(?,?)";
+
+        try {
+            db = DatabaseConnection.ProjAdminInstance();
+            sts = db.connection.prepareCall(query);
+            sts.setObject(1, UUID.fromString(equipmentRequest.getCode()));
+            sts.setBigDecimal(2, BigDecimal.valueOf(price));
             sts.getParameterMetaData();
             sts.execute();
             db.connection.close();

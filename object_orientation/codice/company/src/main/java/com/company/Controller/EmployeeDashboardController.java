@@ -254,7 +254,9 @@ public class EmployeeDashboardController {
             newStage.showAndWait();
 
             // aggiornare la tabella delle richieste una volta che la pagina di buy equipment viene chiusa
-            equipmentRequestTable.refresh();
+            projectsTable.getSelectionModel().clearSelection();
+            equipmentRequestTable.getItems().clear();
+            hiredProjectSalariedTable.getItems().clear();
             currentStage.show();
         }
     }

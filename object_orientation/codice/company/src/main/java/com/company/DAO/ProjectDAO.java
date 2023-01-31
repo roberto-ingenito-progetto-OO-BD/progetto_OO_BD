@@ -1,6 +1,7 @@
 package com.company.DAO;
 
 import com.company.Model.*;
+import com.company.PostgresDAO.ProjectDAOImplementation;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -31,4 +32,6 @@ public interface ProjectDAO {
     ArrayList<Project> getAvailableProjects();
 
     ArrayList<Equipment> getBuyedEquipments(Project project, Laboratory laboratory);
+
+    void buyEquipment(Project project, EquipmentRequest equipmentRequest, Float price);
 }
