@@ -7,6 +7,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    /**
+     * Funzione che viene eseguita per avviare l'applicazione
+     */
     @Override
     public void start(Stage stage) {
         Login loginGUI = new Login();
