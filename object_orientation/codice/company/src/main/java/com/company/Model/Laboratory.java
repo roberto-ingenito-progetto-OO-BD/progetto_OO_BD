@@ -7,9 +7,9 @@ public class Laboratory {
     private String name;
     private String topic;
 
-    private ArrayList<Project> projects;
+    private ArrayList<Project> projects = new ArrayList<>();
     private ArrayList<EquipmentRequest> equipmentRequests;
-    private ArrayList<Equipment> equipment;
+    private ArrayList<Equipment> equipments = new ArrayList<>();
     private Senior scientificManager;
     private ArrayList<Employee> employees;
 
@@ -41,8 +41,8 @@ public class Laboratory {
         return projects;
     }
 
-    public ArrayList<Equipment> getEquipment() {
-        return equipment;
+    public ArrayList<Equipment> getEquipments() {
+        return equipments;
     }
 
     public Senior getScientificManager() {
@@ -61,9 +61,15 @@ public class Laboratory {
     public void setProjects(ArrayList<Project> projects) {
         this.projects = projects;
     }
+    public void addProject(Project newProject) {
+        this.projects.add(newProject);
+    }
 
     public void setEquipment(ArrayList<Equipment> equipment) {
-        this.equipment = equipment;
+        this.equipments = equipment;
+    }
+    public void addEquipment(Equipment equipment) {
+        this.equipments.add(equipment);
     }
 
     public void setScientificManager(Senior scientificManager) {

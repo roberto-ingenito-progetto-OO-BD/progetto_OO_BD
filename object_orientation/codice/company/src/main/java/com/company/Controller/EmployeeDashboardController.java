@@ -1,5 +1,6 @@
 package com.company.Controller;
 
+import com.company.GUI.EquipmentBuyingScreen;
 import com.company.GUI.ProjectCard;
 import com.company.GUI.SelectedLaboratoryCard;
 import com.company.Model.*;
@@ -130,7 +131,13 @@ public class EmployeeDashboardController {
             // imposta la nuova finistra come "modal",
             // quindi blocca tutti gli eventi delle altre finestre finché questa non viene chiusa
             newStage.initModality(Modality.APPLICATION_MODAL);
-            newStage.show();
+              newStage.showAndWait();
+
+                if (employee.getLaboratory() != null) {
+                    labWorkingProjectsTable.getItems().clear();
+                    labWorkingProjectsTable.getItems().addAll(employee.getLaboratory().getProjects());
+                    labWorkingProjectsTable.refresh();
+                }
         }
     }
 
@@ -188,13 +195,7 @@ public class EmployeeDashboardController {
                 newStage.setResizable(false);
 
                 newStage.initModality(Modality.APPLICATION_MODAL);
-                newStage.showAndWait();
-
-                if (employee.getLaboratory() != null) {
-                    labWorkingProjectsTable.getItems().clear();
-                    labWorkingProjectsTable.getItems().addAll(employee.getLaboratory().getProjects());
-                    labWorkingProjectsTable.refresh();
-                }
+                newStage.show();
             }
 
             // carica tutti gli equipment request del progetto selezionato nella tabella di equipment
@@ -209,6 +210,7 @@ public class EmployeeDashboardController {
         }
 
     }
+
 
     private @FXML void showHiringScreen() {
         Project selectedProject = projectsTable.getSelectionModel().getSelectedItem();
@@ -235,11 +237,29 @@ public class EmployeeDashboardController {
         currentStage.show();
     }
 
-    private @FXML void getSelectedRequest(MouseEvent mouseEvent) {
-
-    }
-
     private @FXML void getSelectedEquipment(MouseEvent mouseEvent) {
+        Project selectedProject = projectsTable.getSelectionModel().getSelectedItem();
+        EquipmentRequest selectedEquipmentRequest = equipmentRequestTable.getSelectionModel().getSelectedItem();
+
+        if(selectedProject != null && selectedEquipmentRequest != null){
+            EquipmentBuyingScreen equipmentBuyingScreen = new EquipmentBuyingScreen();
+            Scene scene = equipmentBuyingScreen.getScene(selectedProject, selectedEquipmentRequest);
+            Stage currentStage = (Stage) projectsTable.getScene().getWindow();
+            Stage newStage = new Stage();
+
+            newStage.setTitle("Equipment Buying Screen");
+            newStage.setScene(scene);
+            newStage.setResizable(false);
+
+            currentStage.hide();
+            newStage.showAndWait();
+
+            // aggiornare la tabella delle richieste una volta che la pagina di buy equipment viene chiusa
+            equipmentRequestTable.refresh();
+            currentStage.show();
+
+
+        } else return;
     }
 
     /// METHODS
@@ -254,7 +274,7 @@ public class EmployeeDashboardController {
         tabPane.getSelectionModel().select(tab);
     }
 
-    private void showSelectedLaboratory(Laboratory laboratory) {
+    private void showSelectedLaboratory(Laboratory laboratory)  {
         SelectedLaboratoryCard selectedLaboratoryCard = new SelectedLaboratoryCard();
 
         Scene scene = selectedLaboratoryCard.getScene(laboratory, ((Senior) employee).getProjects());
@@ -324,7 +344,7 @@ public class EmployeeDashboardController {
             );
 
             // riempie la ListView "equipmentListView"
-            for (Equipment equipment : employee.getLaboratory().getEquipment()) {
+            for (Equipment equipment : employee.getLaboratory().getEquipments()) {
                 laboratoryEquipmentListView.getItems().add(
                         equipment.getName() + ", " + equipment.getType() + ", " + equipment.getTechSpecs()
                 );
@@ -378,10 +398,11 @@ public class EmployeeDashboardController {
                     project.setContracts(
                             projectDAO.getProjectContracts(project.getCup())
                     );
-
+                    project.getLaboratories().forEach(laboratory -> {
+                        projectDAO.getBuyedEquipments(project, laboratory);
+                    });
                     // per ogni contratto settare il riferimento al progetto stesso
                     project.getContracts().forEach(contract -> contract.setProject(project));
-
                 });
 
                 // carica la tabella con i project
