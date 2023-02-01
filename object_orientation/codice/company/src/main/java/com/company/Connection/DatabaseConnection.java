@@ -59,7 +59,7 @@ public class DatabaseConnection {
     /**
      * Effettua la connessione al database con le credenziali dell'admin dello schema del database
      */
-    public static DatabaseConnection ProjAdminInstance() throws SQLException {
+    public static DatabaseConnection projAdminInstance() throws SQLException {
         return getInstance("project_admin", "proj_admin");
     }
 }

@@ -97,6 +97,9 @@ public class SelectedLaboratoryCardController {
         );
         alert.setTitle("Attenzione");
 
+        // quando viene cliccato il tasto "X" dell'alert, lo chiude
+        alert.getDialogPane().getScene().getWindow().setOnCloseRequest(e -> alert.close());
+
         Project selectedProject = workingProjectsTable.getSelectionModel().getSelectedItem();
         workingProjectsTable.getSelectionModel().clearSelection();
 
@@ -154,6 +157,7 @@ public class SelectedLaboratoryCardController {
 
     /**
      * Esegue la query sul database e aggiorna il model
+     *
      * @param selectedProject Progetto al quale il laboratorio vuole partecipare
      */
     private void joinProject(Project selectedProject) {
@@ -211,6 +215,7 @@ public class SelectedLaboratoryCardController {
 
     /**
      * Esegue la query sul database e aggiorna il model
+     *
      * @param selectedProject Progetto che il laboratorio intende lasciare
      */
     private void leaveProject(Project selectedProject) {
@@ -271,6 +276,7 @@ public class SelectedLaboratoryCardController {
 
     /**
      * Apre una schermata dove sono presenti dei campi che è possibile compilare per effettuare la richiesta di attrezzatura
+     *
      * @param selectedProject Progetto selezionato al quale si vuole chiedere attrezzatura
      */
     private void showEquipmentRequestCard(Project selectedProject) {

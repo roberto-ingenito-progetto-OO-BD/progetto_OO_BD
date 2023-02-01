@@ -26,7 +26,7 @@ public class ProjectDAOImplementation implements ProjectDAO {
                 "AND take_part.end_date IS NULL AND take_part.cup = project.cup AND take_part.cup = '" + cup + "'";
 
         try {
-            db = DatabaseConnection.ProjAdminInstance();
+            db = DatabaseConnection.projAdminInstance();
             rs = db.connection.createStatement().executeQuery(query);
             db.connection.close();
 
@@ -54,7 +54,7 @@ public class ProjectDAOImplementation implements ProjectDAO {
                 "WHERE P.cup =  '" + cup + "'";
 
         try {
-            db = DatabaseConnection.ProjAdminInstance();
+            db = DatabaseConnection.projAdminInstance();
             resultSet = db.connection.createStatement().executeQuery(query);
             db.connection.close();
             resultSet.next();
@@ -81,7 +81,7 @@ public class ProjectDAOImplementation implements ProjectDAO {
                 "WHERE project.cf_manager = base_emp.cf AND project.cup =  '" + cup + "'";
 
         try {
-            db = DatabaseConnection.ProjAdminInstance();
+            db = DatabaseConnection.projAdminInstance();
             resultSet = db.connection.createStatement().executeQuery(query);
             db.connection.close();
             resultSet.next();
@@ -159,7 +159,7 @@ public class ProjectDAOImplementation implements ProjectDAO {
         String query = "call buy_equipment(?,?)";
 
         try {
-            db = DatabaseConnection.ProjAdminInstance();
+            db = DatabaseConnection.projAdminInstance();
             sts = db.connection.prepareCall(query);
             sts.setObject(1, UUID.fromString(equipmentRequest.getCode()));
             sts.setBigDecimal(2, BigDecimal.valueOf(price));
@@ -218,7 +218,7 @@ public class ProjectDAOImplementation implements ProjectDAO {
         String query = "SELECT * FROM project_salaried as ps , project as p , works_on as w WHERE ps.cf = w.cf AND w.cup = p.cup AND p.cup = '" + cup + "'";
 
         try {
-            db = DatabaseConnection.ProjAdminInstance();
+            db = DatabaseConnection.projAdminInstance();
             resultSet = db.connection.createStatement().executeQuery(query);
             db.connection.close();
 
@@ -259,7 +259,7 @@ public class ProjectDAOImplementation implements ProjectDAO {
                 "WHERE er.lab_code = l.lab_code AND p.cup = er.cup AND p.cup =  '" + cup + "'";
 
         try {
-            db = DatabaseConnection.ProjAdminInstance();
+            db = DatabaseConnection.projAdminInstance();
             rs = db.connection.createStatement().executeQuery(query);
             db.connection.close();
 
@@ -345,7 +345,7 @@ public class ProjectDAOImplementation implements ProjectDAO {
                 "AND PR.cup = '" + project.getCup() + "' AND L.lab_code = '" + laboratory.getLabCode() + "'";
 
         try {
-            db = DatabaseConnection.ProjAdminInstance();
+            db = DatabaseConnection.projAdminInstance();
             rs = db.connection.createStatement().executeQuery(query);
             db.connection.close();
 
