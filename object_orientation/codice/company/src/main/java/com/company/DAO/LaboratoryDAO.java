@@ -62,4 +62,11 @@ public interface LaboratoryDAO {
      * @param empType    Tipo dell'impiegato loggato che istanzia la connessione al db, solo un senior ha i permessi per portare a termine quest'operazione sul db.
      */
     void joinProject(int labCode, String projectCUP, EmpType empType);
+
+
+    /**
+     * Aggiunge al database la richiesta di attrezzatura passata in input
+     * @param equipmentRequest Richiesta creata nel model
+     */
+    void equipmentRequest(EquipmentRequest equipmentRequest);
 }
