@@ -9,6 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -50,9 +51,10 @@ public class EquipmentBuyingController {
      * @param project          the project
      * @param equipmentRequest the equipment request
      */
-    public EquipmentBuyingController(Project project, EquipmentRequest equipmentRequest) {
+    public EquipmentBuyingController(Project project, @Nullable EquipmentRequest equipmentRequest) {
         this.currentProject = project;
         this.currentEquipmentRequest = equipmentRequest;
+
     }
 
     /// FXML METHODS
@@ -68,28 +70,40 @@ public class EquipmentBuyingController {
         remainingFundsValue = projectDAO.remainingEquipmentFunds(currentProject.getCup());
 
         ArrayList<Equipment> equipments = new ArrayList<>();
-        currentProject.getLaboratories().forEach(laboratory -> {
-            if (laboratory.getLabCode() == currentEquipmentRequest.getLaboratory().getLabCode()) {
-                equipments.addAll(laboratory.getEquipments());
-            }
-        });
 
-        // settare le label con le informazioni in ingresso
-        selectedProjectName.setText(currentProject.getName());
-        equipmentNameLabel.setText(equipmentNameLabel.getText() + " " + currentEquipmentRequest.getName());
-        techSpecsLabel.setText(techSpecsLabel.getText() + " " + currentEquipmentRequest.getSpecs());
-        quantityLabel.setText(quantityLabel.getText() + " " + currentEquipmentRequest.getQuantity());
-        labNameLabel.setText(currentEquipmentRequest.getLaboratory().getName());
-        remainingFunds.setText("€" + remainingFundsValue.setScale(2, RoundingMode.UNNECESSARY));
-
-        // caricare le informazioni della richiesta di equipaggiamento
-
-        // caricare la tabella con le precedenti attrezzature acquistate dal progetto per questo laboratorio
+        // carica le colonne della tabella
         equipmentLog.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
         equipmentLog.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("price"));
         equipmentLog.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("purchaseDate"));
-        equipmentLog.getItems().addAll(equipments);
 
+
+        // se la richiesta è vuota non rendere cliccabile il pulsante e caricare tutti gli equipment acquistati per tutti i laboratori
+        if(currentEquipmentRequest == null){
+            buyEquipmentButton.setDisable(true);
+            priceTextField.setDisable(true);
+            equipmentLog.getItems().addAll(currentProject.getEquipments());
+            labNameLabel.setText("Tutte le attrezzature acquistate: ");
+            remainingFunds.setText("€" + remainingFundsValue.setScale(2, RoundingMode.UNNECESSARY));
+            return;
+        } else {
+            // carica gli equipment che sono stati acquistati dal progetto soltanto per il laboratorio richiesto
+            currentProject.getLaboratories().forEach(laboratory -> {
+                if (laboratory.getLabCode() == currentEquipmentRequest.getLaboratory().getLabCode()) {
+                    equipments.addAll(laboratory.getEquipments());
+                }
+            });
+
+            // caricare la tabella con le precedenti attrezzature acquistate dal progetto per questo laboratorio
+            equipmentLog.getItems().addAll(equipments);
+
+            // settare le label con le informazioni in ingresso
+            selectedProjectName.setText(currentProject.getName());
+            equipmentNameLabel.setText(equipmentNameLabel.getText() + " " + currentEquipmentRequest.getName());
+            techSpecsLabel.setText(techSpecsLabel.getText() + " " + currentEquipmentRequest.getSpecs());
+            quantityLabel.setText(quantityLabel.getText() + " " + currentEquipmentRequest.getQuantity());
+            labNameLabel.setText(currentEquipmentRequest.getLaboratory().getName());
+            remainingFunds.setText("€" + remainingFundsValue.setScale(2, RoundingMode.UNNECESSARY));
+        }
     }
 
     /**
@@ -114,7 +128,7 @@ public class EquipmentBuyingController {
         if (!totalPriceLabel.getText().isEmpty()) {
             float unitPrice = Float.parseFloat(priceTextField.getText());
             errorLabel.setText("");
-            if (totalPrice < remainingFundsValue.floatValue()) {
+            if (totalPrice <= remainingFundsValue.floatValue()) {
                 errorLabel.setText("");
                 try {
                     projectDAO.buyEquipment(currentProject, currentEquipmentRequest, unitPrice);
