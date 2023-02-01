@@ -2527,7 +2527,7 @@
 											"top": 1693,
 											"width": 216.0361328125,
 											"height": 13,
-											"text": "-scientificManager: ScientificManager",
+											"text": "-scientificManager",
 											"horizontalAlignment": 0
 										},
 										{
@@ -4365,8 +4365,8 @@
 								"$ref": "AAAAAAFF+qBtyKM79qY="
 							},
 							"font": "Arial;13;0",
-							"left": 1176,
-							"top": 320,
+							"left": 808,
+							"top": 336,
 							"width": 441,
 							"height": 438,
 							"text": "HIRE PROJECT SALARIED\n\nVariabili locali:\n\tprojectSalaried: inizialmente null\n\tcontract: inizialmente null\n\ncerco in project.array_contract se l'impiegato che si vuole inserire già è presente.\nNel caso ne prendo il riferimento.\nse non c'è, creo una nuova istanza\n\ncreo una nuova istanza di contract inserendo il riferimento dell'impiegato e del progetto.\n\nsuccessivamente inserisco nella lista di contratti dell'impiegato, il nuovo contratto\n\ninserisco nella lista di contratti del progetto, il nuovo contratto\n\n\nemployeeData è un HashMap<String, Object> che contiene i dati del nuovo impiegato.\nControllo se è presente la chiave \"cf\", successivamente controllo se quell'impiegato c'è gia. altrimenti, dovendo creare una nuova istanza, controllo se nell'hashmap sono presenti tutti gli altri dati.\n\ncontractData è un HashMap<String, Object> che contiene i dati del nuovo contratto.\nBisogna controllare se nell'hashmap sono presenti tutti i dati necessari per il nuovo contratto.\n\n\n\nPARAMETRI:\nemployeeData: HashMap<String, Object> \ncontractData: HashMap<String, Object> \nemployee: Employee\n\ncontrolla se employe instanceof Manager OPPURE ScientificReferent\nperché solo un manager o un scientificmanager può assumere"
@@ -4378,8 +4378,8 @@
 								"$ref": "AAAAAAFF+qBtyKM79qY="
 							},
 							"font": "Arial;13;0",
-							"left": 1176,
-							"top": 768,
+							"left": 808,
+							"top": 784,
 							"width": 441,
 							"height": 179,
 							"text": "BUY EQUIPMENT\nprende in ingresso un riferimento ad una richiesta\ne il prezzo del singolo prodotto\n\n\nPARAMETRI\nrequest: EquipmentRequest\nprice: float\nemployee: Employee\n\nFUNZIONAMENTO\ncontrolla se employe instanceof Manager OPPURE ScientificReferent\nperché solo un manager o un scientificmanager può acquistare attrezzatura"
@@ -4391,8 +4391,8 @@
 								"$ref": "AAAAAAFF+qBtyKM79qY="
 							},
 							"font": "Arial;13;0",
-							"left": 1176,
-							"top": 968,
+							"left": 808,
+							"top": 984,
 							"width": 329,
 							"height": 121,
 							"text": "END PROJECT\nimposta l'endDate di project\n\nPARAMETRI\nemployee: Employee\n\nFUNZIONAMENTO\ncontrolla se employe instanceof Manager\nperché solo un manager può terminare il progetto\n"
@@ -5592,10 +5592,7 @@
 								"$ref": "AAAAAAGFm3Y+XIbAzdo="
 							},
 							"name": "scientificManager",
-							"visibility": "private",
-							"type": {
-								"$ref": "AAAAAAGFm21VcLk2+w8="
-							}
+							"visibility": "private"
 						},
 						{
 							"_type": "UMLAttribute",
