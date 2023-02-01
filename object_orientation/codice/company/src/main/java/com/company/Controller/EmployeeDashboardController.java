@@ -271,7 +271,7 @@ public class EmployeeDashboardController {
         Project selectedProject = projectsTable.getSelectionModel().getSelectedItem();
         EquipmentRequest selectedEquipmentRequest = equipmentRequestTable.getSelectionModel().getSelectedItem();
 
-        if (selectedProject != null && selectedEquipmentRequest != null) {
+        if (selectedProject != null) {
             EquipmentBuyingScreen equipmentBuyingScreen = new EquipmentBuyingScreen();
 
             Stage currentStage = (Stage) projectsTable.getScene().getWindow();
@@ -287,6 +287,13 @@ public class EmployeeDashboardController {
             // una volta chiusa, esegue il restante codice
             currentStage.hide();
             newStage.showAndWait();
+
+
+            if(selectedEquipmentRequest == null){
+                projectsTable.getSelectionModel().clearSelection();
+                currentStage.show();
+                return;
+            }
 
             // aggiorno nel model la list view "laboratoryEquipmentListView"
             // dato che il senior che acquista l'attrezzatura per il laboratorio X, ci potrebbe lavorare, dovrà quindi
@@ -459,6 +466,9 @@ public class EmployeeDashboardController {
                     );
                     // per ogni contratto settare il riferimento al progetto stesso
                     project.getContracts().forEach(contract -> contract.setProject(project));
+                    project.getLaboratories().forEach(laboratory -> {
+                                projectDAO.getBuyedEquipments(project, laboratory);
+                    });
                 });
 
                 // carica la tabella con i project
