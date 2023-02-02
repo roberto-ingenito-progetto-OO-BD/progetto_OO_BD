@@ -109,6 +109,7 @@ public class SelectedLaboratoryCardController {
         // avvia il dialog e aspetta il click di uno dei pulsanti
         // oppure aspetta la chiusura
         alert.showAndWait();
+
         if (alert.getResult() == leaveProjectButton)
             leaveProject(selectedProject);
         else if (alert.getResult() == equipmentRequestButton) {
