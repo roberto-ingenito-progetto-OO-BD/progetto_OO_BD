@@ -1,6 +1,8 @@
 package com.company.Controller;
 
-import com.company.Model.*;
+import com.company.Model.Project;
+import com.company.Model.EmpType;
+import com.company.Model.Employee;
 import com.company.PostgresDAO.ProjectDAOImplementation;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
