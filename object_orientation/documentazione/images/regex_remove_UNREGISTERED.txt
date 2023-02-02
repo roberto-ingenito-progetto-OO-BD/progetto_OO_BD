@@ -1,0 +1,1 @@
+<text fill="#eeeeee" stroke="none" font-family="Arial" font-size="24px" font-style="normal" font-weight="normal" text-decoration="none" x="\w*" y="\w*">UNREGISTERED</text>
